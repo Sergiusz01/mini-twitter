@@ -3,7 +3,6 @@ import {BsSearch} from 'react-icons/bs';
 
 const RightSections = () => {
     return (
-
             <section
                 className="w-[40%] sticky top-2 flex flex-col items-stretch h-screen px-6 mt-2  right-40 overflow-scroll scroll-hidden">
                 <div>
