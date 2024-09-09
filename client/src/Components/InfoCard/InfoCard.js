@@ -7,61 +7,54 @@ import { useParams } from 'react-router-dom';
 import * as UserApi from '../../api/UserRequest.js';
 import { logOut } from '../../actions/AuthAction';
 
-
-
 const InfoCard = () => {
-
     const [modalOpened, setModalOpened] = useState(false);
     const dispatch = useDispatch();
     const params = useParams();
     const profileUserId = params.id;
 
     const [profileUser, setProfileUser] = useState({});
-
     const { user } = useSelector((state) => state.authReducer.authData);
-
 
     useEffect(() => {
         const fetchProfileUser = async () => {
             if (profileUserId === user._id) {
                 setProfileUser(user);
-
             } else {
-                const profileUser = await UserApi.getUser(profileUserId)
-                setProfileUser(profileUser);
+                const { data } = await UserApi.getUser(profileUserId);
+                setProfileUser(data);
             }
-
-        }
+        };
 
         fetchProfileUser();
-    }, [user]);
-
-
+    }, [profileUserId, user]); // Dodanie `profileUserId` i `user` do tablicy zależności
 
     const handleLogOut = () => {
         dispatch(logOut());
-    }
-
+    };
 
     return (
         <div className='InfoCard'>
-
             <div className="infoHead">
                 <h4>Profile Info</h4>
 
-                {user._id === profileUserId ?
-
-                    (<div>
-                        <EditIcon width='2rem' height='1.2rem'
-                                  onClick={() => setModalOpened(true)} />
-
-                        <ProfileModal modalOpened={modalOpened} setModalOpened={setModalOpened}
-                                      data={user}
+                {user._id === profileUserId ? (
+                    <div>
+                        <EditIcon
+                            width='2rem'
+                            height='1.2rem'
+                            onClick={() => setModalOpened(true)}
                         />
-                    </div>)
-                    : (" ")
-                }
 
+                        <ProfileModal
+                            modalOpened={modalOpened}
+                            setModalOpened={setModalOpened}
+                            data={user}
+                        />
+                    </div>
+                ) : (
+                    " "
+                )}
             </div>
 
             <div className="info">
@@ -85,9 +78,11 @@ const InfoCard = () => {
                 <span>{profileUser.worksAt}</span>
             </div>
 
-            <button className='button logout-button' onClick={handleLogOut}>Log Out</button>
+            <button className='button logout-button' onClick={handleLogOut}>
+                Log Out
+            </button>
         </div>
-    )
-}
+    );
+};
 
-export default InfoCard
+export default InfoCard;

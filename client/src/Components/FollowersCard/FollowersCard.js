@@ -4,14 +4,10 @@ import UserFollow from '../UserFollow/UserFollow';
 import { useSelector } from 'react-redux';
 import { getAllUser } from '../../api/UserRequest';
 
-
-
-
 const FollowersCard = () => {
 
   const [persons, setPersons] = useState([]);
   const { user } = useSelector((state) => state.authReducer.authData);
-
 
   useEffect(() => {
     const fetchPersons = async () => {
@@ -19,24 +15,20 @@ const FollowersCard = () => {
       setPersons(data);
     }
     fetchPersons();
-  }, [])
-
-
+  }, []);
 
   return (
-    <div className='FollowersCard'>
-      <h3>People you may know...</h3>
+      <div className='FollowersCard'>
+        <h3>People you may know...</h3>
 
-      {persons.map((person, id) => {
+        {persons.map((person, id) => {
+          return person._id !== user._id
+              ? <UserFollow person={person} key={id} />
+              : null; // Zwracamy `null`, jeśli warunek nie jest spełniony
+        })}
 
-        if (person._id !== user._id) {
-          return <UserFollow person={person} key={id} />
-        }
-
-      })}
-
-    </div>
+      </div>
   )
 }
 
-export default FollowersCard
+export default FollowersCard;
