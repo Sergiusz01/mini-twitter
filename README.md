@@ -1,3 +1,40 @@
+
+# 🌐 Mini Blog app - beta version
+
+## Opis
+
+Ten projekt to pełnostackowa aplikacja społecznościowa. Jest to platforma społecznościowa, na której możesz dzielić się postami, lajkować/odlajkować posty, obserwować/odobserwować użytkowników i wiele więcej.
+
+## Technologie
+
+### Frontend:
+
+- **React JS** - biblioteka JavaScript do budowania interfejsów użytkownika.
+- **CSS** - do stylowania aplikacji.
+- **React-Router-Dom** - narzędzie do nawigacji w aplikacji jednosstronicowej.
+- **Redux** - zarządzanie stanem aplikacji.
+
+### Backend:
+
+- **Node.js** - środowisko uruchomieniowe JavaScript na serwerze.
+- **Express.js** - framework do budowania aplikacji webowych.
+- **MongoDB** - baza danych NoSQL.
+- **Rest API** - architektura API.
+- **JWT Authentication** - JSON Web Tokens do autoryzacji użytkowników.
+
+## 🚀 Funkcje
+
+- **Rejestracja/Logowanie**: Użytkownicy mogą założyć konto lub zalogować się do istniejącego.
+- **Dodawanie postów**: Możliwość dzielenia się nowymi postami, które zawierają tekst (opis).
+- **Lajkowanie/Odlajkowanie postów**: Reakcje na posty innych użytkowników.
+- **Sugerowani użytkownicy**: Lista sugerowanych osób do obserwowania.
+- **Obserwowanie/Odobserwowanie użytkowników**: Możliwość zarządzania relacjami w platformie.
+- **Wyświetlanie liczby obserwujących/obserwowanych**: Możliwość podglądu liczby obserwujących i obserwowanych użytkowników.
+- **Wyświetlanie postów obserwowanych użytkowników**: Posty od obserwowanych użytkowników dostępne na głównej stronie.
+- **Aktualizacja profilu**: Możliwość edycji danych użytkownika i aktualizacji swojego profilu.
+
+
+
 ## Wymagania
 
 Przed uruchomieniem projektu upewnij się, że masz zainstalowane następujące oprogramowanie:
