@@ -1,7 +1,18 @@
-.ProfileSide{
+.ProfileSide {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem; /* Większe odstępy między elementami */
     align-items: center;
     overflow: auto;
+    padding: 1rem; /* Dodanie paddingu dla lepszego odstępu */
+    background-color: #f5f5f5; /* Jasne tło dla karty */
+    border-radius: 12px; /* Zaokrąglone rogi */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Dodanie cienia */
+}
+
+@media (max-width: 768px) {
+    .ProfileSide {
+        padding: 1rem; /* Zmniejszenie paddingu na mniejszych ekranach */
+        gap: 1rem; /* Mniejsze odstępy na mniejszych ekranach */
+    }
 }

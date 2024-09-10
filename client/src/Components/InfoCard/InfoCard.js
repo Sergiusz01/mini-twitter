@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './InfoCard.css';
-import EditIcon from '@mui/icons-material/Edit';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -27,7 +26,7 @@ const InfoCard = () => {
         };
 
         fetchProfileUser();
-    }, [profileUserId, user]); // Dodanie `profileUserId` i `user` do tablicy zależności
+    }, [profileUserId, user]);
 
     const handleLogOut = () => {
         dispatch(logOut());
@@ -40,11 +39,18 @@ const InfoCard = () => {
 
                 {user._id === profileUserId ? (
                     <div>
-                        <EditIcon
-                            width='2rem'
-                            height='1.2rem'
+                        {/* Zastąpienie EditIcon własnym komponentem SVG */}
+                        <svg
                             onClick={() => setModalOpened(true)}
-                        />
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                            className="edit-icon"
+                            style={{ cursor: "pointer" }}
+                        >
+                            <path d="M12 20h9" />
+                            <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" />
+                        </svg>
 
                         <ProfileModal
                             modalOpened={modalOpened}
@@ -58,23 +64,23 @@ const InfoCard = () => {
             </div>
 
             <div className="info">
-        <span>
-          <b>Status </b>
-        </span>
+                <span>
+                    <b>Status </b>
+                </span>
                 <span>{profileUser.relationship}</span>
             </div>
 
             <div className="info">
-        <span>
-          <b>Lives in </b>
-        </span>
+                <span>
+                    <b>Lives in </b>
+                </span>
                 <span>{profileUser.livesin}</span>
             </div>
 
             <div className="info">
-        <span>
-          <b>Works at </b>
-        </span>
+                <span>
+                    <b>Works at </b>
+                </span>
                 <span>{profileUser.worksAt}</span>
             </div>
 

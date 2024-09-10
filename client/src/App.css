@@ -1,63 +1,111 @@
 :root {
-  --lightPurple: #b578ff;
-  --darkPurple: #6674cc;
-  --purplePain: #9615db;
-  --yellow: #f5c32c;
-  --orange: #fca61f;
-  --black: #242d49;
-  --gray: rgba(36, 45, 73, 0.65);
-  --profileShadow: 0px 4px 17px 2px rgba(0, 0, 0, 0.25);
-  --hrColor: #cfcdcd;
-  --cardColor: rgba(255, 255, 255, 0.64);
-  --buttonBg: linear-gradient(98.63deg, #6674cc 10%, #9615db 100%);
-  --inputColor: rgba(40, 52, 62, 0.07);
-  --photo: #4CB256;
-  --video: #4A4EB7;
-  --location: #EF5757;
-  --shedule: #E1AE4A;
+  --twitterBlue: #1da1f2;
+  --twitterDarkBlue: #1a91da;
+  --lightGray: #e1e8ed;
+  --darkGray: #657786;
+  --lightBlack: #14171a;
+  --hoverGray: rgba(29, 161, 242, 0.1);
+  --cardBackground: #fff;
+  --borderColor: #e6ecf0;
+  --buttonBg: var(--twitterBlue);
 }
 
-
+/* Główna zawartość aplikacji w dwóch kolumnach */
 .App {
-  overflow: hidden;
-  color: var(--black);
-  background: #f3f3f3;
-  padding: 1rem 1rem;
+  display: grid;
+
+  gap: 2rem; /* Przestrzeń między kolumnami */
+  max-width: 1200px;
+  margin: 0 auto; /* Wyśrodkowanie */
+  padding: 2rem; /* Większe marginesy wewnętrzne */
+
+  box-sizing: border-box;
 }
 
-.blur{
-  position: absolute;
-  width: 22rem;
-  height: 14rem;
-  border-radius: 50%;
-  background: #a6ddf0;
-  filter: blur(72px);
-}
 
-.button{
+
+/* Styl przycisków */
+.button {
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  background: var(--buttonBg);
+  background: var(--twitterBlue);
   border: none;
-  border-radius: 0.5rem;
-  transition: all 100ms ease-out;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.button:hover{
+.button:hover {
   cursor: pointer;
-  background: transparent;
-  color: var(--purplePain);
-  border: 2px solid var(--purplePain);
+  background: var(--twitterDarkBlue);
+}
+
+.button:disabled {
+  background: #c0c4cc;
+  cursor: not-allowed;
 }
 
 
-.button:disabled{
-  background: silver;
-  pointer-events: none;
+
+/* Styl kart */
+.card {
+  background: var(--cardBackground);
+  border: 1px solid var(--borderColor);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
-::-webkit-scrollbar {
-  display: none;
+.hr {
+  border: 1px solid var(--lightGray);
+  margin: 1rem 0;
+}
+
+/* Nagłówki kart */
+.card-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--lightBlack);
+  margin-bottom: 0.5rem;
+}
+
+/* Tekst w kartach */
+.text {
+  color: var(--darkGray);
+}
+
+/* Przyciski interaktywne */
+.interactive-button {
+  display: inline-flex;
+  align-items: center;
+  color: var(--darkGray);
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.interactive-button:hover {
+  background-color: var(--hoverGray);
+  color: var(--twitterBlue);
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .App {
+    grid-template-columns: 1fr; /* Jedna kolumna na mniejszych ekranach */
+    padding: 1.5rem;
+  }
+
+  .leftColumn, .rightColumn {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
 }

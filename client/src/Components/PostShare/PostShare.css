@@ -1,75 +1,108 @@
-.PostShare{
-    display: flex;
-    gap: 1rem;
-    background-color: var(--cardColor);
-    padding: 1rem;
-    border-radius: 1rem;
-}
-
-.PostShare > img{
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-}
-
-.PostShare > div{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    gap: 1rem;
-}
-
-.PostShare > div > input {
-    background-color: var(--inputColor);
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 17px;
-    border: none;
-    outline: none;
-}
-
-.postOptions{
-    display: flex;
-    justify-content: space-around;
-}
-
-.option{
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 10px;
+/* Główny kontener dla sekcji udostępniania posta */
+.PostShare {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 14px;
+    background-color: var(--cardColor); /* Białe tło dla karty */
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtelny cień */
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
-.option:hover{
-    cursor: pointer;
-}
-
-.ps-button{
-    padding: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-size: 15px;
-}
-
-
-.previewImage{
-    position: relative;
-}
-
-.previewImage > svg{
-    position: absolute;
-    right: 1rem;
-    top: 0.5rem;
-    cursor: pointer;
-}
-
-.previewImage > img{
-    width: 100%;
-    height: 20rem;
+/* Obraz profilowy użytkownika */
+.PostShare img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Okrągłe zdjęcie profilowe */
     object-fit: cover;
-    border-radius: 0.5rem;
+}
+
+/* Główne pole tekstowe */
+.PostShare input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    background-color: var(--inputColor); /* Jasnoszare tło */
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    color: var(--black);
+}
+
+.PostShare input::placeholder {
+    color: var(--gray); /* Kolor tekstu zastępczego */
+}
+
+/* Opcje postów (dodawanie zdjęć) */
+.postOptions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.option:hover {
+    color: var(--twitterBlue); /* Zmiana koloru przy najechaniu */
+}
+
+/* Przycisk udostępnienia */
+.ps-button {
+    background-color: var(--twitterBlue);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* Styl przycisku jak na Twitterze */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ps-button:disabled {
+    background-color: var(--gray); /* Zmiana koloru przy wczytywaniu */
+    cursor: not-allowed;
+}
+
+.ps-button:hover:not(:disabled) {
+    background-color: var(--twitterDarkBlue);
+}
+
+/* Podgląd załadowanego obrazu */
+.previewImage {
+    position: relative;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.previewImage img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Ikona zamknięcia podglądu */
+.previewImage .MuiSvgIcon-root {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 0.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.previewImage .MuiSvgIcon-root:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }

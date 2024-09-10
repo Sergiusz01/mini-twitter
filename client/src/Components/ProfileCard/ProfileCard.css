@@ -1,94 +1,109 @@
+/* Główna karta profilu */
 .ProfileCard {
-    border-radius: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    gap: 1rem;
-    background: var(--cardColor);
-    overflow-x: clip;   
-}
-
-.ProfileImages {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.ProfileImages>img:nth-of-type(1) {
+    background-color: #fff;
+    border: 1px solid #e1e8ed;
+    border-radius: 15px; /* Większe zaokrąglenie dla nowoczesnego wyglądu */
+    overflow: hidden;
+    font-family: 'Helvetica Neue', sans-serif;
     width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Dodanie subtelnego cienia */
 }
 
-.ProfileImages>img:nth-of-type(2) {
-    width: 6rem;
+/* Obrazy w profilu: cover i profil */
+.ProfileImages img:first-child {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.ProfileImages img:last-child {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    position: absolute;
-    bottom: -3rem;
-    box-shadow: var(--profileShadow);
+    border: 4px solid #fff;
+    position: relative;
+    margin-top: -50px;
+    margin-left: 20px;
+    z-index: 1;
 }
 
+/* Nazwa profilu */
 .ProfileName {
+    text-align: left;
+    padding: 20px;
+    font-size: 18px;
+    color: #14171a;
+}
+
+.ProfileName span {
+    display: block;
+    font-weight: bold;
+}
+
+.ProfileName span:last-child {
+    font-size: 14px;
+    color: #657786; /* Lżejszy kolor dla informacji zawodowej */
+}
+
+/* Sekcja statusu obserwowania */
+.followStatus {
+    padding: 10px 20px;
+    text-align: center;
+    color: #657786;
+}
+
+.followStatus hr {
+    border: 0;
+    height: 1px;
+    background: #e1e8ed;
+    margin: 10px 0;
+}
+
+.followStatus div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3rem;
+    justify-content: space-around;
     gap: 10px;
 }
 
-.ProfileName>span:nth-of-type(1) {
-    font-weight: bold;
-}
-
-
-.followStatus {
+.followStatus .follow {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
 }
 
-.followStatus > hr {
-    width: 85%;
-    border: 1px solid gray;
+.followStatus .vl {
+    border-left: 1px solid #e1e8ed;
+    height: 40px;
 }
 
-.followStatus > div {
-    display: flex;
-    gap: 1rem;
-    width: 80%;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.follow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-}
-
-.follow > :nth-of-type(1) {
+/* Wyróżnienie liczb */
+.followStatus .follow span:first-child {
     font-weight: bold;
+    color: #14171a;
 }
 
-.follow > :nth-of-type(2) {
-    color: black;
-    font-size: 15px;
-}
-
-.vl { 
-    border: 1px solid gray;  
-    height: 50px;
-}
-
-
-.ProfileCard > span {
+/* Link do profilu */
+a {
+    text-decoration: none;
+    color: #1da1f2;
     font-weight: bold;
-    color: var(--purplePain);
-    align-self: center;
-    margin-bottom: 1rem;
-    cursor: pointer;
+    padding: 10px;
+    display: block;
+    text-align: center;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .ProfileCard {
+        max-width: 100%; /* Pełna szerokość na mniejszych ekranach */
+        margin: 10px 0; /* Zmniejszenie odstępów */
+    }
+
+    .ProfileImages img:last-child {
+        width: 80px; /* Zmniejszenie rozmiaru zdjęcia profilowego */
+        height: 80px;
+        margin-top: -40px; /* Dostosowanie przesunięcia */
+    }
 }
