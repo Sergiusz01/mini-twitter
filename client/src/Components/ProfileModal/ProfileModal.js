@@ -6,18 +6,21 @@ import { uploadImage } from '../../actions/UploadAction';
 import { updateUser } from '../../actions/UserAction';
 
 function ProfileModal({ modalOpened, setModalOpened, data }) {
+  // Wykluczamy hasło z danych użytkownika
   const { password, ...other } = data;
-  const [formData, setFormData] = useState(other);
-  const [profileImage, setProfileImage] = useState(null);
-  const [coverImage, setCoverImage] = useState(null);
+  const [formData, setFormData] = useState(other); // Inicjalizujemy stan z pozostałymi danymi
+  const [profileImage, setProfileImage] = useState(null); // Przechowujemy wybraną grafikę profilową
+  const [coverImage, setCoverImage] = useState(null); // Przechowujemy wybraną grafikę okładkową
   const dispatch = useDispatch();
-  const param = useParams();
-  const { user } = useSelector((state) => state.authReducer.authData);
+  const param = useParams(); // Pobieramy parametry z URL (np. id użytkownika)
+  const { user } = useSelector((state) => state.authReducer.authData); // Pobieramy dane zalogowanego użytkownika
 
+  // Obsługa zmian w formularzu
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Obsługa zmiany obrazu profilowego lub okładkowego
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -27,25 +30,28 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
     }
   };
 
+  // Obsługa przesyłania formularza
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let UserData = formData;
+    let UserData = formData; // Zbieramy dane użytkownika do aktualizacji
 
+    // Jeśli użytkownik wybrał obraz profilowy
     if (profileImage) {
       const data = new FormData();
-      const fileName = Date.now() + profileImage.name;
+      const fileName = Date.now() + profileImage.name; // Tworzymy unikalną nazwę pliku
       data.append("name", fileName);
       data.append("file", profileImage);
-      UserData.profilePicture = fileName;
+      UserData.profilePicture = fileName; // Dodajemy nazwę pliku do danych użytkownika
 
       try {
-        dispatch(uploadImage(data));
+        dispatch(uploadImage(data)); // Wysyłamy obraz na serwer
       } catch (error) {
         console.log(error);
       }
     }
 
+    // Jeśli użytkownik wybrał obraz okładkowy
     if (coverImage) {
       const data = new FormData();
       const fileName = Date.now() + coverImage.name;
@@ -54,14 +60,15 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
       UserData.coverPicture = fileName;
 
       try {
-        dispatch(uploadImage(data));
+        dispatch(uploadImage(data)); // Wysyłamy obraz na serwer
       } catch (error) {
         console.log(error);
       }
     }
 
+    // Aktualizacja danych użytkownika
     dispatch(updateUser(param.id, UserData));
-    setModalOpened(false);
+    setModalOpened(false); // Zamykamy okno modalne
   };
 
   return (
@@ -70,11 +77,11 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
             <div className="modalContent">
               <span className="closeModal" onClick={() => setModalOpened(false)}>&times;</span>
               <form className="infoForm" onSubmit={handleSubmit}>
-                <h3>Update Your Info</h3>
+                <h3>Zaktualizuj swoje informacje</h3>
                 <div>
                   <input
                       type="text"
-                      placeholder="First Name"
+                      placeholder="Imię"
                       className="infoInput"
                       name="firstname"
                       onChange={handleChange}
@@ -82,7 +89,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
                   />
                   <input
                       type="text"
-                      placeholder="Last Name"
+                      placeholder="Nazwisko"
                       className="infoInput"
                       name="lastname"
                       onChange={handleChange}
@@ -92,7 +99,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
                 <div>
                   <input
                       type="text"
-                      placeholder="Works At"
+                      placeholder="Pracuje w"
                       className="infoInput"
                       name="worksAt"
                       onChange={handleChange}
@@ -102,7 +109,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
                 <div>
                   <input
                       type="text"
-                      placeholder="Lives in"
+                      placeholder="Mieszka w"
                       className="infoInput"
                       name="livesin"
                       onChange={handleChange}
@@ -110,7 +117,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
                   />
                   <input
                       type="text"
-                      placeholder="Country"
+                      placeholder="Kraj"
                       className="infoInput"
                       name="country"
                       onChange={handleChange}
@@ -120,7 +127,7 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
                 <div>
                   <input
                       type="text"
-                      placeholder="Relationship Status"
+                      placeholder="Status związku"
                       className="infoInput"
                       name="relationship"
                       onChange={handleChange}
@@ -128,13 +135,13 @@ function ProfileModal({ modalOpened, setModalOpened, data }) {
                   />
                 </div>
                 <div>
-                  <h5>Profile Image</h5>
+                  <h5>Zdjęcie profilowe</h5>
                   <input type="file" name="profileImage" onChange={onImageChange} />
-                  <h5>Cover Image</h5>
+                  <h5>Zdjęcie okładkowe</h5>
                   <input type="file" name="coverImage" onChange={onImageChange} />
                 </div>
                 <button className="button infoButton" type="submit">
-                  Update
+                  Zaktualizuj
                 </button>
               </form>
             </div>

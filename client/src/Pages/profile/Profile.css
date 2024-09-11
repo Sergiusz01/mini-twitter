@@ -1,10 +1,10 @@
 .Profile {
     position: relative;
     display: grid;
-    grid-template-columns: 20rem auto;
+    grid-template-columns: 25rem auto;
     gap: 1.5rem; /* Zwiększone odstępy między kolumnami */
     padding: 1rem; /* Dodanie paddingu wewnętrznego */
-    background-color: #fafafa; /* Jasne tło */
+     /* Jasne tło */
 }
 
 .ProfilePage-Center {

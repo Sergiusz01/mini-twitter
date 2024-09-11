@@ -6,9 +6,9 @@ import { uploadImage, uploadPost } from '../../actions/UploadAction';
 const PostShare = () => {
     const loading = useSelector((state) => state.postReducer.uploading);
     const [image, setImage] = useState(null);
-    const imageRef = useRef();
+    const imageRef = useRef(null); // Upewniamy się, że domyślnie jest ustawione na null
     const dispatch = useDispatch();
-    const desc = useRef();
+    const desc = useRef(); // Referencja do pola opisu posta
     const { user } = useSelector((state) => state.authReducer.authData);
     const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -27,9 +27,8 @@ const PostShare = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Walidacja: sprawdzanie, czy tekst lub obrazek jest dostępny
         if (!desc.current.value.trim() && !image) {
-            alert("You cannot submit an empty post.");
+            alert("Nie możesz wysłać pustego posta.");
             return;
         }
 
@@ -61,42 +60,38 @@ const PostShare = () => {
         <div className="PostShare">
             <img
                 src={user.profilePicture ? serverPublic + user.profilePicture : serverPublic + "defaultProfile.png"}
-                alt="Profile"
+                alt="Profil"
             />
 
-            <div>
-                <input type="text" placeholder="Napisz coś..." required ref={desc} />
+            <div className="PostShareContent">
+                <input type="text" placeholder="Napisz coś..." required ref={desc}/>
 
                 <div className="postOptions">
                     <div
                         className="option"
-                        style={{ color: "var(--photo)" }}
-                        onClick={() => imageRef.current.click()}
+                        style={{color: "var(--photo)"}}
+                        onClick={() => imageRef.current && imageRef.current.click()} // Sprawdzamy, czy imageRef istnieje
                     >
-                        {/* Zastąpienie PhotoOutlinedIcon emoji kamery */}
                         <span role="img" aria-label="photo">📷</span>
                         Obraz
                     </div>
 
                     <button className="button ps-button" onClick={handleSubmit} disabled={loading}>
-                        {loading ? "Uploading..." : "Share"}
+                        {loading ? "Wysyłanie..." : "Udostępnij"}
                     </button>
-
-                    <div style={{ display: "none" }}>
-                        <input
-                            type="file"
-                            name="myImage"
-                            ref={imageRef}
-                            onChange={onImageChange}
-                        />
-                    </div>
                 </div>
+
+                <input
+                    type="file"
+                    ref={imageRef} // Przypisujemy referencję do ukrytego pola input
+                    style={{ display: "none" }} // Ukrywamy pole input
+                    onChange={onImageChange}
+                />
 
                 {image && (
                     <div className="previewImage">
-                        {/* Zastąpienie CloseOutlinedIcon emoji krzyżyka */}
                         <button onClick={() => setImage(null)}>❌</button>
-                        <img src={URL.createObjectURL(image)} alt="Preview" />
+                        <img src={URL.createObjectURL(image)} alt="Podgląd"/>
                     </div>
                 )}
             </div>

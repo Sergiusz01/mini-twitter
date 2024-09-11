@@ -5,7 +5,7 @@
     align-items: center;
     overflow: auto;
     padding: 1rem; /* Dodanie paddingu dla lepszego odstępu */
-    background-color: #f5f5f5; /* Jasne tło dla karty */
+    /* Jasne tło dla karty */
     border-radius: 12px; /* Zaokrąglone rogi */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Dodanie cienia */
 }

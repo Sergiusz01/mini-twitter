@@ -1,17 +1,17 @@
 /* Karta główna */
 .FollowersCard {
     background-color: white;
-    border-radius: 12px; /* Nieco większe zaokrąglenie */
-    padding: 20px; /* Większe odstępy */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Mocniejszy cień dla lepszego efektu */
-    max-width: 100%; /* Ustawienie na 100%, aby była responsywna */
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
     width: 100%;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Nagłówek */
 .followersCardHeader {
-    font-size: 20px; /* Większa czcionka dla lepszej widoczności */
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #333;
@@ -22,13 +22,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0; /* Większe odstępy między obserwującymi */
-    border-bottom: 1px solid #e6ecf0; /* Zmiana koloru separatora na jaśniejszy */
+    padding: 15px 0;
+    border-bottom: 1px solid #e6ecf0;
     margin-bottom: 10px;
 }
 
 .follower:last-child {
-    border-bottom: none; /* Usunięcie separatora pod ostatnim elementem */
+    border-bottom: none;
 }
 
 /* Informacje o obserwującym */
@@ -40,11 +40,11 @@
 
 /* Zdjęcie profilowe */
 .followerImg {
-    width: 50px; /* Nieco większe zdjęcia profilowe */
+    width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
-    border: 2px solid #e6ecf0; /* Zwiększenie grubości ramki */
+    border: 2px solid #e6ecf0;
 }
 
 /* Dane użytkownika */
@@ -59,18 +59,13 @@
     color: #333;
 }
 
-.followerUsername {
-    font-size: 14px;
-    color: #8899a6;
-}
-
 /* Styl przycisku 'Follow' */
 .followButton {
     background-color: #1da1f2;
     color: white;
     border: none;
-    border-radius: 25px; /* Większe zaokrąglenie dla przycisku */
-    padding: 8px 20px; /* Większe przyciski dla lepszego UX */
+    border-radius: 25px;
+    padding: 10px 25px;
     cursor: pointer;
     font-weight: bold;
     font-size: 14px;
@@ -79,22 +74,22 @@
 
 .followButton:hover {
     background-color: #1a91da;
-    transform: scale(1.05); /* Efekt powiększenia przy najechaniu */
+    transform: scale(1.05);
 }
 
 /* Responsywność */
 @media (max-width: 768px) {
     .FollowersCard {
-        padding: 15px; /* Zmniejszenie paddingu na mniejszych ekranach */
+        padding: 15px;
     }
 
     .followerImg {
-        width: 40px; /* Zmniejszenie zdjęcia profilowego */
+        width: 40px;
         height: 40px;
     }
 
     .followButton {
-        padding: 6px 15px; /* Mniejsze przyciski na mniejszych ekranach */
+        padding: 8px 20px;
         font-size: 12px;
     }
 }
@@ -111,7 +106,7 @@
     }
 
     .followButton {
-        width: 100%; /* Pełna szerokość przycisku na bardzo małych ekranach */
+        width: 100%;
         text-align: center;
         margin-top: 10px;
     }

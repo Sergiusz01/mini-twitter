@@ -1,37 +1,51 @@
 /* Główny kontener dla sekcji udostępniania posta */
 .PostShare {
     display: flex;
-    align-items: center;
-    background-color: var(--cardColor); /* Białe tło dla karty */
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtelny cień */
+    align-items: flex-start;
+    background-color: var(--cardColor);
+    border-radius: 12px;
+    padding: 1.5rem;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--borderColor);
+}
+
+.PostShareContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 /* Obraz profilowy użytkownika */
 .PostShare img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Okrągłe zdjęcie profilowe */
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     object-fit: cover;
+    border: none;
 }
 
 /* Główne pole tekstowe */
-.PostShare input {
-    width: 100%;
-    padding: 0.5rem;
+.PostShareContent input {
+    width: 100%; /* Zajmuje całą szerokość kontenera */
+    padding: 0.75rem 1rem;
     border: none;
-    background-color: var(--inputColor); /* Jasnoszare tło */
-    border-radius: 10px;
+    background-color: transparent;
     font-size: 1rem;
     outline: none;
     color: var(--black);
+    font-weight: 400;
+    border-bottom: 1px solid var(--borderColor);
+    transition: border-color 0.3s ease;
 }
 
-.PostShare input::placeholder {
-    color: var(--gray); /* Kolor tekstu zastępczego */
+.PostShareContent input:focus {
+    border-color: var(--twitterBlue);
+}
+
+.PostShareContent input::placeholder {
+    color: var(--gray);
 }
 
 /* Opcje postów (dodawanie zdjęć) */
@@ -39,36 +53,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 0.5rem;
+    gap: 1rem;
 }
 
-.option {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.option:hover {
-    color: var(--twitterBlue); /* Zmiana koloru przy najechaniu */
-}
-
-/* Przycisk udostępnienia */
+/* Styl przycisku udostępnienia po prawej stronie */
 .ps-button {
     background-color: var(--twitterBlue);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
-    border-radius: 9999px; /* Styl przycisku jak na Twitterze */
+    border-radius: 9999px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 1rem;
+    min-width: 100px;
+    align-self: flex-end; /* Wyrównanie do prawej strony */
 }
 
 .ps-button:disabled {
-    background-color: var(--gray); /* Zmiana koloru przy wczytywaniu */
+    background-color: var(--gray);
     cursor: not-allowed;
 }
 
@@ -76,33 +80,38 @@
     background-color: var(--twitterDarkBlue);
 }
 
-/* Podgląd załadowanego obrazu */
+/* Miniaturka załadowanego obrazu */
 .previewImage {
     position: relative;
     margin-top: 1rem;
-    width: 100%;
-    max-width: 500px;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--borderColor);
 }
 
 .previewImage img {
     width: 100%;
-    border-radius: 10px;
+    height: 100%;
     object-fit: cover;
 }
 
 /* Ikona zamknięcia podglądu */
-.previewImage .MuiSvgIcon-root {
+.previewImage button {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
     border-radius: 50%;
-    padding: 0.2rem;
+    padding: 0.3rem;
+    cursor: pointer;
+    font-size: 0.8rem;
     transition: background-color 0.3s ease;
 }
 
-.previewImage .MuiSvgIcon-root:hover {
+.previewImage button:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
