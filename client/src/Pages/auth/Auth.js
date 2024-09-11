@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Auth.css';
-import Logo from '../../Img/logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn, signUp } from '../../actions/AuthAction.js';
 
@@ -51,10 +50,14 @@ const Auth = () => {
         //    Left Side
         <div className='Auth'>
             <div className="a-left">
-                <img src={Logo} alt="" />
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023_original.svg"
+                    alt="Logo"
+                    className="logo"
+                />
                 <div className="Webname">
                     <h2>Welcome !</h2>
-                    <h5>Explore the ideas throughout <br /> the world.</h5>
+                    <h5>Explore the ideas throughout <br/> the world.</h5>
                 </div>
             </div>
 

@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
-import './LogoSearch.css';
-import Logo from '../../Img/logo.png';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import ShareModal from '../ShareModal/ShareModal';
+import  './LogoSearch.css';  // Import the CSS module
 
 const LogoSearch = () => {
-    const [modalOpened, setModalOpened] = useState(false);
-
     return (
         <div className="LogoSearch">
-            <Link to="../home">
-                <img src={Logo} alt="Logo" />
+            <Link to="/home">
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023_original.svg"
+                    alt="Logo"
+                    className="logo"
+                />
             </Link>
-
-            <div className="button rg-button" onClick={() => setModalOpened(true)}>
-                Share
-            </div>
-
-            <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
         </div>
     );
 };
 
 export default LogoSearch;
-
