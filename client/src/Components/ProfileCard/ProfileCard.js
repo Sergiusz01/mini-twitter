@@ -26,7 +26,7 @@ const ProfileCard = ({ location }) => {
 
             <div className="ProfileName">
                 <span>{user.firstname} {user.lastname}</span>
-                <span>{user.worksAt ? user.worksAt : "write about yourself..."}</span>
+                <span>{user.worksAt ? user.worksAt : "Napisz coś o sobie"}</span>
             </div>
 
             <div className="followStatus">
@@ -34,12 +34,12 @@ const ProfileCard = ({ location }) => {
                 <div>
                     <div className="follow">
                         <span>{user.followers.length}</span>
-                        <span>Followers</span>
+                        <span>Obserwujących</span>
                     </div>
                     <div className="vl"></div>
                     <div className="follow">
                         <span>{user.following.length}</span>
-                        <span>Following</span>
+                        <span>Obserwowanych</span>
                     </div>
 
                     {location === "profilePage" && (
@@ -47,7 +47,7 @@ const ProfileCard = ({ location }) => {
                             <div className="vl"></div>
                             <div className="follow">
                                 <span>{posts.filter((post) => post.userId === user._id).length}</span>
-                                <span>Posts</span>
+                                <span>Wpisy</span>
                             </div>
                         </>
                     )}
@@ -58,7 +58,7 @@ const ProfileCard = ({ location }) => {
 
             {location === "profilePage" ? '' :
                 <span>
-                    <Link style={{ textDecoration: "none", color: "inherit" }} to={`/profile/${user._id}`}>My Profile</Link>
+                    <Link style={{ textDecoration: "none", color: "inherit" }} to={`/profile/${user._id}`}>Mój profil</Link>
                 </span>
             }
 
