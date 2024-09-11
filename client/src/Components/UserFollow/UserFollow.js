@@ -34,8 +34,11 @@ const UserFollow = ({ person }) => {
                     <span className="followerName">@{person.firstname} {person.lastname}</span>
                 </div>
             </div>
-            <button className="followButton" onClick={handleFollow}>
-                {following ? "Przestań obserwować" : "Obserwuj"}
+            <button
+                className={`followButton ${following ? 'following' : ''}`}
+                onClick={handleFollow}
+            >
+                {following ? "Obserwujesz" : "Obserwuj"}
             </button>
         </div>
     );

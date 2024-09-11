@@ -48,10 +48,12 @@
     flex-direction: column;
 }
 
+/* Imię i nazwisko autora */
 .authorInfo span:first-of-type {
     font-weight: bold;
 }
 
+/* Opis posta */
 .authorInfo span:last-of-type {
     color: var(--gray);
     font-size: 14px;

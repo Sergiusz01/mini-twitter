@@ -21,7 +21,7 @@ const FollowersCard = () => {
 
   return (
       <div className='FollowersCard'>
-        <h3 className="followersCardHeader">Zaobserwuj</h3> {/* Nagłówek karty */}
+        <h3 className="followersCardHeader">Poznawaj</h3> {/* Nagłówek karty */}
         {/* Mapowanie przez listę osób, wykluczając aktualnie zalogowanego użytkownika */}
         {persons.map((person, id) => {
           return person._id !== user._id

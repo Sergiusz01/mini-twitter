@@ -3,7 +3,7 @@
     background-color: white;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
     max-width: 100%;
     width: 100%;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -110,4 +110,19 @@
         text-align: center;
         margin-top: 10px;
     }
+}
+
+
+
+
+.followButton:hover {
+    background-color: #1a91da; /* Ciemniejszy odcień niebieskiego */
+}
+
+.followButton.following {
+    background-color: #657786; /* Szary kolor, gdy użytkownik jest zaobserwowany */
+}
+
+.followButton.following:hover {
+    background-color: #525e6b; /* Ciemniejszy szary przy hoverze */
 }
