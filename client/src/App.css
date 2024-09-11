@@ -8,21 +8,27 @@
   --cardBackground: #fff;
   --borderColor: #e6ecf0;
   --buttonBg: var(--twitterBlue);
+  --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* Główna zawartość aplikacji w dwóch kolumnach */
 .App {
   display: grid;
-
   gap: 2rem; /* Przestrzeń między kolumnami */
   max-width: 1200px;
   margin: 0 auto; /* Wyśrodkowanie */
   padding: 2rem; /* Większe marginesy wewnętrzne */
-
   box-sizing: border-box;
+  font-family: var(--font-family); /* Ustawienie globalnej czcionki */
 }
 
-
+/* Styl tekstu */
+.text {
+  font-family: var(--font-family); /* Czcionka podobna do Twittera */
+  line-height: 1.5;
+  color: var(--lightBlack); /* Ciemny tekst */
+  font-size: 15px; /* Rozmiar tekstu */
+}
 
 /* Styl przycisków */
 .button {
@@ -32,25 +38,24 @@
   color: white;
   background: var(--twitterBlue);
   border: none;
-  border-radius: 9999px;
+  border-radius: 9999px; /* Zaokrąglone krawędzie */
   padding: 0.75rem 1.5rem;
   transition: background-color 0.2s ease-in-out;
   font-weight: bold;
   font-size: 1rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Dodanie cienia */
+  font-family: var(--font-family);
 }
 
 .button:hover {
   cursor: pointer;
-  background: var(--twitterDarkBlue);
+  background: var(--twitterDarkBlue); /* Zmiana koloru przy hover */
 }
 
 .button:disabled {
   background: #c0c4cc;
   cursor: not-allowed;
 }
-
-
 
 /* Styl kart */
 .card {
@@ -59,9 +64,11 @@
   border-radius: 15px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05); /* Subtelny cień */
+  font-family: var(--font-family);
 }
 
+/* Separator */
 .hr {
   border: 1px solid var(--lightGray);
   margin: 1rem 0;
@@ -73,11 +80,14 @@
   font-weight: bold;
   color: var(--lightBlack);
   margin-bottom: 0.5rem;
+  font-family: var(--font-family);
 }
 
 /* Tekst w kartach */
 .text {
   color: var(--darkGray);
+  font-size: 15px;
+  font-family: var(--font-family);
 }
 
 /* Przyciski interaktywne */
@@ -85,9 +95,9 @@
   display: inline-flex;
   align-items: center;
   color: var(--darkGray);
-  font-size: 1rem;
+  font-size: 15px;
   padding: 0.75rem 1rem;
-  border-radius: 9999px;
+  border-radius: 9999px; /* Zaokrąglone krawędzie */
   transition: background-color 0.2s;
   cursor: pointer;
 }

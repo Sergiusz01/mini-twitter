@@ -50,11 +50,6 @@
     width: 90%;
 }
 
-.infoButton{
-    width: 6rem;
-    height: 2rem;
-    align-items: center;
-}
 
 .authForm{
     background-color: var(--cardColor);
@@ -65,4 +60,19 @@
 .authForm > div{
     width: 100%;
     align-items: center;
+}
+.infoButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: var(--twitterBlue);
+    border: none;
+    border-radius: 9999px; /* Zaokrąglone krawędzie */
+    padding: 0.75rem 1.5rem;
+    transition: background-color 0.2s ease-in-out;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Dodanie cienia */
+    font-family: var(--font-family);
 }

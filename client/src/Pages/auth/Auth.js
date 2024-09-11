@@ -122,7 +122,7 @@ const Auth = () => {
                     </div>
 
                     {/* Przycisk wysłania formularza, z komunikatem ładowania */}
-                    <button className='button infoButton' type='submit' disabled={loading}>
+                    <button className='infoButton' type='submit' disabled={loading}>
                         {loading ? "Ładowanie..." : isSignUp ? "Zarejestruj się" : "Zaloguj się"}
                     </button>
 
