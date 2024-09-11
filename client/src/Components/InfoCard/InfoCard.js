@@ -35,7 +35,7 @@ const InfoCard = () => {
     return (
         <div className='InfoCard'>
             <div className="infoHead">
-                <h4>Profile Info</h4>
+                <h4>Informacja o profilu</h4>
 
                 {user._id === profileUserId ? (
                     <div>
@@ -65,27 +65,27 @@ const InfoCard = () => {
 
             <div className="info">
                 <span>
-                    <b>Status </b>
+                    <b>Status</b>
                 </span>
                 <span>{profileUser.relationship}</span>
             </div>
 
             <div className="info">
                 <span>
-                    <b>Lives in </b>
+                    <b>Mieszka w </b>
                 </span>
                 <span>{profileUser.livesin}</span>
             </div>
 
             <div className="info">
                 <span>
-                    <b>Works at </b>
+                    <b>Pracuje w </b>
                 </span>
                 <span>{profileUser.worksAt}</span>
             </div>
 
             <button className='button logout-button' onClick={handleLogOut}>
-                Log Out
+                Wyloguj się
             </button>
         </div>
     );
