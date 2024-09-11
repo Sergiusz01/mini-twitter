@@ -63,7 +63,7 @@ const Post = ({ data }) => {
                 <img src={Comment} alt="Comment icon" />
             </div>
 
-            <span style={{ color: "var(--gray)", fontSize: '14px' }}>{likes} likes</span>
+            <span style={{ color: "var(--gray)", fontSize: '14px' }}>{likes} Polubień</span>
         </div>
     );
 }

@@ -65,7 +65,7 @@ const PostShare = () => {
             />
 
             <div>
-                <input type="text" placeholder="Write a caption..." required ref={desc} />
+                <input type="text" placeholder="Napisz coś..." required ref={desc} />
 
                 <div className="postOptions">
                     <div
@@ -75,7 +75,7 @@ const PostShare = () => {
                     >
                         {/* Zastąpienie PhotoOutlinedIcon emoji kamery */}
                         <span role="img" aria-label="photo">📷</span>
-                        Photo
+                        Obraz
                     </div>
 
                     <button className="button ps-button" onClick={handleSubmit} disabled={loading}>
