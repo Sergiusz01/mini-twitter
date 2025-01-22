@@ -1,8 +1,0 @@
-.Home{
-    position: relative;
-    display: grid;
-    grid-template-columns: 25rem auto;
-    gap: 1.5rem; /* Zwiększone odstępy między kolumnami */
-    padding: 1rem; /* Dodanie paddingu wewnętrznego */
-
-}

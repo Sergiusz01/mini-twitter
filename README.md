@@ -1,118 +1,36 @@
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# 🌐 Mini Blog app - beta version
+## Getting Started
 
-## Opis
-
-Ten projekt to pełnostackowa aplikacja społecznościowa. Jest to platforma społecznościowa, na której możesz dzielić się postami, lajkować/odlajkować posty, obserwować/odobserwować użytkowników i wiele więcej.
-
-## Technologie
-
-### Frontend:
-
-- **React JS** - biblioteka JavaScript do budowania interfejsów użytkownika.
-- **CSS** - do stylowania aplikacji.
-- **React-Router-Dom** - narzędzie do nawigacji w aplikacji jednosstronicowej.
-- **Redux** - zarządzanie stanem aplikacji.
-
-### Backend:
-
-- **Node.js** - środowisko uruchomieniowe JavaScript na serwerze.
-- **Express.js** - framework do budowania aplikacji webowych.
-- **MongoDB** - baza danych NoSQL.
-- **Rest API** - architektura API.
-- **JWT Authentication** - JSON Web Tokens do autoryzacji użytkowników.
-
-## 🚀 Funkcje
-
-- **Rejestracja/Logowanie**: Użytkownicy mogą założyć konto lub zalogować się do istniejącego.
-- **Dodawanie postów**: Możliwość dzielenia się nowymi postami, które zawierają tekst (opis).
-- **Lajkowanie/Odlajkowanie postów**: Reakcje na posty innych użytkowników.
-- **Sugerowani użytkownicy**: Lista sugerowanych osób do obserwowania.
-- **Obserwowanie/Odobserwowanie użytkowników**: Możliwość zarządzania relacjami w platformie.
-- **Wyświetlanie liczby obserwujących/obserwowanych**: Możliwość podglądu liczby obserwujących i obserwowanych użytkowników.
-- **Wyświetlanie postów obserwowanych użytkowników**: Posty od obserwowanych użytkowników dostępne na głównej stronie.
-- **Aktualizacja profilu**: Możliwość edycji danych użytkownika i aktualizacji swojego profilu.
-
-
-
-## Wymagania
-
-Przed uruchomieniem projektu upewnij się, że masz zainstalowane następujące oprogramowanie:
-
-- [Node.js](https://nodejs.org/) - platforma do uruchamiania aplikacji JavaScript po stronie serwera.
-- [MongoDB](https://www.mongodb.com/try/download/community) 
-- [Visual Studio Code](https://code.visualstudio.com/) - edytor kodu (opcjonalnie).
-
-## Instalacja
-
-### 1. Klonowanie repozytorium
-
-Aby sklonować to repozytorium, użyj poniższej komendy w terminalu:
+First, run the development server:
 
 ```bash
-git clone https://github.com/Sergiusz01/mini-twitter.git
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-### 2. Instalacja zależności
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-#### Frontend
-Przejdź do folderu `/client` i zainstaluj wszystkie zależności:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```bash
-cd client
-npm install
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-#### Backend
-Przejdź do folderu `/server` i zainstaluj wszystkie zależności:
+## Learn More
 
-```bash
-cd server
-npm install
-```
+To learn more about Next.js, take a look at the following resources:
 
-## Uruchamianie aplikacji
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### 1. Uruchomienie MongoDB
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Upewnij się, że MongoDB działa na Twoim lokalnym komputerze 
+## Deploy on Vercel
 
-- Jeśli korzystasz z lokalnej wersji MongoDB, uruchom ją zgodnie z dokumentacją:  
-  [MongoDB - Dokumentacja](https://www.mongodb.com/docs/manual/installation/)
-  
-- Skonfiguruj swoje połączenie w pliku `.env`.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-### 2. Uruchomienie frontendu
-
-Aby uruchomić frontend, przejdź do folderu `/client` i uruchom aplikację:
-
-```bash
-npm start
-```
-
-Aplikacja frontendowa powinna być dostępna pod adresem `http://localhost:3000`.
-
-### 3. Uruchomienie backendu
-
-Aby uruchomić backend, przejdź do folderu `/server` i użyj `nodemon`:
-
-```bash
-npx nodemon
-```
-
-Backend będzie działał na porcie `http://localhost:4000`.
-
-## Dodatkowe informacje
-
-- Jeśli nie masz zainstalowanego `nodemon`, możesz go zainstalować globalnie:
-
-```bash
-npm install -g nodemon
-```
-
-- Upewnij się, że w pliku `.env` znajdują się poprawne zmienne środowiskowe (np. adres bazy danych, klucze API).
-
----
-
-
-
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
