@@ -4,6 +4,7 @@ const nextConfig = {
 		serverActions: {
 			bodySizeLimit: '1mb',
 			allowedOrigins: ['*'],
+			disableDynamicValues: true, // Ensure no dynamic values are used
 		},
 	},
 	images: {

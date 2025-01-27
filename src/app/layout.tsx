@@ -27,7 +27,7 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en">
-				<body className="bg-black-100 text-white font-lato">
+				<body className="bg-black text-white font-lato">
 					<Toaster position="bottom-center" />
 					<main className="h-full">{children}</main>
 				</body>
