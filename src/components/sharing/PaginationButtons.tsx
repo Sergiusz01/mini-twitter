@@ -46,6 +46,8 @@ const PaginationButtons = ({ currentPath, currentPage, hasNext }: Props) => {
 
 	if (!isMount) return null;
 
+	if (!hasNext && currentPage === 0) return null;
+
 	return (
 		<section className="flex justify-center items-center py-10 gap-x-5">
 			<Button
