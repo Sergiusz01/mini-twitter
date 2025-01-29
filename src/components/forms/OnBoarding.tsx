@@ -40,45 +40,39 @@ const OnBoarding = ({ initialValue }: OnBoardingProps) => {
 		},
 	});
 
-	async function onSubmit(values: z.infer<typeof userSchema>) {
-		const newDataUser = {
-			...values,
-			isCompleted: true,
-		};
-
+	const onSubmit = async (values: z.infer<typeof userSchema>) => {
 		try {
-			const data = await saveUserAction(newDataUser);
-			if (!data) {
-				return toast.error("Something went wrong!", {
-					duration: 2000,
-				});
-			}
+			const user = await saveUserAction({
+				...values,
+				isCompleted: true,
+			});
 
-			window.location.href = "/home";
+			if (user) {
+				toast("Profil został zaktualizowany pomyślnie", toastOptions);
+				window.location.href = "/home";
+			}
 		} catch (error) {
+			toast("Wystąpił błąd podczas aktualizacji profilu", toastOptions);
 			console.log("[ERROR_ONBOARDING]", error);
 		}
-	}
-
-	const isLoading = form.formState.isSubmitting;
+	};
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="flex flex-col space-y-8"
+			>
 				<FormField
 					control={form.control}
 					name="name"
 					render={({ field }) => (
 						<FormItem>
-							<Label className="font-bold" htmlFor="name">
-								Name
-							</Label>
+							<Label>Imię</Label>
 							<FormControl>
 								<Input
+									placeholder="Wprowadź swoje imię"
 									{...field}
-									id="name"
-									className="onboarding__input"
-									disabled={isLoading}
 								/>
 							</FormControl>
 							<FormMessage />
@@ -90,16 +84,11 @@ const OnBoarding = ({ initialValue }: OnBoardingProps) => {
 					name="bio"
 					render={({ field }) => (
 						<FormItem>
-							<Label htmlFor="bio" className="font-bold">
-								Bio
-							</Label>
+							<Label>Bio</Label>
 							<FormControl>
 								<Textarea
+									placeholder="Wprowadź swoje bio"
 									{...field}
-									id="bio"
-									className="onboarding__textarea"
-									disabled={isLoading}
-									rows={6}
 								/>
 							</FormControl>
 							<FormMessage />
@@ -107,12 +96,12 @@ const OnBoarding = ({ initialValue }: OnBoardingProps) => {
 					)}
 				/>
 				<Button
-					disabled={isLoading}
 					variant="primary"
+					className="w-full py-6 text-lg font-extrabold"
 					type="submit"
-					className="w-full rounded-xl"
+					disabled={form.formState.isSubmitting}
 				>
-					Continue
+					Zapisz
 				</Button>
 			</form>
 		</Form>

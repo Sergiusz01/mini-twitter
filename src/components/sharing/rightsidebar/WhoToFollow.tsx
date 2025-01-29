@@ -12,7 +12,7 @@ const WhoToFollow = ({ users, currentUser }: Props) => {
 		if (!users?.length) {
 			return (
 				<p className="text-gray-200 font-normal">
-					there are no users to follow
+					Nie ma użytkowników do zaobserwowania
 				</p>
 			);
 		}
@@ -33,7 +33,7 @@ const WhoToFollow = ({ users, currentUser }: Props) => {
 	return (
 		<section className="p-3 bg-gray-400 rounded-xl flex flex-col space-y-6">
 			<h3 className="text-xl text-gray-100 font-bold tracking-wide">
-				Who To Follow
+				Kogo obserwować
 			</h3>
 			<ul>{showUsersList()}</ul>
 		</section>

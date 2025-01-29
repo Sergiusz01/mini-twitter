@@ -11,6 +11,7 @@ import Unread from "./Unread";
 import Menu from "./Menu";
 import { usePrevious } from "@/hooks/usePrevious";
 import TweetText from "@/components/sharing/TweetText";
+import ClientOnly from "@/components/ClientOnly";
 
 interface Props {
 	dataNotification: DataNotification;
@@ -100,69 +101,71 @@ const PostNotification = ({ dataNotification, currentUsername }: Props) => {
 	if (!isMounted) return null;
 
 	return (
-		<div
-			onClick={(e) => handleNavigation(e)}
-			className={cn(
-				"notifications__component",
-				isPending && "notifications__component-disabled",
-			)}
-		>
-			<div className="flex justify-center items-center w-[40px] h-[40px]">
-				{showActivityImage(dataNotification.activityType ?? "")}
-			</div>
-			<div className="notifications__component-body">
-				<div className="flex flex-col space-y-2 flex-1">
-					<Image
-						src={
-							dataNotification.sourceUser?.imageUrl ??
-							"/assets/small-x-logo.svg"
-						}
-						alt={dataNotification.sourceUser?.username ?? "Logo Twitter"}
-						width={40}
-						height={40}
-						className="object-cover rounded-full w-[40px] h-[40px]"
-					/>
+		<ClientOnly>
+			<div
+				onClick={(e) => handleNavigation(e)}
+				className={cn(
+					"notifications__component",
+					isPending && "notifications__component-disabled",
+				)}
+			>
+				<div className="flex justify-center items-center w-[40px] h-[40px]">
+					{showActivityImage(dataNotification.activityType ?? "")}
+				</div>
+				<div className="notifications__component-body">
+					<div className="flex flex-col space-y-2 flex-1">
+						<Image
+							src={
+								dataNotification.sourceUser?.imageUrl ??
+								"/assets/small-x-logo.svg"
+							}
+							alt={dataNotification.sourceUser?.username ?? "Logo Twitter"}
+							width={40}
+							height={40}
+							className="object-cover rounded-full w-[40px] h-[40px]"
+						/>
 
-					<div className="flex justify-start items-start flex-wrap gap-x-2">
-						<h5
-							onClick={redirectToSourceId}
-							className="font-bold tracking-wide"
-						>
-							{dataNotification.sourceUser?.username}.
-						</h5>
-						<p>{showActivityText(dataNotification.activityType ?? "")}</p>∙
-						<p className="font-normal text-gray-200">
-							{customDatePost(dataNotification.createdAt.getTime())}
-						</p>
+						<div className="flex justify-start items-start flex-wrap gap-x-2">
+							<h5
+								onClick={redirectToSourceId}
+								className="font-bold tracking-wide"
+							>
+								{dataNotification.sourceUser?.username}.
+							</h5>
+							<p>{showActivityText(dataNotification.activityType ?? "")}</p>∙
+							<p className="font-normal text-gray-200">
+								{customDatePost(dataNotification.createdAt.getTime())}
+							</p>
+						</div>
+
+						<div className="flex flex-col space-y-2">
+							<p className="font-normal text-gray-200">
+								<TweetText content={renderText(
+									dataNotification.post?.text ??
+									"This post is no longer available",
+								)} />
+							</p>
+							{dataNotification.post?.imageUrl && (
+								<Image
+									src={dataNotification.post?.imageUrl}
+									alt={dataNotification.post?.text}
+									width={300}
+									height={300}
+									className="object-cover w-[50px] h-[50px]"
+								/>
+							)}
+						</div>
 					</div>
-
-					<div className="flex flex-col space-y-2">
-						<p className="font-normal text-gray-200">
-							<TweetText content={renderText(
-								dataNotification.post?.text ??
-								"This post is no longer available",
-							)} />
-						</p>
-						{dataNotification.post?.imageUrl && (
-							<Image
-								src={dataNotification.post?.imageUrl}
-								alt={dataNotification.post?.text}
-								width={300}
-								height={300}
-								className="object-cover w-[50px] h-[50px]"
-							/>
-						)}
+					<div ref={menuFeed} className="flex justify-end items-start">
+						{!dataNotification.isRead && <Unread />}
+						<Menu
+							isRead={dataNotification.isRead}
+							notificationId={dataNotification.id}
+						/>
 					</div>
 				</div>
-				<div ref={menuFeed} className="flex justify-end items-start">
-					{!dataNotification.isRead && <Unread />}
-					<Menu
-						isRead={dataNotification.isRead}
-						notificationId={dataNotification.id}
-					/>
-				</div>
 			</div>
-		</div>
+		</ClientOnly>
 	);
 };
 

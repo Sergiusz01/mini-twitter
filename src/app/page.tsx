@@ -3,6 +3,8 @@ import { currentUser } from "@clerk/nextjs/server"; // Poprawny import dla serwe
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { getUserAction, saveUserAction } from "@/actions/user.action";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function Home() {
   // Pobranie danych użytkownika z Clerk
@@ -70,12 +72,29 @@ export default async function Home() {
         {/* Sekcja główna */}
         <div className="flex flex-col space-y-4 sm:space-y-8">
           <div className="flex flex-col space-y-8 sm:space-y-16">
-            <h1 className="text-4xl sm:text-6xl font-extrabold">Happening now</h1>
+            <h1 className="text-4xl sm:text-6xl font-extrabold">Dzieje się teraz</h1>
             <h3 className="text-xl sm:text-3xl font-bold tracking-wider">
-              Join today.
+              Dołącz już dziś.
             </h3>
           </div>
-          <CreateAnAccount />
+          <div className="flex flex-col space-y-4">
+            <Link href="/sign-up" className="w-full">
+              <Button
+                variant="primary"
+                className="w-full font-bold text-lg bg-blue hover:bg-blue/90 rounded-full"
+              >
+                Utwórz konto
+              </Button>
+            </Link>
+            <Link href="/sign-in" className="w-full">
+              <Button
+                variant="outline"
+                className="w-full font-bold text-lg bg-white hover:bg-white/90 text-black border-[1px] border-gray-200 rounded-full"
+              >
+                Zaloguj się
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </main>

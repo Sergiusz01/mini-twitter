@@ -17,7 +17,7 @@ const Latest = ({ userId, tweets, queryQ, page }: Props) => {
 			const dateB = new Date(b.createdAt).getTime() as number;
 			return dateB - dateA;
 		}),
-		path = `/search?q=${queryQ}&f=latest`;
+		path = `/search?q=${queryQ}&f=najnowsze`;
 
 	return tweets?.data.length && ascendingTweets?.length ? (
 		<>

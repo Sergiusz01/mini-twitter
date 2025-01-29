@@ -1,4 +1,4 @@
-import { toggleFollowUserAction } from "@/actions/user.action";
+import { toggleFollowUserAction, removeFollowerAction } from "@/actions/user.action";
 import {
 	CopyLinkUserProps,
 	toggleFollowUserProps,
@@ -26,17 +26,21 @@ export const toggleFollowUser = ({
 
 	startTransition(() => {
 		toggleFollowUserAction({ userId, currentUserId, path });
-		followUserNotificationAction({
-			userId,
-			sourceId: currentUserId,
-			parentIdUser: currentUserId,
-			path,
-		});
+		
+		// Nie wysyłamy powiadomienia przy usuwaniu obserwującego
+		if (!followed) {
+			followUserNotificationAction({
+				userId,
+				sourceId: currentUserId,
+				parentIdUser: currentUserId,
+				path,
+			});
+		}
 	});
 
 	const message = followed
-		? `You unfollowed ${username}`
-		: `You followed ${username}`;
+		? `Przestałeś obserwować ${username}`
+		: `Zacząłeś obserwować ${username}`;
 
 	toast(message, toastOptions);
 };
@@ -53,4 +57,33 @@ export const copyLinkUser = ({ toast, username }: CopyLinkUserProps) => {
 	navigator.clipboard.writeText(`${url}/${username}`);
 
 	toast("Copied to clipboard", toastOptions);
+};
+
+/**
+ * Usuwa obserwującego użytkownika.
+ */
+export const removeFollower = ({
+	isPending,
+	startTransition,
+	toast,
+	path,
+	username,
+	followerId,
+	userId,
+}: {
+	isPending: boolean;
+	startTransition: (callback: () => void) => void;
+	toast: any;
+	path: string;
+	username: string;
+	followerId: string;
+	userId: string;
+}): void => {
+	if (isPending) return;
+
+	startTransition(() => {
+		removeFollowerAction({ followerId, userId, path });
+	});
+
+	toast(`Usunięto obserwującego ${username}`, toastOptions);
 };

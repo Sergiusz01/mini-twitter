@@ -10,11 +10,11 @@ export function cn(...inputs: ClassValue[]) {
  * Converts a given timestamp into a custom date format.
  *
  * @param {number} timestamp - The timestamp to convert.
+ * @param {number} referenceTime - The reference time to calculate the difference.
  * @return {string} The custom date format.
  */
-export function customDatePost(timestamp: number): string {
-	const now = Date.now();
-	const timeDiff = now - timestamp;
+export function customDatePost(timestamp: number, referenceTime: number = Date.now()): string {
+	const timeDiff = referenceTime - timestamp;
 
 	switch (true) {
 		case timeDiff < 60000:
@@ -45,15 +45,17 @@ export function customDatePost(timestamp: number): string {
  * @return {string} The formatted string representing the time and date.
  */
 export const formatDateTime = (Date: Date): string => {
-	const formattedTime = Date.toLocaleTimeString([], {
+	const formattedTime = new Intl.DateTimeFormat('en-US', {
 		hour: "2-digit",
 		minute: "2-digit",
-	});
-	const formattedDate = Date.toLocaleDateString([], {
+		hour12: true
+	}).format(Date);
+
+	const formattedDate = new Intl.DateTimeFormat('en-US', {
 		month: "short",
 		day: "numeric",
-		year: "numeric",
-	});
+		year: "numeric"
+	}).format(Date);
 
 	return `${formattedTime} · ${formattedDate}`;
 };
@@ -113,11 +115,15 @@ export function convertToHttps(url: string): ConvertToHttpsType {
  *
  * @return {string} The current path and search parameters.
  */
-export const getCurrentPath = (): string => {
-	const path = window.location.pathname;
-	const searchParams = window.location.search;
-
-	return `${path}${searchParams}`;
+export const getCurrentPath = (fallbackPath: string = ''): string => {
+	try {
+		if (typeof window === 'undefined') {
+			return fallbackPath;
+		}
+		return `${window.location.pathname}${window.location.search}`;
+	} catch {
+		return fallbackPath;
+	}
 };
 
 /**

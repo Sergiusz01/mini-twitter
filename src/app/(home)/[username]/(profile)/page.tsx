@@ -22,7 +22,7 @@ export const generateMetadata = async ({ params }: Props) => {
 
   if (!user) {
     return {
-      title: "Profile",
+      title: "Profil",
     };
   }
 
@@ -30,7 +30,7 @@ export const generateMetadata = async ({ params }: Props) => {
     title: `${user.name} (${user.username})`,
     openGraph: {
       title: `${user.name} (${user.username})`,
-      description: user.bio || "Check out this profile on X (formerly Twitter).",
+      description: user.bio || "Sprawdź ten profil na X (dawniej Twitter).",
       images: [user.imageUrl],
       url: `${process.env.NEXT_PUBLIC_NEXT_URL}/${user.username}`,
     },
@@ -85,8 +85,8 @@ const Page = async ({ params, searchParams }: Props) => {
     </>
   ) : (
     <NotFound
-      title="No tweets yet"
-      description={`${user.name} hasn't tweeted anything yet.`}
+      title="Brak tweetów"
+      description={`${user.name} nie opublikował(a) jeszcze żadnych tweetów.`}
     />
   );
 };

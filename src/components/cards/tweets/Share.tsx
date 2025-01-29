@@ -55,7 +55,7 @@ const Share = ({
 					}}
 				>
 					<LinkIcon className="w-4 h-4" />
-					Copy Link
+					Kopiuj link
 				</DropdownMenuItem>
 				{!isDetailTweet && (
 					<DropdownMenuItem
@@ -77,12 +77,12 @@ const Share = ({
 						{bookmark ? (
 							<>
 								<BookmarkMinus className="w-4 h-4" />
-								Delete From Bookmarks
+								Usuń z zakładek
 							</>
 						) : (
 							<>
 								<BookmarkPlus className="w-4 h-4" />
-								Bookmark
+								Dodaj do zakładek
 							</>
 						)}
 					</DropdownMenuItem>

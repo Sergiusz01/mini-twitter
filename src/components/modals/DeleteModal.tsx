@@ -7,55 +7,44 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "../ui/dialog";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+} from "@/components/ui/dialog";
 import { Button } from "../ui/button";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
 	title: string;
 	description: string;
-	ButtonAction: ReactNode;
 	isDialogOpen: boolean;
 	setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
+	ButtonAction: React.ReactNode;
 }
 
 const DeleteModal = ({
 	title,
 	description,
-	ButtonAction,
 	isDialogOpen,
 	setIsDialogOpen,
+	ButtonAction,
 }: Props) => {
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-			<DialogContent className="!w-[320px] !outline-none !border-none bg-black-100 select-none p-8 rounded-xl">
-				<section className="flex flex-col space-y-7">
-					{" "}
-					{/* Body */}
-					<DialogHeader className="flex flex-col space-y-2">
-						<DialogTitle className="font-extrabold tracking-wide text-xl">
-							{title}
-						</DialogTitle>
-						<DialogDescription className="font-normal text-gray-200 leading-5">
-							{description}
-						</DialogDescription>
-					</DialogHeader>
-					<DialogFooter className="w-full">
-						<div className="flex flex-col space-y-3 w-full">
-							{ButtonAction}
-							<Button
-								variant="ghost"
-								className="bg-transparent hover:bg-gray-300/30 hover:text-white border border-gray-200 rounded-full font-extrabold text-sm"
-								onClick={(e) => {
-									e.stopPropagation();
-									setIsDialogOpen(false);
-								}}
-							>
-								Cancel
-							</Button>
-						</div>
-					</DialogFooter>
-				</section>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>{title}</DialogTitle>
+					<DialogDescription>{description}</DialogDescription>
+				</DialogHeader>
+				<DialogFooter>
+					<div className="flex items-center gap-x-2">
+						<Button
+							variant="primary"
+							className="bg-transparent hover:bg-gray-300/30 border border-gray-200 rounded-full font-extrabold text-sm"
+							onClick={() => setIsDialogOpen(false)}
+						>
+							Anuluj
+						</Button>
+						{ButtonAction}
+					</div>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	);

@@ -6,10 +6,17 @@ import { usePathname } from "next/navigation";
 import { useTransition } from "react";
 import { cn, getCurrentPath } from "@/lib/utils";
 import { UserWithFollowers } from "@/interfaces/user.interface";
-import { toggleFollowUser } from "@/lib/user";
+import { removeFollower, toggleFollowUser } from "@/lib/user";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { usePrevious } from "@/hooks/usePrevious";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { MoreHorizontal, UserMinus } from "lucide-react";
 
 interface UsersProps {
 	username: string;
@@ -18,6 +25,7 @@ interface UsersProps {
 	userId: string;
 	bio: string | null;
 	currentUser: UserWithFollowers;
+	showRemoveButton?: boolean;
 }
 
 const UsersTwo = ({
@@ -27,6 +35,7 @@ const UsersTwo = ({
 	userId,
 	bio,
 	currentUser,
+	showRemoveButton = false,
 }: UsersProps) => {
 	const path = usePathname();
 	const { addToNavigationHistory } = usePrevious();
@@ -38,9 +47,11 @@ const UsersTwo = ({
 
 	const isFollowed = () => {
 		if (isPending) return "...";
-		if (followed) return "Unfollow";
-		return "Follow";
+		if (followed) return "Przestań obserwować";
+		return "Obserwuj";
 	};
+
+	const isOwnProfile = currentUser.id === userId;
 
 	return (
 		<section
@@ -72,30 +83,58 @@ const UsersTwo = ({
 								@{username}
 							</p>
 						</div>
-						<div>
-							<Button
-								disabled={isPending}
-								onClick={() =>
-									toggleFollowUser({
-										isPending,
-										startTransition,
-										toast,
-										path,
-										username,
-										followed,
-										userId,
-										currentUserId: currentUser.id,
-									})
-								}
-								className={cn(
-									"py-1 px-4 font-bold tracking-wide rounded-full",
-									!followed
-										? "bg-white hover:bg-white/90 text-black-100"
-										: "border border-gray-200 bg-transparent hover:border-red-500 hover:text-red-500 hover:bg-transparent",
-								)}
-							>
-								{isFollowed()}
-							</Button>
+						<div className="flex items-center gap-x-2">
+							{showRemoveButton && (
+								<DropdownMenu>
+									<DropdownMenuTrigger className="!outline-none p-1.5 border border-gray-200 rounded-full text-white hover:bg-gray-300/30">
+										<MoreHorizontal size="20" />
+									</DropdownMenuTrigger>
+									<DropdownMenuContent side="bottom" align="end">
+										<DropdownMenuItem
+											onClick={() =>
+												removeFollower({
+													isPending,
+													startTransition,
+													toast,
+													path,
+													username,
+													followerId: userId,
+													userId: currentUser.id,
+												})
+											}
+											className="text-red-500 focus:text-red-500"
+										>
+											<UserMinus size="20" />
+											Usuń obserwującego
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							)}
+							{!isOwnProfile && (
+								<Button
+									disabled={isPending}
+									onClick={() =>
+										toggleFollowUser({
+											isPending,
+											startTransition,
+											toast,
+											path,
+											username,
+											followed,
+											userId,
+											currentUserId: currentUser.id,
+										})
+									}
+									className={cn(
+										"py-1 px-4 font-bold tracking-wide rounded-full",
+										!followed
+											? "bg-white hover:bg-white/90 text-black-100"
+											: "border border-gray-200 bg-transparent hover:border-red-500 hover:text-red-500 hover:bg-transparent",
+									)}
+								>
+									{isFollowed()}
+								</Button>
+							)}
 						</div>
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useTweetModal } from "@/hooks/useTweetModal";
 import CreateTweetForm from "../forms/createtweetform/CreateTweetForm";
 import { useReplyTweet } from "@/hooks/useReplyTweet";
@@ -27,6 +27,7 @@ const CreateTweetModal = ({ userId, imageUrl }: Props) => {
 		<Dialog open={isOpen} onOpenChange={onOpenChangeDialog}>
 			<DialogContent className="!outline-none !border-none bg-black-100 w-full select-none">
 				<DialogHeader>
+					<DialogTitle className="sr-only">Utwórz tweet</DialogTitle>
 					<Button
 						variant="icon"
 						size="icon"

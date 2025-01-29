@@ -45,8 +45,8 @@ const UserProfile = ({ user, isMyProfile, currentUser }: Props) => {
 
 	const isFollowed = () => {
 		if (isPending) return "...";
-		if (followed) return "Unfollow";
-		return "Follow";
+		if (followed) return "Przestań obserwować";
+		return "Obserwuj";
 	};
 
 	// Components
@@ -96,7 +96,7 @@ const UserProfile = ({ user, isMyProfile, currentUser }: Props) => {
 				)}
 				<p className="font-normal text-gray-200 flex items-center gap-x-1">
 					<CalendarDays size="18" />
-					Joined {months[month]} {year}
+					Dołączył(a) {months[month]} {year}
 				</p>
 			</div>
 		);
@@ -120,7 +120,7 @@ const UserProfile = ({ user, isMyProfile, currentUser }: Props) => {
 								}
 							>
 								<LinkIcon size="20" />
-								Copy link to profile
+								Kopiuj link do profilu
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
@@ -159,14 +159,14 @@ const UserProfile = ({ user, isMyProfile, currentUser }: Props) => {
 					className="py-2 px-4 font-bold tracking-wide rounded-full bg-transparent hover:bg-gray-300/30 border border-gray-200 text-sm max-md:hidden md:block"
 					onClick={() => setIsOpen(true)}
 				>
-					Edit Profile
+					Edytuj profil
 				</Button>
 				{/* Mobile */}
 				<Link
 					className="py-2 px-4 font-bold tracking-wide rounded-full bg-transparent hover:bg-gray-300/30 border border-gray-200 text-sm max-md:block md:hidden"
 					href="/settings/profile"
 				>
-					Edit Profile
+					Edytuj profil
 				</Link>
 			</div>
 		);
@@ -178,12 +178,16 @@ const UserProfile = ({ user, isMyProfile, currentUser }: Props) => {
 
 		return (
 			<div className="flex items-center gap-x-5">
-				<p className="font-normal flex gap-x-2">
-					{totalFollowers} <span className="text-gray-200">Followers</span>
-				</p>
-				<p className="font-normal flex gap-x-2">
-					{totalFollowings} <span className="text-gray-200">Followings</span>
-				</p>
+				<Link href={`/${user.username}/followers`} className="hover:underline">
+					<p className="font-normal flex gap-x-2">
+						{totalFollowers} <span className="text-gray-200">Obserwujących</span>
+					</p>
+				</Link>
+				<Link href={`/${user.username}/following`} className="hover:underline">
+					<p className="font-normal flex gap-x-2">
+						{totalFollowings} <span className="text-gray-200">Obserwowanych</span>
+					</p>
+				</Link>
 			</div>
 		);
 	};

@@ -2,7 +2,7 @@ import { getTweetsAction } from "@/actions/tweet.action";
 import { getUserAction, getUserByUsernameAction } from "@/actions/user.action";
 import NotFound from "@/components/sharing/404";
 import Tweets from "@/components/cards/tweets/Tweets";
-import { currentUser as clerkCurrentUser } from "@clerk/nextjs";
+import { currentUser as clerkCurrentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { isValidPage } from "@/lib/utils";
 import PaginationButtons from "@/components/sharing/PaginationButtons";
@@ -22,14 +22,14 @@ export const generateMetadata = async ({ params }: Props) => {
 
 	if (!user) {
 		return {
-			title: "Profile",
+			title: "Profil",
 		};
 	}
 
 	return {
-		title: `Posts with replies by ${user.name} (${user.username})`,
+		title: `Posty z odpowiedziami użytkownika ${user.name} (${user.username})`,
 		openGraph: {
-			title: `Posts with replies by ${user.name} (${user.username})`,
+			title: `Posty z odpowiedziami użytkownika ${user.name} (${user.username})`,
 		},
 	};
 };

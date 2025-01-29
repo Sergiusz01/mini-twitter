@@ -14,7 +14,7 @@ interface Props {
 }
 
 const People = ({ currentUser, people, queryQ, page }: Props) => {
-	const path = `/search?q=${queryQ}&f=people`;
+	const path = `/search?q=${queryQ}&f=ludzie`;
 
 	return people?.data.length ? (
 		<>
@@ -38,8 +38,8 @@ const People = ({ currentUser, people, queryQ, page }: Props) => {
 		</>
 	) : (
 		<NotFound
-			title={`No results for users "${queryQ}"`}
-			description="Try searching for something else"
+			title={`Brak wyników dla użytkowników "${queryQ}"`}
+			description="Spróbuj wyszukać coś innego"
 		/>
 	);
 };

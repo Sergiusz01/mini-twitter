@@ -50,11 +50,11 @@ const Page = async () => {
           <Image
             width={35}
             height={35}
-            alt="X Logo"
+            alt="Logo X"
             src="/assets/small-x-logo.svg"
             className="object-contain"
           />
-          <Logout>Log Out</Logout>
+          <Logout>Wyloguj się</Logout>
         </div>
       </nav>
 
@@ -62,10 +62,10 @@ const Page = async () => {
       <section className="max-w-4xl mx-auto px-3 flex justify-center mt-20 lg:px-0 font-lato">
         <div className="w-full max-w-[500px] flex flex-col space-y-10">
           <div className="text-center flex flex-col space-y-2 items-center max-w-[450px] mx-auto">
-            <h1 className="text-3xl font-extrabold tracking-wide">Welcome.</h1>
+            <h1 className="text-3xl font-extrabold tracking-wide">Witaj.</h1>
             <p className="font-normal text-gray-100">
-              Let's take a moment to complete your profile so we can provide you
-              with a better and more personalized experience on our platform.
+              Poświęćmy chwilę na uzupełnienie Twojego profilu, abyśmy mogli
+              zapewnić Ci lepsze i bardziej spersonalizowane doświadczenie na naszej platformie.
             </p>
           </div>
           {/* Formularz onboardingu */}

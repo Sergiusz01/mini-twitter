@@ -73,7 +73,7 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 
 		// if file size greather then 1mb, return alert
 		if (file.size > maxSizeInBytes) {
-			toast.error("Maximum Size Image 1MB", { duration: 2000 });
+			toast.error("Maksymalny rozmiar zdjęcia to 1MB", { duration: 2000 });
 			return;
 		}
 
@@ -112,7 +112,7 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 			// validations
 			const isValidURL = isURL(values.website);
 			if (values.website && !isValidURL) {
-				toast("Url Is Not Valid", toastOptions);
+				toast("Nieprawidłowy adres URL", toastOptions);
 				return;
 			}
 
@@ -200,7 +200,7 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 				<nav className="sticky top-0 z-10 bg-black/80 backdrop-blur p-4 flex justify-between items-center">
 					<div className="flex items-center max-sm:gap-x-2 sm:gap-x-8">
 						{showCloseOrPrevButton()}
-						<h2 className="font-bold tracking-wide text-xl">Edit Profile</h2>
+						<h2 className="font-bold tracking-wide text-xl">Edytuj profil</h2>
 					</div>
 					<div>
 						<Button
@@ -209,7 +209,7 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 							className="py-1.5 px-4 font-bold tracking-wide rounded-full bg-white hover:bg-white/90 text-sm text-black"
 							variant="primary"
 						>
-							Save
+							Zapisz
 						</Button>
 					</div>
 				</nav>

@@ -2,10 +2,11 @@ import { getTweetsAction } from "@/actions/tweet.action";
 import { getUserAction, getUserByUsernameAction } from "@/actions/user.action";
 import NotFound from "@/components/sharing/NotFound";
 import Tweets from "@/components/cards/tweets/Tweets";
-import { currentUser as clerkCurrentUser } from "@clerk/nextjs";
+import { currentUser as clerkCurrentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { isValidPage } from "@/lib/utils";
 import PaginationButtons from "@/components/sharing/PaginationButtons";
+import React from "react";
 
 interface Props {
 	params: {
@@ -22,14 +23,14 @@ export const generateMetadata = async ({ params }: Props) => {
 
 	if (!user) {
 		return {
-			title: "Profile",
+			title: "Profil",
 		};
 	}
 
 	return {
-		title: `Posts with liked by ${user.name} (${user.username})`,
+		title: `Posty polubione przez ${user.name} (${user.username})`,
 		openGraph: {
-			title: `Posts with liked by ${user.name} (${user.username})`,
+			title: `Posty polubione przez ${user.name} (${user.username})`,
 		},
 	};
 };
@@ -61,14 +62,14 @@ const Page = async ({ params, searchParams }: Props) => {
 	 *
 	 * @return {JSX.Element} The JSX element of the NotFound component.
 	 */
-	const savePostsForLater = (): JSX.Element => {
+	const savePostsForLater = (): React.ReactElement => {
 		const isSameUserId = currentUser.id === user.id;
 		const title = isSameUserId
-			? "You don’t have any likes yet"
-			: `@${user.username} hasn’t`;
+			? "Nie masz jeszcze żadnych polubień"
+			: `@${user.username} nie ma jeszcze polubień`;
 		const description = isSameUserId
-			? "Tap the heart on any post to show it some love. When you do, it’ll show up here.."
-			: "When they do, those posts will show up here.";
+			? "Kliknij serduszko na dowolnym poście, aby okazać uznanie. Gdy to zrobisz, post pojawi się tutaj."
+			: "Gdy pojawią się polubienia, posty będą wyświetlane tutaj.";
 
 		return <NotFound title={title} description={description} />;
 	};

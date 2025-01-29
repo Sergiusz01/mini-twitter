@@ -15,14 +15,29 @@ const Tab = ({ title }: TabProps) => {
 	const queryQ = searchParams?.get("q");
 	const queryF = searchParams?.get("f");
 
-	const currentPathIsTop = title === "Top" && !queryF;
+	const currentPathIsTop = title === "Popularne" && !queryF;
 	const isSamePath = title.toLowerCase() === queryF?.toLowerCase();
+
+	const getTabParam = (title: string) => {
+		switch (title) {
+			case "Popularne":
+				return "popularne";
+			case "Najnowsze":
+				return "najnowsze";
+			case "Ludzie":
+				return "ludzie";
+			case "Media":
+				return "media";
+			default:
+				return title.toLowerCase();
+		}
+	};
 
 	const optionLink = {
 		pathname: "/search",
 		query: {
 			q: queryQ,
-			f: title.toLowerCase(),
+			f: getTabParam(title),
 		},
 	};
 
@@ -50,9 +65,9 @@ const Tabs = () => {
 	return (
 		<section className="border-b border-gray-300">
 			<ul className="flex items-center justify-evenly">
-				<Tab title="Top" />
-				<Tab title="Latest" />
-				<Tab title="People" />
+				<Tab title="Popularne" />
+				<Tab title="Najnowsze" />
+				<Tab title="Ludzie" />
 				<Tab title="Media" />
 			</ul>
 		</section>

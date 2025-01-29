@@ -44,8 +44,8 @@ const Users = ({
 
 	const isFollowed = () => {
 		if (isPending) return "...";
-		if (followed) return "Unfollow";
-		return "Follow";
+		if (followed) return "Przestań obserwować";
+		return "Obserwuj";
 	};
 
 	const redirectToProfilePage = () => {
@@ -87,7 +87,7 @@ const Users = ({
 					{followed && (
 						<p className="font-normal text-gray-200 flex items-center gap-x-1">
 							<User size={14} />
-							Following
+							Obserwujesz
 						</p>
 					)}
 				</div>

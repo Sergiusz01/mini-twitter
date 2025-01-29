@@ -75,7 +75,7 @@ const Menu = ({
 						}}
 					>
 						<ChevronsRight className="w-4 h-4" />
-						Go To Post
+						Przejdź do posta
 					</DropdownMenuItem>
 					{isOwnTweet ? (
 						<DropdownMenuItem
@@ -90,7 +90,7 @@ const Menu = ({
 							disabled={isPendingTweet}
 						>
 							<Trash className="w-4 h-4" />
-							Delete
+							Usuń
 						</DropdownMenuItem>
 					) : (
 						<DropdownMenuItem
@@ -116,7 +116,7 @@ const Menu = ({
 								? <UserX2 className="w-4 h-4" />
 								: <UserPlus2 className="w-4 h-4" />}
 							<p className="flex items-center gap-x-2">
-								{followed ? "Unfollow" : "Follow"}
+								{followed ? "Przestań obserwować" : "Obserwuj"}
 								<span className="max-w-[80px] overflow-hidden whitespace-nowrap text-ellipsis">
 									@{username}
 								</span>
@@ -127,8 +127,8 @@ const Menu = ({
 			</DropdownMenu>
 
 			<DeleteModal
-				title="Delete post?"
-				description="This can’t be undone and it will be removed from your profile, the timeline of any accounts that follow you, and from search results. "
+				title="Usunąć post?"
+				description="Tej operacji nie można cofnąć. Post zostanie usunięty z Twojego profilu, z osi czasu osób, które Cię obserwują oraz z wyników wyszukiwania."
 				ButtonAction={
 					<Button
 						variant="primary"
@@ -136,7 +136,7 @@ const Menu = ({
 						onClick={deleteTweetHandler}
 						disabled={isPendingTweet}
 					>
-						Delete
+						Usuń
 					</Button>
 				}
 				isDialogOpen={isDialogOpen}

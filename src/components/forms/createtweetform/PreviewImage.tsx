@@ -26,7 +26,7 @@ const PreviewImage = ({ previewImage, setPreviewImage }: Props) => {
 				</div>
 				<Image
 					src={previewImage}
-					alt="Preview Image"
+					alt="Podgląd zdjęcia"
 					width={600}
 					height={300}
 					className="object-contain rounded-xl"

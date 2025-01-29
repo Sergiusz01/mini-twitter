@@ -25,9 +25,27 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<ClerkProvider>
-			<html lang="en">
-				<body className="bg-black text-white font-lato">
+		<ClerkProvider
+			localization={{
+				signIn: {
+					start: {
+						title: "Zaloguj się",
+						subtitle: "aby kontynuować"
+					}
+				},
+				signUp: {
+					start: {
+						title: "Utwórz konto",
+						subtitle: "aby kontynuować"
+					}
+				},
+				userButton: {
+					action__signOut: "Wyloguj się"
+				}
+			}}
+		>
+			<html lang="en" suppressHydrationWarning>
+				<body className="bg-black text-white font-lato" suppressHydrationWarning>
 					<Toaster position="bottom-center" />
 					<main className="h-full">{children}</main>
 				</body>

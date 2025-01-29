@@ -3,7 +3,12 @@
 import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
 
-const NotFound = () => {
+interface NotFoundProps {
+	title?: string;
+	description?: string;
+}
+
+const NotFound = ({ title = "Nie znaleziono", description = "Nie znaleziono żądanego zasobu." }: NotFoundProps) => {
 	return (
 		<div className="p-3 space-y-20">
 			<div>
@@ -17,15 +22,14 @@ const NotFound = () => {
 				</Button>
 			</div>
 			<div className="flex items-center justify-start flex-col space-y-4">
-				<p className="text-gray-200 font-normal">
-					Hmm...this page doesn’t exist. Try searching for something else.
-				</p>
+				<h2 className="text-2xl font-bold">{title}</h2>
+				<p className="text-gray-600">{description}</p>
 				<Button
 					variant="primary"
 					className="py-0"
 					onClick={() => (window.location.href = "/explore")}
 				>
-					Search
+					Szukaj
 				</Button>
 			</div>
 		</div>

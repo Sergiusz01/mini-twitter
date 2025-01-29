@@ -12,7 +12,7 @@ const CreateAnAccount = () => {
 			onClick={() => router.push("/sign-in")}
 			className="font-extrabold text-sm"
 		>
-			Create Account
+			Utwórz konto
 		</Button>
 	);
 };

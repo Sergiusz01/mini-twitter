@@ -277,3 +277,37 @@ export const toggleFollowUserAction = async ({
 		revalidatePath(path);
 	}
 };
+
+/**
+ * Usuwa obserwującego użytkownika.
+ * @param followerId - ID użytkownika, który ma zostać usunięty z obserwujących
+ * @param userId - ID użytkownika, który usuwa obserwującego
+ */
+export const removeFollowerAction = async ({
+	followerId,
+	userId,
+	path,
+}: {
+	followerId: string;
+	userId: string;
+	path: string;
+}) => {
+	try {
+		const existingFollower = await prisma.follower.findFirst({
+			where: {
+				followerId: followerId,
+				followingId: userId,
+			},
+		});
+
+		if (existingFollower) {
+			return await prisma.follower.delete({
+				where: { id: existingFollower.id },
+			});
+		}
+	} catch (error) {
+		console.log("[ERROR_REMOVE_FOLLOWER_ACTION]", error);
+	} finally {
+		revalidatePath(path);
+	}
+};

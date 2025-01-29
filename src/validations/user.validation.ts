@@ -5,13 +5,13 @@ export const userSchema = z.object({
 	name: z
 		.string()
 		.min(1, {
-			message: "name required",
+			message: "Imię jest wymagane",
 		})
 		.max(30, {
-			message: "maximum character is 30",
+			message: "Maksymalna długość to 30 znaków",
 		}),
 	bio: z.string().max(255, {
-		message: "maximum character is 255",
+		message: "Maksymalna długość to 255 znaków",
 	}),
 });
 
@@ -22,18 +22,18 @@ export const editUserSchema = z.object({
 	name: z
 		.string()
 		.min(1, {
-			message: "name can't be blank",
+			message: "Imię nie może być puste",
 		})
 		.max(30, {
-			message: "maximum character is 30",
+			message: "Maksymalna długość to 30 znaków",
 		}),
 	bio: z.string().max(255, {
-		message: "maximum character is 255",
+		message: "Maksymalna długość to 255 znaków",
 	}),
 	location: z.string().max(30, {
-		message: "maximum character is 30",
+		message: "Maksymalna długość to 30 znaków",
 	}),
 	website: z.string().max(100, {
-		message: "maximum character is 100",
+		message: "Maksymalna długość to 100 znaków",
 	}),
 });

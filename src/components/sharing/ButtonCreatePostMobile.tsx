@@ -39,7 +39,7 @@ const ButtonCreatePostMobile = ({ isMobile, dataTweet }: Props) => {
 			>
 				<Image
 					src="/assets/create-tweet.svg"
-					alt="Tweet Icon"
+					alt="Ikona tweeta"
 					width={40}
 					height={40}
 					className="object-contain"

@@ -53,9 +53,9 @@ const Tabs = ({ username }: TabsProps) => {
 	return (
 		<section className="max-sm:mt-8 sm:mt-12 border-b border-gray-300">
 			<ul className="flex items-center justify-evenly">
-				<Tab title="Posts" href={`/${username}`} path={path} />
-				<Tab title="Replies" href={`/${username}/with_replies`} path={path} />
-				<Tab title="Likes" href={`/${username}/likes`} path={path} />
+				<Tab title="Posty" href={`/${username}`} path={path} />
+				<Tab title="Odpowiedzi" href={`/${username}/with_replies`} path={path} />
+				<Tab title="Polubienia" href={`/${username}/likes`} path={path} />
 			</ul>
 		</section>
 	);

@@ -78,7 +78,7 @@ const CreateTweetForm = ({
 		const maxSizeInBytes = 2 * 1024 * 1024;
 		if (!file) return;
 
-		if (file.size > maxSizeInBytes) return toast(`Maximum Size Image 2MB`);
+		if (file.size > maxSizeInBytes) return toast(`Maksymalny rozmiar zdjęcia to 2MB`);
 
 		setFile(file);
 		const previewPhoto = URL.createObjectURL(file);
@@ -149,13 +149,13 @@ const CreateTweetForm = ({
 	};
 
 	const showTextSubmitButton = () => {
-		if (!dataTweet) return "Post";
-		if (isReply) return "Reply";
+		if (!dataTweet) return "Opublikuj";
+		if (isReply) return "Odpowiedz";
 	};
 
 	const showTextPlaceholder = () => {
-		if (!dataTweet) return "What is happening?";
-		if (isReply) return "Post your reply";
+		if (!dataTweet) return "Co się dzieje?";
+		if (isReply) return "Napisz swoją odpowiedź";
 	};
 
 	return (
@@ -178,7 +178,7 @@ const CreateTweetForm = ({
 				<section className="flex items-start justify-start gap-x-5 w-full">
 					<Image
 						src={imageUrl}
-						alt="User Profile"
+						alt="Zdjęcie profilowe"
 						width={35}
 						height={35}
 						priority
