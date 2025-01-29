@@ -135,6 +135,7 @@ export async function getTweetsAction({
 			user: {
 				followers: isFollowing ? { some: { followingId: userId } } : undefined,
 			},
+			userId: !isFollowing && !isProfile && !isBookmarks && !isLikes ? { not: userId } : undefined,
 		} as WhereFilter;
 
 		if (isBookmarks) {
