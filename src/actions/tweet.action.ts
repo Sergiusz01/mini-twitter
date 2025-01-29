@@ -103,7 +103,7 @@ export async function getTweetAction(id: string): Promise<GetTweetActionType> {
  * Retrieves tweets based on the provided parameters.
  *
  * @param {GetTweetsActionProps} param - The parameters for retrieving tweets.
- * @param {number} param.size - The number of tweets to retrieve per page. Default is 30.
+ * @param {number} param.size - The number of tweets to retrieve per page. Default is 20.
  * @param {number} param.page - The page number of tweets to retrieve. Default is 0.
  * @param {string} param.userId - The ID of the user whose tweets are being retrieved.
  * @param {boolean} param.isFollowing - Whether to retrieve tweets from users that the specified user is following. Default is false.
@@ -115,7 +115,7 @@ export async function getTweetAction(id: string): Promise<GetTweetActionType> {
  * @return {Promise<GetTweetsActionType>} - A promise that resolves to the retrieved tweets.
  */
 export async function getTweetsAction({
-	size = 30,
+	size = 20,
 	page = 0,
 	userId,
 	isFollowing = false,
@@ -158,37 +158,53 @@ export async function getTweetsAction({
 			};
 		}
 
-		const data = await prisma.thread.findMany({
-			where: whereFilter,
-			include: {
-				user: {
-					select: {
-						id: true,
-						imageUrl: true,
-						name: true,
-						username: true,
-						followers: true,
-						followings: true,
+		const [data, totalCount] = await Promise.all([
+			prisma.thread.findMany({
+				where: whereFilter,
+				include: {
+					user: {
+						select: {
+							id: true,
+							imageUrl: true,
+							name: true,
+							username: true,
+							followers: true,
+							followings: true,
+						},
+					},
+					bookmarks: {
+						where: { userId },
+						select: { 
+							id: true,
+							userId: true,
+							threadId: true,
+						},
+					},
+					likes: {
+						where: { userId },
+						select: { 
+							id: true,
+							userId: true,
+							threadId: true,
+						},
+					},
+					_count: {
+						select: {
+							replies: true,
+						},
 					},
 				},
-				bookmarks: true,
-				likes: true,
-				_count: {
-					select: {
-						replies: true,
-					},
+				orderBy: {
+					createdAt: "desc",
 				},
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-			skip,
-			take: size,
-		});
+				skip,
+				take: size,
+			}),
+			prisma.thread.count({
+				where: whereFilter,
+			}),
+		]);
 
-		const totalCount = await prisma.thread.count({
-			where: whereFilter,
-		});
 		const hasNext = Boolean(totalCount - skip - data.length);
 
 		return {

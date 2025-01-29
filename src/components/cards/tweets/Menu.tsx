@@ -64,8 +64,10 @@ const Menu = ({
 	return (
 		<>
 			<DropdownMenu>
-				<DropdownMenuTrigger className="!outline-none text-gray-200 bg-transparent hover:bg-blue/20 hover:text-blue transition p-2 rounded-full">
-					<MoreHorizontal className="w-5 h-5" />
+				<DropdownMenuTrigger asChild>
+					<div className="!outline-none text-gray-200 bg-transparent hover:bg-blue/20 hover:text-blue transition p-2 rounded-full cursor-pointer">
+						<MoreHorizontal className="w-5 h-5" />
+					</div>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent side="bottom" align="end">
 					<DropdownMenuItem

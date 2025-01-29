@@ -73,6 +73,10 @@ model Thread {
   likes         Like[]         @relation("PostLikes")
   bookmarks     Bookmark[]
   notifications Notification[] @relation("PostNotifications")
+
+  @@index([userId])
+  @@index([parentId])
+  @@index([createdAt])
 }
 
 model Like {
