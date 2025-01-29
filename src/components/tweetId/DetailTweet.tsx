@@ -1,6 +1,6 @@
 "use client";
 
-import { DataTweet, DetailTweet } from "@/interfaces/tweet.interface";
+import { DataTweet, type DetailTweet } from "@/interfaces/tweet.interface";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -113,14 +113,14 @@ const DetailTweet = ({ tweet, userId }: Props) => {
 						userId={tweet.user.id}
 						currentUserId={userId}
 						threadId={tweet.id}
-						totalLikes={tweet.likes.length}
+						totalLikes={tweet._count.likes}
 					/>
 					<Bookmark
 						userId={userId}
 						path={pathname}
 						threadId={tweet.id}
 						bookmark={bookmark!}
-						totalBookmarks={tweet.bookmarks.length}
+						totalBookmarks={tweet._count.bookmarks}
 					/>
 					<Share
 						path={pathname}

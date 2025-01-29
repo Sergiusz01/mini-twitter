@@ -126,7 +126,7 @@ const Tweets = ({ tweet, userId }: Props) => {
 							userId={tweet.user.id}
 							currentUserId={userId}
 							threadId={tweet.id}
-							totalLikes={tweet.likes.length}
+							totalLikes={tweet._count.likes}
 						/>
 						<div className="flex-1 flex justify-end">
 							<Share

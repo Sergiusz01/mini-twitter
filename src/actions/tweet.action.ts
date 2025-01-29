@@ -90,6 +90,8 @@ export async function getTweetAction(id: string): Promise<GetTweetActionType> {
 				_count: {
 					select: {
 						replies: true,
+						likes: true,
+						bookmarks: true,
 					},
 				},
 			},
@@ -191,6 +193,8 @@ export async function getTweetsAction({
 					_count: {
 						select: {
 							replies: true,
+							likes: true,
+							bookmarks: true,
 						},
 					},
 				},

@@ -16,6 +16,8 @@ export interface DetailTweet extends Thread {
 	bookmarks: Bookmark[];
 	_count: {
 		replies: number;
+		likes: number;
+		bookmarks: number;
 	};
 }
 
