@@ -1,6 +1,6 @@
 import { getUserAction } from "@/actions/user.action";
 import ShowCreateTweetForm from "@/components/compose/tweet/ShowCreateTweetForm";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 const Page = async () => {

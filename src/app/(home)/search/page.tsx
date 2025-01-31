@@ -7,7 +7,7 @@ import Tabs from "@/components/search/Tabs";
 import Top from "@/components/search/Top";
 import NotFound from "@/components/sharing/NotFound";
 import { isValidPage } from "@/lib/utils";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 

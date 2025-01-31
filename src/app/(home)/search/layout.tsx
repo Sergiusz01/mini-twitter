@@ -1,7 +1,7 @@
 import { getUserAction } from "@/actions/user.action";
 import Topbar from "@/components/search/Topbar";
 import Loading from "@/components/sharing/Loading";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { ReactNode, Suspense } from "react";
 

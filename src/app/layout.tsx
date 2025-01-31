@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 
@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 		template: "%s / X",
 	},
 	metadataBase: new URL(process.env.NEXT_PUBLIC_NEXT_URL!),
-	themeColor: "black",
 	openGraph: {
 		title: {
 			default: "X",
@@ -17,6 +16,10 @@ export const metadata: Metadata = {
 		},
 		siteName: "X (formerly Twitter)",
 	},
+};
+
+export const viewport: Viewport = {
+	themeColor: "black",
 };
 
 export default function RootLayout({
@@ -44,7 +47,7 @@ export default function RootLayout({
 				}
 			}}
 		>
-			<html lang="en" suppressHydrationWarning>
+			<html lang="pl" suppressHydrationWarning>
 				<body className="bg-black text-white font-lato" suppressHydrationWarning>
 					<Toaster position="bottom-center" />
 					<main className="h-full">{children}</main>

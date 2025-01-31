@@ -1,6 +1,6 @@
 import { getUserAction } from "@/actions/user.action";
 import EditProfileForm from "@/components/forms/EditProfileForm";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 

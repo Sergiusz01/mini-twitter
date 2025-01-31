@@ -14,8 +14,7 @@ interface Props {
 }
 
 const Page = async ({ searchParams }: Props) => {
-  const { page: qPage } = searchParams;
-  const page = isValidPage(qPage); // Walidacja strony (domyślnie 1)
+  const page = isValidPage(searchParams?.page); // Walidacja strony (domyślnie 1)
 
   // Pobranie zalogowanego użytkownika
   const clerkUser = await currentUser();
@@ -51,7 +50,10 @@ const Page = async ({ searchParams }: Props) => {
           />
         </>
       ) : (
-        <NotFound description="No posts can be displayed" />
+        <NotFound
+          title="Witaj w X"
+          description="To jest najlepszy moment, aby dołączyć do konwersacji. Zacznij obserwować innych, aby zobaczyć ich tweety tutaj."
+        />
       )}
     </>
   );
