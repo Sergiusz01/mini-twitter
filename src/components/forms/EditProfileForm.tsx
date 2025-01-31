@@ -86,45 +86,63 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 		const formData = new FormData();
 		formData.append("file", file!);
 		formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!);
+		formData.append("api_key", process.env.CLOUDINARY_API_KEY!);
+		formData.append("timestamp", String(Math.round(new Date().getTime() / 1000)));
 
-		const response = await axios.post(
-			`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
-			formData,
-		);
+		try {
+			const response = await axios.post(
+				`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
+				formData
+			);
 
-		const isStatus200 = response.status === 200;
-		if (!isStatus200) return;
+			if (response.status !== 200) {
+				toast.error("Błąd podczas przesyłania zdjęcia", { duration: 2000 });
+				return null;
+			}
 
-		return response.data.url;
+			return response.data.url;
+		} catch (error) {
+			console.error("[ERROR_UPLOAD_FILE]", error);
+			toast.error("Błąd podczas przesyłania zdjęcia", { duration: 2000 });
+			return null;
+		}
 	}
 
 	async function onSubmit(values: z.infer<typeof editUserSchema>) {
 		try {
 			if (previewBannerUrl) {
 				const bannerUrl = await uploadFile(fileBannerUrl!);
+				if (!bannerUrl) return;
 				values.bannerUrl = bannerUrl;
 			}
 			if (previewImageUrl) {
 				const imageUrl = await uploadFile(fileImageUrl!);
+				if (!imageUrl) return;
 				values.imageUrl = imageUrl;
 			}
 
 			// validations
 			const isValidURL = isURL(values.website);
 			if (values.website && !isValidURL) {
-				toast("Nieprawidłowy adres URL", toastOptions);
+				toast.error("Nieprawidłowy adres URL", toastOptions);
 				return;
 			}
 
-			const responsed = await updateUserAction({
+			const response = await updateUserAction({
 				...values,
 				path,
 			});
 
-			// isModal? close
-			if (isModal && setIsOpen) setIsOpen(false);
+			if (response) {
+				toast.success("Profil został zaktualizowany", { duration: 2000 });
+				// isModal? close
+				if (isModal && setIsOpen) setIsOpen(false);
+			} else {
+				toast.error("Wystąpił błąd podczas aktualizacji profilu", { duration: 2000 });
+			}
 		} catch (error: any) {
-			console.log("[ERROR_CREATE_TWEET_FORM]", error.message);
+			console.error("[ERROR_SUBMIT_PROFILE_FORM]", error.message);
+			toast.error("Wystąpił błąd podczas aktualizacji profilu", { duration: 2000 });
 		}
 	}
 
