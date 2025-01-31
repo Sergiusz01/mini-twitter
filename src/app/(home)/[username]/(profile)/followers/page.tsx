@@ -15,7 +15,7 @@ interface Props {
 	};
 }
 
-export const generateMetadata = async ({ params }: Props) => {
+export const generateMetadata = async ({ params }: { params: { username: string } }) => {
 	const { username } = params;
 	const user = await getUserByUsernameAction(username);
 
