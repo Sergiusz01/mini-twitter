@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.10.6",
@@ -31,7 +32,6 @@
     "mysql": "^2.18.1",
     "next": "^15.1.5",
     "postcss": "^8.5.1",
-    "prisma": "^6.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.5",
@@ -53,6 +53,7 @@
     "@types/react-dom": "^19.0.3",
     "@types/validator": "^13.12.2",
     "prettier": "^3.4.2",
+    "prisma": "^6.2.1",
     "typescript": "^5.7.3"
   }
 }
