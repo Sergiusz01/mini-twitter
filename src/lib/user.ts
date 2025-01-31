@@ -53,10 +53,17 @@ export const toggleFollowUser = ({
  * @param {string} props.username - The username to be included in the link.
  */
 export const copyLinkUser = ({ toast, username }: CopyLinkUserProps) => {
-	const url = process.env.NEXT_PUBLIC_NEXT_URL;
-	navigator.clipboard.writeText(`${url}/${username}`);
+	try {
+		if (!username) throw new Error("username required");
 
-	toast("Copied to clipboard", toastOptions);
+		const url = process.env.NEXT_PUBLIC_NEXT_URL || 'https://mini-twitter-sergiusz01.vercel.app';
+		navigator.clipboard.writeText(`${url}/${username}`);
+
+		toast("Copied to clipboard", toastOptions);
+	} catch (error) {
+		console.error("Error copying link:", error);
+		toast("Error copying link", toastOptions);
+	}
 };
 
 /**

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 		default: "X",
 		template: "%s / X",
 	},
-	metadataBase: new URL(process.env.NEXT_PUBLIC_NEXT_URL!),
+	metadataBase: new URL(process.env.NEXT_PUBLIC_NEXT_URL || 'https://mini-twitter-sergiusz01.vercel.app'),
 	openGraph: {
 		title: {
 			default: "X",

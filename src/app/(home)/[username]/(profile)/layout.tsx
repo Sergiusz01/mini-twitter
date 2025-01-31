@@ -34,7 +34,7 @@ export const generateMetadata = async ({ params }: Props) => {
       type: "profile",
       images: [user.imageUrl],
       siteName: "X (formerly Twitter)",
-      url: `${process.env.NEXT_PUBLIC_NEXT_URL}/${user.username}`,
+      url: `${process.env.NEXT_PUBLIC_NEXT_URL || 'https://mini-twitter-sergiusz01.vercel.app'}/${user.username}`,
     },
   };
 };

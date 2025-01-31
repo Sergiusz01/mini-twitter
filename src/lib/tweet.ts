@@ -90,10 +90,17 @@ export const copyLinkTweet = ({
 	username,
 	tweetId,
 }: CopyLinkTweetProps) => {
-	const url = process.env.NEXT_PUBLIC_NEXT_URL;
-	navigator.clipboard.writeText(`${url}/${username}/status/${tweetId}`);
+	try {
+		if (!username || !tweetId) throw new Error("username and tweetId required");
 
-	toast("Copied to clipboard", toastOptions);
+		const url = process.env.NEXT_PUBLIC_NEXT_URL || 'https://mini-twitter-sergiusz01.vercel.app';
+		navigator.clipboard.writeText(`${url}/${username}/status/${tweetId}`);
+
+		toast("Copied to clipboard", toastOptions);
+	} catch (error) {
+		console.error("Error copying link:", error);
+		toast("Failed to copy link", toastOptions);
+	}
 };
 
 /**

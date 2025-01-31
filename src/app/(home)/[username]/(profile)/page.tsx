@@ -32,7 +32,7 @@ export const generateMetadata = async ({ params }: Props) => {
       title: `${user.name} (${user.username})`,
       description: user.bio || "Sprawdź ten profil na X (dawniej Twitter).",
       images: [user.imageUrl],
-      url: `${process.env.NEXT_PUBLIC_NEXT_URL}/${user.username}`,
+      url: `${process.env.NEXT_PUBLIC_NEXT_URL || 'https://mini-twitter-sergiusz01.vercel.app'}/${user.username}`,
     },
   };
 };
