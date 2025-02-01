@@ -14,6 +14,7 @@ export interface DetailTweet extends Thread {
 	user: User;
 	likes: Like[];
 	bookmarks: Bookmark[];
+	parentId: string | null;
 	_count: {
 		replies: number;
 		likes: number;

@@ -8,6 +8,7 @@ import { formatDateTime } from "@/lib/utils";
 import { renderText } from "@/lib/tweet";
 import { Share, Bookmark, Like, Menu, Comment } from "../cards/tweets";
 import TweetText from "../sharing/TweetText";
+import { useRouter } from "next/navigation";
 
 interface Props {
 	tweet: DetailTweet;
@@ -16,6 +17,7 @@ interface Props {
 
 const DetailTweet = ({ tweet, userId }: Props) => {
 	const pathname = usePathname();
+	const router = useRouter();
 	const [isMounted, setIsMounted] = useState(false);
 	const liked = tweet.likes.find((like) => like.userId === userId);
 	const followed = tweet.user.followers.find(
@@ -63,6 +65,17 @@ const DetailTweet = ({ tweet, userId }: Props) => {
 
 	return (
 		<section className="flex flex-col py-4 px-4 space-y-4">
+			{tweet.parentId && (
+				<p className="text-sm text-gray-200">
+					Odpowiedź do{" "}
+					<span
+						className="text-blue hover:underline cursor-pointer"
+						onClick={() => router.push(`/${tweet.user.username}`)}
+					>
+						@{tweet.user.username}
+					</span>
+				</p>
+			)}
 			<section className="flex items-center justify-between gap-x-10">
 				<div className="flex items-start justify-start gap-x-4">
 					<Image

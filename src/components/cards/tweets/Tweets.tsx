@@ -65,17 +65,36 @@ const Tweets = ({ tweet, userId }: Props) => {
 				redirectToDetailPost();
 			}}
 		>
-			<div className="flex items-start jsutify-start rounded-full overflow-hidden">
-				<Image
-					src={tweet.user.imageUrl}
-					alt={tweet.user.name}
-					width={35}
-					height={35}
-					priority
-					className="object-cover rounded-full w-[35px] h-[35px]"
-				/>
+			<div className="flex flex-col items-start">
+				<div className="flex items-start jsutify-start rounded-full overflow-hidden">
+					<Image
+						src={tweet.user.imageUrl}
+						alt={tweet.user.name}
+						width={35}
+						height={35}
+						priority
+						className="object-cover rounded-full w-[35px] h-[35px]"
+					/>
+				</div>
+				{tweet.parentId && (
+					<div className="flex-1 w-[2px] bg-gray-300 ml-[17px] mt-2" />
+				)}
 			</div>
 			<div className="flex-1 flex flex-col space-y-4">
+				{tweet.parentId && (
+					<p className="text-sm text-gray-200">
+						Odpowiedź do{" "}
+						<span
+							className="text-blue hover:underline cursor-pointer"
+							onClick={(e) => {
+								e.stopPropagation();
+								router.push(`/${tweet.user.username}`);
+							}}
+						>
+							@{tweet.user.username}
+						</span>
+					</p>
+				)}
 				<section className="flex-1 flex justify-between">
 					<div className="flex-1 flex flex-col space-y-3">
 						<div className="flex-1 flex items-center flex-wrap gap-x-2">
