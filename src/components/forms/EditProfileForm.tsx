@@ -119,11 +119,13 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 				const bannerUrl = await uploadFile(fileBannerUrl!);
 				if (!bannerUrl) return;
 				values.bannerUrl = bannerUrl;
+				console.log("Nowy banner URL:", bannerUrl);
 			}
 			if (previewImageUrl) {
 				const imageUrl = await uploadFile(fileImageUrl!);
 				if (!imageUrl) return;
 				values.imageUrl = imageUrl;
+				console.log("Nowy profil URL:", imageUrl);
 			}
 
 			// validations
@@ -139,9 +141,11 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 			});
 
 			if (response) {
+				console.log("Zaktualizowany użytkownik:", response);
 				toast.success("Profil został zaktualizowany", { duration: 2000 });
-				// isModal? close
 				if (isModal && setIsOpen) setIsOpen(false);
+				// Odświeżamy stronę, aby zobaczyć zmiany
+				window.location.reload();
 			} else {
 				toast.error("Wystąpił błąd podczas aktualizacji profilu", { duration: 2000 });
 			}
@@ -174,14 +178,16 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 
 	function showBannerUrl() {
 		if (previewBannerUrl || user.bannerUrl) {
+			const imageUrl = previewBannerUrl || user.bannerUrl || '';
+			console.log("Wyświetlany banner URL:", imageUrl);
 			return (
 				<Image
-					// @ts-ignore i don't like this shit error
-					src={previewBannerUrl || user.bannerUrl}
+					src={imageUrl}
 					alt={user.username}
 					width={600}
 					height={193}
 					className="h-[193px] object-cover w-full brightness-50"
+					unoptimized
 				/>
 			);
 		}
@@ -285,6 +291,7 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 										width={112}
 										height={112}
 										className="object-cover max-sm:w-[90px] max-sm:h-[90px] sm:h-[112px] sm:w-[112px] rounded-full select-none border-4 border-black bg-gray-200"
+										unoptimized
 									/>
 									<Label
 										htmlFor="image-url"
