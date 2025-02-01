@@ -2,7 +2,7 @@
 const nextConfig = {
 	experimental: {
 		serverActions: {
-			bodySizeLimit: '1mb',
+			bodySizeLimit: '5mb',
 			allowedOrigins: ['*'],
 			disableDynamicValues: true, // Ensure no dynamic values are used
 		},

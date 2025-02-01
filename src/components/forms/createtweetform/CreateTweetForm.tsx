@@ -75,10 +75,10 @@ const CreateTweetForm = ({
 		if (!files.length) return;
 
 		const file = files[0];
-		const maxSizeInBytes = 2 * 1024 * 1024;
+		const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
 		if (!file) return;
 
-		if (file.size > maxSizeInBytes) return toast(`Maksymalny rozmiar zdjęcia to 2MB`);
+		if (file.size > maxSizeInBytes) return toast(`Maksymalny rozmiar zdjęcia to 5MB`);
 
 		setFile(file);
 		const previewPhoto = URL.createObjectURL(file);

@@ -68,12 +68,12 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 		if (!files.length) return;
 
 		const file = files[0];
-		const maxSizeInBytes = 1 * 1024 * 1024; // 1mb
+		const maxSizeInBytes = 5 * 1024 * 1024; // 5mb
 		if (!file) return;
 
-		// if file size greather then 1mb, return alert
+		// if file size greather then 5mb, return alert
 		if (file.size > maxSizeInBytes) {
-			toast.error("Maksymalny rozmiar zdjęcia to 1MB", { duration: 2000 });
+			toast.error("Maksymalny rozmiar zdjęcia to 5MB", { duration: 2000 });
 			return;
 		}
 
