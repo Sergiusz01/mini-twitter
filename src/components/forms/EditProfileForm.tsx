@@ -83,24 +83,29 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 	};
 
 	async function uploadFile(file: File) {
-		const formData = new FormData();
-		formData.append("file", file!);
-		formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!);
-		formData.append("api_key", process.env.CLOUDINARY_API_KEY!);
-		formData.append("timestamp", String(Math.round(new Date().getTime() / 1000)));
+		if (!file) return null;
 
 		try {
-			const response = await axios.post(
-				`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
-				formData
+			const formData = new FormData();
+			formData.append("file", file);
+			formData.append("upload_preset", "ml_default");
+
+			const response = await fetch(
+				"https://api.cloudinary.com/v1_1/drjmdbnhm/image/upload",
+				{
+					method: "POST",
+					body: formData
+				}
 			);
 
-			if (response.status !== 200) {
+			if (!response.ok) {
+				console.error("[CLOUDINARY_ERROR] Upload failed", await response.text());
 				toast.error("Błąd podczas przesyłania zdjęcia", { duration: 2000 });
 				return null;
 			}
 
-			return response.data.url;
+			const data = await response.json();
+			return data.secure_url;
 		} catch (error) {
 			console.error("[ERROR_UPLOAD_FILE]", error);
 			toast.error("Błąd podczas przesyłania zdjęcia", { duration: 2000 });
