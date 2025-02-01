@@ -166,7 +166,7 @@ export async function getTweetsAction({
 			const userReplies = await prisma.thread.findMany({
 				where: {
 					userId,
-					replyToId: {
+					parentId: {
 						not: null
 					}
 				},
@@ -179,6 +179,29 @@ export async function getTweetsAction({
 							username: true,
 							followers: true,
 							followings: true,
+						},
+					},
+					parent: {
+						include: {
+							user: {
+								select: {
+									id: true,
+									imageUrl: true,
+									name: true,
+									username: true,
+									followers: true,
+									followings: true,
+								},
+							},
+							likes: true,
+							bookmarks: true,
+							_count: {
+								select: {
+									replies: true,
+									likes: true,
+									bookmarks: true,
+								},
+							},
 						},
 					},
 					likes: true,
@@ -200,7 +223,7 @@ export async function getTweetsAction({
 
 			// Get IDs of parent tweets
 			const parentIds = userReplies
-				.map(reply => reply.replyToId)
+				.map(reply => reply.parentId)
 				.filter((id): id is string => id !== null);
 
 			// Fetch parent tweets
@@ -236,7 +259,7 @@ export async function getTweetsAction({
 			const totalCount = await prisma.thread.count({
 				where: {
 					userId,
-					replyToId: {
+					parentId: {
 						not: null
 					}
 				}
