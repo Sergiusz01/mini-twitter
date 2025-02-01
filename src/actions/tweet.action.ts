@@ -6,6 +6,7 @@ import {
 	ToggleLikeActionProps,
 	ToggleBookmarkActionProps,
 	GetTweetsBySearchActionProps,
+	DetailTweet,
 } from "@/interfaces/tweet.interface";
 import prisma from "@/lib/prismadb";
 import {
@@ -134,10 +135,11 @@ export async function getTweetsAction({
 
 		const whereFilter = {
 			parentId: isReplies ? { not: null } : parentId ? parentId : null,
+			userId: isReplies ? userId : undefined,
 			user: {
 				followers: isFollowing ? { some: { followingId: userId } } : undefined,
 			},
-		} as any;
+		} as WhereFilter;
 
 		if (isBookmarks) {
 			whereFilter.bookmarks = {
@@ -159,6 +161,103 @@ export async function getTweetsAction({
 			};
 		}
 
+		if (isReplies) {
+			// First, get all replies by the user
+			const userReplies = await prisma.thread.findMany({
+				where: {
+					userId,
+					replyToId: {
+						not: null
+					}
+				},
+				include: {
+					user: {
+						select: {
+							id: true,
+							imageUrl: true,
+							name: true,
+							username: true,
+							followers: true,
+							followings: true,
+						},
+					},
+					likes: true,
+					bookmarks: true,
+					_count: {
+						select: {
+							replies: true,
+							likes: true,
+							bookmarks: true,
+						},
+					},
+				},
+				orderBy: {
+					createdAt: "desc",
+				},
+				skip,
+				take: size,
+			});
+
+			// Get IDs of parent tweets
+			const parentIds = userReplies
+				.map(reply => reply.replyToId)
+				.filter((id): id is string => id !== null);
+
+			// Fetch parent tweets
+			const parentTweets = parentIds.length > 0 ? await prisma.thread.findMany({
+				where: {
+					id: {
+						in: parentIds
+					}
+				},
+				include: {
+					user: {
+						select: {
+							id: true,
+							imageUrl: true,
+							name: true,
+							username: true,
+							followers: true,
+							followings: true,
+						},
+					},
+					likes: true,
+					bookmarks: true,
+					_count: {
+						select: {
+							replies: true,
+							likes: true,
+							bookmarks: true,
+						},
+					},
+				},
+			}) : [];
+
+			const totalCount = await prisma.thread.count({
+				where: {
+					userId,
+					replyToId: {
+						not: null
+					}
+				}
+			});
+
+			// Combine and process tweets
+			const combinedTweets = [...userReplies, ...parentTweets].map(tweet => ({
+				...tweet,
+				_count: {
+					replies: tweet._count?.replies || 0,
+					likes: tweet._count?.likes || 0,
+					bookmarks: tweet._count?.bookmarks || 0,
+				},
+			}));
+
+			return {
+				data: combinedTweets as unknown as DetailTweet[],
+				hasNext: Boolean(totalCount - skip - userReplies.length),
+			};
+		}
+
 		const [data, totalCount] = await Promise.all([
 			prisma.thread.findMany({
 				where: whereFilter,
@@ -173,22 +272,8 @@ export async function getTweetsAction({
 							followings: true,
 						},
 					},
-					bookmarks: {
-						where: { userId },
-						select: { 
-							id: true,
-							userId: true,
-							threadId: true,
-						},
-					},
-					likes: {
-						where: { userId },
-						select: { 
-							id: true,
-							userId: true,
-							threadId: true,
-						},
-					},
+					likes: true,
+					bookmarks: true,
 					_count: {
 						select: {
 							replies: true,
@@ -208,11 +293,18 @@ export async function getTweetsAction({
 			}),
 		]);
 
-		const hasNext = Boolean(totalCount - skip - data.length);
+		const processedData = data.map(tweet => ({
+			...tweet,
+			_count: {
+				replies: tweet._count?.replies || 0,
+				likes: tweet._count?.likes || 0,
+				bookmarks: tweet._count?.bookmarks || 0,
+			},
+		}));
 
 		return {
-			data,
-			hasNext,
+			data: processedData as unknown as DetailTweet[],
+			hasNext: Boolean(totalCount - skip - data.length),
 		};
 	} catch (error) {
 		console.log("[GET_TWEETS_ACTION]", error);
