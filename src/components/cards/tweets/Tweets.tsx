@@ -111,6 +111,7 @@ const Tweets = ({ tweet, userId }: Props) => {
 								height={300}
 								loading="lazy"
 								className="object-contain rounded-xl"
+								unoptimized
 							/>
 						)}
 					</section>

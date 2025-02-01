@@ -51,6 +51,7 @@ const DetailTweet = ({ tweet, userId }: Props) => {
 				height={300}
 				loading="lazy"
 				className="object-contain rounded-xl w-full"
+				unoptimized
 			/>
 		);
 	};

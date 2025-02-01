@@ -30,6 +30,7 @@ const PreviewImage = ({ previewImage, setPreviewImage }: Props) => {
 					width={600}
 					height={300}
 					className="object-contain rounded-xl"
+					unoptimized
 				/>
 			</div>
 		)
