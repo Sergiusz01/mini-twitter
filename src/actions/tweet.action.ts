@@ -295,6 +295,29 @@ export async function getTweetsAction({
 							followings: true,
 						},
 					},
+					parent: {
+						include: {
+							user: {
+								select: {
+									id: true,
+									imageUrl: true,
+									name: true,
+									username: true,
+									followers: true,
+									followings: true,
+								},
+							},
+							likes: true,
+							bookmarks: true,
+							_count: {
+								select: {
+									replies: true,
+									likes: true,
+									bookmarks: true,
+								},
+							},
+						},
+					},
 					likes: true,
 					bookmarks: true,
 					_count: {

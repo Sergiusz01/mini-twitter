@@ -65,14 +65,14 @@ const DetailTweet = ({ tweet, userId }: Props) => {
 
 	return (
 		<section className="flex flex-col py-4 px-4 space-y-4">
-			{tweet.parentId && (
+			{tweet.parentId && tweet.parent && (
 				<p className="text-sm text-gray-200">
 					Odpowiedź do{" "}
 					<span
 						className="text-blue hover:underline cursor-pointer"
-						onClick={() => router.push(`/${tweet.user.username}`)}
+						onClick={() => router.push(`/${tweet.parent?.user.username}`)}
 					>
-						@{tweet.user.username}
+						@{tweet.parent.user.username}
 					</span>
 				</p>
 			)}

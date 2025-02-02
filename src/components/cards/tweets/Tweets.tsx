@@ -81,17 +81,17 @@ const Tweets = ({ tweet, userId }: Props) => {
 				)}
 			</div>
 			<div className="flex-1 flex flex-col space-y-4">
-				{tweet.parentId && (
+				{tweet.parentId && tweet.parent && (
 					<p className="text-sm text-gray-200">
 						Odpowiedź do{" "}
 						<span
 							className="text-blue hover:underline cursor-pointer"
 							onClick={(e) => {
 								e.stopPropagation();
-								router.push(`/${tweet.user.username}`);
+								router.push(`/${tweet.parent?.user.username}`);
 							}}
 						>
-							@{tweet.user.username}
+							@{tweet.parent.user.username}
 						</span>
 					</p>
 				)}
