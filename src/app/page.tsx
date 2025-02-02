@@ -50,24 +50,33 @@ export default async function Home() {
     <main className="max-w-4xl mx-auto h-full grid place-items-center p-5 sm:p-12 lg:p-0">
       <section className="w-full h-full md:h-fit flex flex-col md:flex-row justify-center md:justify-between space-y-24 md:space-y-0">
         {/* Logo dla mobilnych */}
-        <div className="flex md:hidden">
-          <Image
-            src="/assets/small-x-logo.svg"
-            alt="X Logo"
-            width={40}
-            height={40}
-            className="object-contain"
-          />
+        <div className="flex md:hidden items-center justify-center">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/assets/large-x-logo.svg"
+              alt="Akademik Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+            />
+            <span className="text-2xl font-bold">Akademik</span>
+          </div>
         </div>
         {/* Logo dla desktopowych */}
-        <div className="hidden md:flex">
-          <Image
-            src="/assets/large-x-logo.svg"
-            alt="X Logo"
-            width={300}
-            height={300}
-            className="object-contain"
-          />
+        <div className="hidden md:flex flex-col items-start gap-4">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/assets/large-x-logo.svg"
+              alt="Akademik Logo"
+              width={60}
+              height={60}
+              className="object-contain"
+            />
+            <span className="text-4xl font-bold">Akademik</span>
+          </div>
+          <p className="text-gray-200 text-xl">
+            Miejsce spotkań studentów
+          </p>
         </div>
         {/* Sekcja główna */}
         <div className="flex flex-col space-y-4 sm:space-y-8">
