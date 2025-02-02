@@ -72,9 +72,9 @@ export default async function Home() {
         {/* Sekcja główna */}
         <div className="flex flex-col space-y-4 sm:space-y-8">
           <div className="flex flex-col space-y-8 sm:space-y-16">
-            <h1 className="text-4xl sm:text-6xl font-extrabold">Dzieje się teraz</h1>
+            <h1 className="text-4xl sm:text-6xl font-extrabold">Witaj w Akademiku!</h1>
             <h3 className="text-xl sm:text-3xl font-bold tracking-wider">
-              Dołącz już dziś.
+              Twoja studencka przestrzeń do dzielenia się wiedzą i doświadczeniami.
             </h3>
           </div>
           <div className="flex flex-col space-y-4">
@@ -83,7 +83,7 @@ export default async function Home() {
                 variant="primary"
                 className="w-full font-bold text-lg bg-blue hover:bg-blue/90 rounded-full"
               >
-                Utwórz konto
+                Dołącz do społeczności
               </Button>
             </Link>
             <Link href="/sign-in" className="w-full">
