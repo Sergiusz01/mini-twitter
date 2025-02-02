@@ -143,9 +143,12 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 			if (response) {
 				console.log("Zaktualizowany użytkownik:", response);
 				toast.success("Profil został zaktualizowany", { duration: 2000 });
-				if (isModal && setIsOpen) setIsOpen(false);
-				// Odświeżamy stronę, aby zobaczyć zmiany
-				window.location.reload();
+				if (isModal && setIsOpen) {
+					setIsOpen(false);
+				} else {
+					// Odświeżamy stronę tylko jeśli nie jesteśmy w trybie modalnym
+					window.location.reload();
+				}
 			} else {
 				toast.error("Wystąpił błąd podczas aktualizacji profilu", { duration: 2000 });
 			}
