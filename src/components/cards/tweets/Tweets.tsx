@@ -4,11 +4,14 @@ import { DataTweet, DetailTweet } from "@/interfaces/tweet.interface";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { customDatePost, getCurrentPath } from "@/lib/utils";
+import { customDatePost, getCurrentPath, extractYouTubeId, extractSpotifyUrl, extractGithubUrl } from "@/lib/utils";
 import { renderText } from "@/lib/tweet";
 import { Like, Share, Comment, Menu } from "./";
 import TweetText from "@/components/sharing/TweetText";
 import { usePrevious } from "@/hooks/usePrevious";
+import YouTubeEmbed from "@/components/sharing/YouTubeEmbed";
+import SpotifyEmbed from "@/components/sharing/SpotifyEmbed";
+import GithubEmbed from "@/components/sharing/GithubEmbed";
 
 interface Props {
 	tweet: DetailTweet;
@@ -46,6 +49,10 @@ const Tweets = ({ tweet, userId }: Props) => {
 		tweet.createdAt && customDatePost(tweet.createdAt.getTime());
 
 	const isOwnTweet = tweet.userId === userId;
+
+	const youtubeId = extractYouTubeId(tweet.text);
+	const spotifyUrl = extractSpotifyUrl(tweet.text);
+	const githubUrl = extractGithubUrl(tweet.text);
 
 	const redirectToDetailPost = () => {
 		addToNavigationHistory(getCurrentPath());
@@ -145,6 +152,9 @@ const Tweets = ({ tweet, userId }: Props) => {
 								unoptimized
 							/>
 						)}
+						{youtubeId && <YouTubeEmbed videoId={youtubeId} />}
+						{spotifyUrl && <SpotifyEmbed spotifyUrl={spotifyUrl} />}
+						{githubUrl && <GithubEmbed githubUrl={githubUrl} />}
 					</section>
 
 					<section className="flex items-center gap-x-10">

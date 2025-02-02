@@ -50,8 +50,11 @@ const Page = async ({ params, searchParams }: Props) => {
 	const user = await getUserByUsernameAction(username);
 	if (!user) return <NotFound />;
 
+	// Sprawdzamy, czy przeglądamy własny profil
+	const isOwnProfile = currentUser.id === user.id;
+
 	let tweets = await getTweetsAction({
-		userId: user.id,
+		userId: isOwnProfile ? currentUser.id : user.id,
 		isProfile: true,
 		isLikes: true,
 		page,
@@ -79,7 +82,7 @@ const Page = async ({ params, searchParams }: Props) => {
 	) : (
 		<>
 			{tweets?.data.map((tweet) => (
-				<Tweets key={tweet.id} tweet={tweet} userId={user.id} />
+				<Tweets key={tweet.id} tweet={tweet} userId={currentUser.id} />
 			))}
 
 			<PaginationButtons

@@ -23,8 +23,8 @@ const Tabs = ({ title, href }: TabsProps) => {
 
 	// Initial Value
 	useEffect(() => {
-		if (path === "/home/following") tabsPosts.setStatus("Following");
-		else tabsPosts.setStatus("For You");
+		if (path === "/home/following") tabsPosts.setStatus("Obserwowani");
+		else tabsPosts.setStatus("Dla Ciebie");
 	}, [path]);
 
 	const isTitleEqualToStatus = title === tabsPosts.status;
@@ -57,25 +57,26 @@ const Topbar = ({ user }: TopbarProps) => {
 					<div className="relative z-10">
 						<MobileSidebar user={user} />
 					</div>
-					<div className="absolute left-0 top-0 right-0 z-0 flex justify-center">
+					<div className="fixed left-0 right-0 z-0 flex justify-center">
 						<Image
 							src="/assets/small-x-logo.svg"
 							alt="X Logo"
 							width={30}
 							height={30}
-							className="object-contain w-[30px] h-[30px]"
+							className="object-contain w-[30px] h-[30px] cursor-pointer"
+							onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 						/>
 					</div>
 				</div>
 				<h2 className="font-bold tracking-wide text-xl max-sm:hidden sm:block">
-					Home
+					Globalna Dyskusja
 				</h2>
 				{/* Dekstop */}
 			</div>
 
 			<div className="flex justify-evenly">
-				<Tabs title="For You" href="/home" />
-				<Tabs title="Following" href="/home/following" />
+				<Tabs title="Dla Ciebie" href="/home" />
+				<Tabs title="Obserwowani" href="/home/following" />
 			</div>
 		</nav>
 	);

@@ -4,11 +4,14 @@ import { DataTweet, type DetailTweet } from "@/interfaces/tweet.interface";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime, extractYouTubeId, extractSpotifyUrl, extractGithubUrl } from "@/lib/utils";
 import { renderText } from "@/lib/tweet";
 import { Share, Bookmark, Like, Menu, Comment } from "../cards/tweets";
 import TweetText from "../sharing/TweetText";
 import { useRouter } from "next/navigation";
+import YouTubeEmbed from "@/components/sharing/YouTubeEmbed";
+import SpotifyEmbed from "@/components/sharing/SpotifyEmbed";
+import GithubEmbed from "@/components/sharing/GithubEmbed";
 
 interface Props {
 	tweet: DetailTweet;
@@ -42,6 +45,10 @@ const DetailTweet = ({ tweet, userId }: Props) => {
 
 	const isOwnTweet = tweet.userId === userId;
 
+	const youtubeId = extractYouTubeId(tweet.text);
+	const spotifyUrl = extractSpotifyUrl(tweet.text);
+	const githubUrl = extractGithubUrl(tweet.text);
+
 	const displayTweetImage = () => {
 		if (!tweet.imageUrl) return null;
 
@@ -56,6 +63,21 @@ const DetailTweet = ({ tweet, userId }: Props) => {
 				unoptimized
 			/>
 		);
+	};
+
+	const displayYouTubeVideo = () => {
+		if (!youtubeId) return null;
+		return <YouTubeEmbed videoId={youtubeId} />;
+	};
+
+	const displaySpotifyEmbed = () => {
+		if (!spotifyUrl) return null;
+		return <SpotifyEmbed spotifyUrl={spotifyUrl} />;
+	};
+
+	const displayGithubEmbed = () => {
+		if (!githubUrl) return null;
+		return <GithubEmbed githubUrl={githubUrl} />;
 	};
 
 	useEffect(() => {
@@ -112,6 +134,9 @@ const DetailTweet = ({ tweet, userId }: Props) => {
 				<div className="flex flex-col space-y-3">
 					<TweetText content={renderText(tweet.text)} />
 					{displayTweetImage()}
+					{displayYouTubeVideo()}
+					{displaySpotifyEmbed()}
+					{displayGithubEmbed()}
 					<p className="font-normal text-gray-200">
 						{formatDateTime(tweet.createdAt)}
 					</p>

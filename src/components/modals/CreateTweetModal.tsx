@@ -27,7 +27,7 @@ const CreateTweetModal = ({ userId, imageUrl }: Props) => {
 		<Dialog open={isOpen} onOpenChange={onOpenChangeDialog}>
 			<DialogContent className="!outline-none !border-none bg-black-100 w-full select-none">
 				<DialogHeader>
-					<DialogTitle className="sr-only">Utwórz tweet</DialogTitle>
+					<DialogTitle>Utwórz post</DialogTitle>
 					<Button
 						variant="icon"
 						size="icon"

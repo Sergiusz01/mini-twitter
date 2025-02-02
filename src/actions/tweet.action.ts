@@ -149,7 +149,7 @@ export async function getTweetsAction({
 			};
 		}
 
-		if (isProfile) {
+		if (isProfile && !isLikes) {
 			whereFilter.userId = userId;
 		}
 
@@ -159,6 +159,21 @@ export async function getTweetsAction({
 					userId,
 				},
 			};
+			delete whereFilter.userId;
+
+			// Oznaczamy powiadomienia o polubieniach jako przeczytane
+			if (isProfile) {
+				await prisma.notification.updateMany({
+					where: {
+						userId,
+						activityType: "Like",
+						isRead: false
+					},
+					data: {
+						isRead: true
+					}
+				});
+			}
 		}
 
 		if (isReplies) {

@@ -45,19 +45,17 @@ export function customDatePost(timestamp: number, referenceTime: number = Date.n
  * @return {string} The formatted string representing the time and date.
  */
 export const formatDateTime = (Date: Date): string => {
-	const formattedTime = new Intl.DateTimeFormat('en-US', {
+	const formattedTime = new Intl.DateTimeFormat('pl-PL', {
 		hour: "2-digit",
 		minute: "2-digit",
-		hour12: true
+		hour12: false
 	}).format(Date);
 
-	const formattedDate = new Intl.DateTimeFormat('en-US', {
-		month: "short",
-		day: "numeric",
-		year: "numeric"
-	}).format(Date);
+	const day = Date.getDate();
+	const month = months[Date.getMonth()].toLowerCase();
+	const year = Date.getFullYear();
 
-	return `${formattedTime} · ${formattedDate}`;
+	return `${formattedTime} · ${day} ${month} ${year}`;
 };
 
 export const toastOptions = {
@@ -69,18 +67,18 @@ export const toastOptions = {
 };
 
 export const months = [
-	"January",
-	"February",
-	"March",
-	"April",
-	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November",
-	"December",
+	"Styczeń",
+	"Luty",
+	"Marzec",
+	"Kwiecień",
+	"Maj",
+	"Czerwiec",
+	"Lipiec",
+	"Sierpień",
+	"Wrzesień",
+	"Październik",
+	"Listopad",
+	"Grudzień",
 ];
 
 /**
@@ -137,4 +135,38 @@ export const isValidPage = (qPage: string): number => {
 
 	if (page < 0 || isNaN(page)) return 0;
 	return page;
+};
+
+/**
+ * Wyodrębnia ID filmu z linku YouTube
+ * @param text Tekst zawierający link do YouTube
+ * @returns ID filmu lub null jeśli nie znaleziono linku
+ */
+export const extractYouTubeId = (text: string): string | null => {
+	const patterns = [
+		/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&\s]+)/,
+		/(?:https?:\/\/)?(?:www\.)?youtu\.be\/([^\s]+)/,
+		/(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^\s]+)/
+	];
+
+	for (const pattern of patterns) {
+		const match = text.match(pattern);
+		if (match && match[1]) {
+			return match[1];
+		}
+	}
+
+	return null;
+};
+
+export const extractSpotifyUrl = (text: string): string | null => {
+	const spotifyRegex = /https:\/\/open\.spotify\.com\/(track|album|playlist)\/[a-zA-Z0-9]+/;
+	const match = text.match(spotifyRegex);
+	return match ? match[0] : null;
+};
+
+export const extractGithubUrl = (text: string): string | null => {
+	const githubRegex = /https?:\/\/(?:www\.)?github\.com\/[^/\s]+\/[^/\s]+(?:\/(?:blob|tree)\/[^/\s]+\/[^/\s]+)?/;
+	const match = text.match(githubRegex);
+	return match ? match[0] : null;
 };

@@ -62,7 +62,7 @@ model Notification {
 
 model Thread {
   id            String         @id @default(uuid())
-  text          String         @db.Char(255)
+  text          String         @db.VarChar(500)
   parentId      String?
   userId        String
   imageUrl      String?

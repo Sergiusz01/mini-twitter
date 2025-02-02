@@ -35,10 +35,10 @@ const MobileSidebar = ({ user }: Props) => {
     return (
       <div className="flex items-center gap-x-5">
         <p className="font-normal flex gap-x-2">
-          {totalFollowers} <span className="text-gray-200">Followers</span>
+          {totalFollowers} <span className="text-gray-200">Obserwatorzy</span>
         </p>
         <p className="font-normal flex gap-x-2">
-          {totalFollowings} <span className="text-gray-200">Followings</span>
+          {totalFollowings} <span className="text-gray-200">Obserwowani</span>
         </p>
       </div>
     );
@@ -106,16 +106,18 @@ const MobileSidebar = ({ user }: Props) => {
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1" className="border-none">
           <AccordionTrigger className="border-none hover:no-underline hover:bg-black-200 px-3 font-bold tracking-wide">
-            Settings And Supports
+            Więcej
           </AccordionTrigger>
           <AccordionContent>
             <SignOutButton>
+
               <p className="flex items-center gap-x-3 text-base p-3 hover:bg-black-200">
                 <LogOut className="w-5 h-5" />
-                Log out
+                Wyloguj się
               </p>
             </SignOutButton>
           </AccordionContent>
+
         </AccordionItem>
       </Accordion>
     );

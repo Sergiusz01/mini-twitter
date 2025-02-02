@@ -139,12 +139,12 @@ const PostNotification = ({ dataNotification, currentUsername }: Props) => {
 						</div>
 
 						<div className="flex flex-col space-y-2">
-							<p className="font-normal text-gray-200">
+							<div className="font-normal text-gray-200">
 								<TweetText content={renderText(
 									dataNotification.post?.text ??
 									"This post is no longer available",
 								)} />
-							</p>
+							</div>
 							{dataNotification.post?.imageUrl && (
 								<Image
 									src={dataNotification.post?.imageUrl}

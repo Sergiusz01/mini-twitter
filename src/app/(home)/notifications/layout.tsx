@@ -37,13 +37,14 @@ const Layout = async ({ children }: Props) => {
   }
 
   // Pobranie liczby nieprzeczytanych powiadomień
-  const totalUnreadNotifications = await getTotalNotificationsAction(user.id);
+  const totalUnreadNotifications = await getTotalNotificationsAction(user.id) ?? 0;
 
   return (
     <>
       <Topbar
         userId={user.id}
-        totalUnreadNotifications={totalUnreadNotifications ?? 0} // Bezpieczna obsługa wartości null/undefined
+        totalUnreadNotifications={totalUnreadNotifications}
+        shouldMarkAsRead={totalUnreadNotifications > 0}
       />
       <Suspense fallback={<Loading />}>
         {children}

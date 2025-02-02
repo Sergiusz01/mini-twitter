@@ -1,7 +1,5 @@
 export const links = [
 	{
-		icon: "/assets/small-x-logo.svg",
-		activeIcon: "/assets/small-x-logo.svg",
 		title: "X Logo",
 		href: "/home",
 	},

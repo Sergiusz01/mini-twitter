@@ -56,7 +56,10 @@ const Layout = async ({ children }: Props) => {
         </section>
         <RightSidebar users={users?.data!} user={user} />
       </section>
-      <Bottombar username={user.username} />
+      <Bottombar 
+        username={user.username} 
+        totalUnreadNotifications={totalUnreadNotifications ?? 0}
+      />
     </main>
   );
 };

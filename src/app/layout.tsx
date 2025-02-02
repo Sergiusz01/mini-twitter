@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
+import CookieConsent from "@/components/sharing/CookieConsent";
 
 export const metadata: Metadata = {
 	title: {
@@ -51,6 +52,7 @@ export default function RootLayout({
 				<body className="bg-black text-white font-lato" suppressHydrationWarning>
 					<Toaster position="bottom-center" />
 					<main className="h-full">{children}</main>
+					<CookieConsent />
 				</body>
 			</html>
 		</ClerkProvider>

@@ -9,6 +9,6 @@ interface Action {
 }
 
 export const useTabsPosts = create<State & Action>((set) => ({
-	status: "For You",
+	status: "Dla Ciebie",
 	setStatus: (status) => set({ status }),
 }));

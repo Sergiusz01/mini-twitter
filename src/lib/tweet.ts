@@ -146,15 +146,36 @@ export const toggleLikeTweet = ({
 };
 
 /**
- * Removes empty lines and multiple line breaks from the given text.
+ * Removes empty lines, multiple line breaks and YouTube links from the given text.
  *
  * @param {string} text - The text to be processed.
- * @return {string} The processed text without empty lines and multiple line breaks.
+ * @return {string} The processed text without empty lines, multiple line breaks and YouTube links.
  */
 export const renderText = (text: string): string => {
-	const textWithoutEmptyLines = text.replace(/^\s*$/gm, " ");
+	// Usuń linki do YouTube wraz z wszystkimi parametrami
+	const textWithoutYouTubeLinks = text.replace(
+		/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)[^\s]+/g,
+		''
+	);
+
+	// Usuń linki do Spotify wraz z parametrami (włącznie z si=...)
+	const textWithoutSpotifyLinks = textWithoutYouTubeLinks.replace(
+		/https?:\/\/(?:www\.)?open\.spotify\.com\/(?:track|album|playlist|embed)\/[a-zA-Z0-9]+(?:\?[^?\s]*(?:si=[a-z0-9]+)?)?/g,
+		''
+	);
+
+	// Usuń linki do GitHub
+	const textWithoutGithubLinks = textWithoutSpotifyLinks.replace(
+		/https?:\/\/(?:www\.)?github\.com\/[^/\s]+\/[^/\s]+(?:\/(?:blob|tree)\/[^/\s]+\/[^/\s]+)?/g,
+		''
+	);
+
+	// Usuń puste linie i wielokrotne znaki nowej linii
+	const textWithoutEmptyLines = textWithoutGithubLinks.replace(/^\s*$/gm, " ");
 	const textWithSingleLineBreaks = textWithoutEmptyLines.replace(/\n+/g, "\n");
-	return textWithSingleLineBreaks;
+	
+	// Usuń zbędne spacje na początku i końcu oraz wielokrotne spacje między słowami
+	return textWithSingleLineBreaks.trim().replace(/\s+/g, ' ');
 };
 
 export const URL_REGEX =
