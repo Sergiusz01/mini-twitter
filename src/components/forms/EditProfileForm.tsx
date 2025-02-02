@@ -248,30 +248,32 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 					control={form.control}
 					name="bannerUrl"
 					render={({ field }) => (
-						<FormItem className="w-full h-[193px]">
+						<FormItem className="w-full h-[193px] relative">
 							<div className="relative w-full h-full overflow-hidden">
 								{showBannerUrl()}
 								<Label
 									htmlFor="banner-url"
-									className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-3 rounded-full bg-gray-300/80 hover:bg-gray-300/50 transition text-white cursor-pointer"
+									className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-3 rounded-full bg-gray-300/80 hover:bg-gray-300/50 transition text-white cursor-pointer z-10"
 								>
 									<Camera />
 								</Label>
 							</div>
-							<Input
-								id="banner-url"
-								type="file"
-								accept="image/*"
-								className="hidden"
-								disabled={isLoading}
-								onChange={(event) =>
-									onChangeImage({
-										event,
-										setFile: setFileBannerUrl,
-										setPreviewImage: setPreviewBannerUrl,
-									})
-								}
-							/>
+							<FormControl>
+								<Input
+									id="banner-url"
+									type="file"
+									accept="image/*"
+									className="hidden"
+									disabled={isLoading}
+									onChange={(event) =>
+										onChangeImage({
+											event,
+											setFile: setFileBannerUrl,
+											setPreviewImage: setPreviewBannerUrl,
+										})
+									}
+								/>
+							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -295,25 +297,27 @@ const EditProfileForm = ({ user, isModal, setIsOpen }: Props) => {
 									/>
 									<Label
 										htmlFor="image-url"
-										className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-3 rounded-full bg-gray-300/80 hover:bg-gray-300/50 transition text-white cursor-pointer"
+										className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-3 rounded-full bg-gray-300/80 hover:bg-gray-300/50 transition text-white cursor-pointer z-10"
 									>
 										<Camera />
 									</Label>
 								</div>
-								<Input
-									id="image-url"
-									type="file"
-									accept="image/*"
-									className="hidden"
-									disabled={isLoading}
-									onChange={(event) =>
-										onChangeImage({
-											event,
-											setFile: setFileImageUrl,
-											setPreviewImage: setPreviewImageUrl,
-										})
-									}
-								/>
+								<FormControl>
+									<Input
+										id="image-url"
+										type="file"
+										accept="image/*"
+										className="hidden"
+										disabled={isLoading}
+										onChange={(event) =>
+											onChangeImage({
+												event,
+												setFile: setFileImageUrl,
+												setPreviewImage: setPreviewImageUrl,
+											})
+										}
+									/>
+								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
