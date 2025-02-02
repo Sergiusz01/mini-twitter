@@ -66,7 +66,13 @@ const Tweets = ({ tweet, userId }: Props) => {
 			}}
 		>
 			<div className="flex flex-col items-start">
-				<div className="flex items-start jsutify-start rounded-full overflow-hidden">
+				<div 
+					className="flex items-start jsutify-start rounded-full overflow-hidden cursor-pointer"
+					onClick={(e) => {
+						e.stopPropagation();
+						router.push(`/${tweet.user.username}`);
+					}}
+				>
 					<Image
 						src={tweet.user.imageUrl}
 						alt={tweet.user.name}
@@ -98,7 +104,13 @@ const Tweets = ({ tweet, userId }: Props) => {
 				<section className="flex-1 flex justify-between">
 					<div className="flex-1 flex flex-col space-y-3">
 						<div className="flex-1 flex items-center flex-wrap gap-x-2">
-							<h5 className="text-ellipsis overflow-hidden whitespace-nowrap font-bold text-white w-fit max-w-[150px]">
+							<h5 
+								onClick={(e) => {
+									e.stopPropagation();
+									router.push(`/${tweet.user.username}`);
+								}}
+								className="text-ellipsis overflow-hidden whitespace-nowrap font-bold text-white w-fit max-w-[150px] cursor-pointer hover:underline"
+							>
 								{tweet.user.name}
 							</h5>
 							<p className="text-ellipsis whitespace-nowrap font-normal text-gray-200">
