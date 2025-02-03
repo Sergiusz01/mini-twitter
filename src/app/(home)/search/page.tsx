@@ -83,7 +83,7 @@ const Page = async ({ searchParams }: Props) => {
 			notfound: (
 				<NotFound
 					title={`No results for "${queryQ}"`}
-					description="Try searching for something else"
+					description="Spróbuj wyszukać coś innego"
 				/>
 			),
 		} as any;

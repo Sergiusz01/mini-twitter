@@ -68,7 +68,7 @@ const Searchbar = ({ currentUser }: Props) => {
 					value={searchTerm}
 					onChange={onChangeSearch}
 					className="no-focus !outline-none border-transparent focus:border-blue ps-12 bg-gray-400 text-white placeholder:text-white/80 rounded-full"
-					placeholder="Search"
+					placeholder="Szukaj"
 					onFocus={onFocusSearch}
 					onBlur={onBlurSearch}
 				/>

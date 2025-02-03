@@ -56,7 +56,7 @@ const Page = async ({ searchParams }: Props) => {
     <div className="flex justify-center py-4 px-3">
       <div className="flex flex-col items-start">
         <p className="font-normal text-gray-200">
-          Try searching for something else
+          Spróbuj wyszukać coś innego
         </p>
       </div>
     </div>

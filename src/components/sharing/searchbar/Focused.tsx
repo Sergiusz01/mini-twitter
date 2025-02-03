@@ -45,7 +45,7 @@ const Focused = ({ users, currentUser, setIsFocused, searchTerm }: Props) => {
 			{!searchTerm ? (
 				<div className="pt-3">
 					<p className="font-normal text-gray-200 text-center">
-						Try searching for people
+						Wyszukaj użytkowników
 					</p>
 				</div>
 			) : (
@@ -62,7 +62,7 @@ const Focused = ({ users, currentUser, setIsFocused, searchTerm }: Props) => {
 							onClick={() => addToNavigationHistory(getCurrentPath())}
 							className="font-normal hover:underline"
 						>
-							Search for {searchTerm}
+							Szukaj: {searchTerm}
 						</Link>
 					</div>
 					{/* Divider */}
@@ -76,7 +76,7 @@ const Focused = ({ users, currentUser, setIsFocused, searchTerm }: Props) => {
 								onClick={() => addToNavigationHistory(getCurrentPath())}
 								className="font-normal hover:underline"
 							>
-								Go to @{searchTerm}
+								Przejdź do @{searchTerm}
 							</Link>
 						</div>
 					</div>
