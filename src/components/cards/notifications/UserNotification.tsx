@@ -67,7 +67,7 @@ const UserNotification = ({ dataNotification }: Props) => {
 				<div className="flex justify-center items-center w-[40px] h-[40px]">
 					<Image
 						src="/assets/user-notification-icon.svg"
-						alt="Profile Icon"
+						alt="Ikona profilu"
 						width={20}
 						height={20}
 						className="object-contain"
@@ -90,9 +90,9 @@ const UserNotification = ({ dataNotification }: Props) => {
 								onClick={redirectToSourceId}
 								className="font-bold tracking-wide"
 							>
-								{dataNotification.sourceUser?.username}.
+								{dataNotification.sourceUser?.username}
 							</h5>
-							<p>followed you</p>∙
+							<p>zaczął(a) Cię obserwować</p>∙
 							<span className="font-normal text-gray-200">
 								{customDatePost(dataNotification.createdAt.getTime())}
 							</span>

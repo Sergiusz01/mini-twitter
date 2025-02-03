@@ -86,9 +86,9 @@ const PostNotification = ({ dataNotification, currentUsername }: Props) => {
 
 	const showActivityText = (activityType: string) => {
 		const options: any = {
-			Reply: "replied your Comment",
-			Comment: "commented on your Tweet",
-			Like: "liked your Tweet",
+			Reply: "odpowiedział(a) na Twój komentarz",
+			Comment: "skomentował(a) Twój post",
+			Like: "polubił(a) Twój post",
 		};
 
 		return options[activityType];
@@ -130,7 +130,7 @@ const PostNotification = ({ dataNotification, currentUsername }: Props) => {
 								onClick={redirectToSourceId}
 								className="font-bold tracking-wide"
 							>
-								{dataNotification.sourceUser?.username}.
+								{dataNotification.sourceUser?.username}
 							</h5>
 							<p>{showActivityText(dataNotification.activityType ?? "")}</p>∙
 							<p className="font-normal text-gray-200">
@@ -142,7 +142,7 @@ const PostNotification = ({ dataNotification, currentUsername }: Props) => {
 							<div className="font-normal text-gray-200">
 								<TweetText content={renderText(
 									dataNotification.post?.text ??
-									"This post is no longer available",
+									"Ten post nie jest już dostępny",
 								)} />
 							</div>
 							{dataNotification.post?.imageUrl && (

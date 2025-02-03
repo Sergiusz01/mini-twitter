@@ -40,20 +40,38 @@ const Menu = ({
 	const router = useRouter();
 	const { addToNavigationHistory } = usePrevious();
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isPendingTweet, startTransitionTweet] = useTransition();
 	const [isPendingFollowUser, startTransitionFollowUser] = useTransition();
 
-	const deleteTweetHandler = (
+	const deleteTweetHandler = async (
 		e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
 	) => {
 		e.stopPropagation();
-		deleteTweet({
-			isPending: isPendingTweet,
-			startTransition: startTransitionTweet,
-			toast,
-			path,
-			id: tweetId,
-		});
+		try {
+			setIsDialogOpen(false);
+			setIsMenuOpen(false);
+			
+			await new Promise<void>((resolve) => {
+				startTransitionTweet(async () => {
+					await deleteTweet({
+						isPending: isPendingTweet,
+						startTransition: startTransitionTweet,
+						toast,
+						path,
+						id: tweetId,
+					});
+					resolve();
+				});
+			});
+
+			// Po pomyślnym usunięciu, przekieruj na stronę główną
+			router.push('/home');
+			router.refresh();
+		} catch (error) {
+			console.error('Error deleting tweet:', error);
+			toast.error('Wystąpił błąd podczas usuwania tweeta');
+		}
 	};
 
 	const redirectToDetailPost = () => {
@@ -63,7 +81,7 @@ const Menu = ({
 
 	return (
 		<>
-			<DropdownMenu>
+			<DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
 				<DropdownMenuTrigger asChild>
 					<div className="!outline-none text-gray-200 bg-transparent hover:bg-blue/20 hover:text-blue transition p-2 rounded-full cursor-pointer">
 						<MoreHorizontal className="w-5 h-5" />
@@ -73,6 +91,7 @@ const Menu = ({
 					<DropdownMenuItem
 						onClick={(e) => {
 							e.stopPropagation();
+							setIsMenuOpen(false);
 							redirectToDetailPost();
 						}}
 					>
@@ -84,6 +103,7 @@ const Menu = ({
 							onClick={(e) => {
 								e.stopPropagation();
 								setIsDialogOpen(true);
+								setIsMenuOpen(false);
 							}}
 							className={cn(
 								"text-[#f4212e]",
@@ -98,6 +118,7 @@ const Menu = ({
 						<DropdownMenuItem
 							onClick={(e) => {
 								e.stopPropagation();
+								setIsMenuOpen(false);
 								toggleFollowUser({
 									isPending: isPendingFollowUser,
 									startTransition: startTransitionFollowUser,
@@ -138,7 +159,7 @@ const Menu = ({
 						onClick={deleteTweetHandler}
 						disabled={isPendingTweet}
 					>
-						Usuń
+						{isPendingTweet ? "Usuwanie..." : "Usuń"}
 					</Button>
 				}
 				isDialogOpen={isDialogOpen}

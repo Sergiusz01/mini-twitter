@@ -72,7 +72,7 @@ const Menu = ({ notificationId, isRead }: Props) => {
 							disabled={isPending}
 						>
 							<BookX className="object-contain w-4 h-4" />
-							Mark as read
+							Oznacz jako przeczytane
 						</DropdownMenuItem>
 					)}
 					<DropdownMenuItem
@@ -80,14 +80,14 @@ const Menu = ({ notificationId, isRead }: Props) => {
 						className="text-[#f4212e]"
 					>
 						<Trash className="w-4 h-4" />
-						Delete Notification
+						Usuń powiadomienie
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
 
 			<DeleteModal
-				title="Delete post?"
-				description="This can’t be undone and it will be removed from your profile, the timeline of any accounts that follow you, and from search results. "
+				title="Usunąć powiadomienie?"
+				description="Tej operacji nie można cofnąć. Powiadomienie zostanie usunięte z Twojej listy powiadomień."
 				ButtonAction={
 					<Button
 						variant="primary"
@@ -95,7 +95,7 @@ const Menu = ({ notificationId, isRead }: Props) => {
 						onClick={deleteNotification}
 						disabled={isPending}
 					>
-						Delete
+						{isPending ? "Usuwanie..." : "Usuń"}
 					</Button>
 				}
 				isDialogOpen={isDialogOpen}
