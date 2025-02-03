@@ -78,7 +78,7 @@ const AIAssistant = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 w-[500px] h-[700px] bg-white dark:bg-[#1B1B1B] rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden border border-gray-200 dark:border-[#2A2B32]">
+    <div className="fixed bottom-4 right-4 w-[calc(100%-2rem)] md:w-[500px] h-[80vh] md:h-[700px] max-h-[700px] bg-white dark:bg-[#1B1B1B] rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden border border-gray-200 dark:border-[#2A2B32]">
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#2A2B32] bg-white dark:bg-[#1B1B1B]">
         <div className="flex items-center space-x-3">
