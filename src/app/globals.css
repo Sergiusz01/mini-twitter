@@ -176,3 +176,77 @@ body,
 	opacity: 0.6;
 	cursor: not-allowed;
 }
+
+/* Markdown Styles */
+.markdown-content {
+	@apply text-base leading-relaxed text-white;
+}
+
+.markdown-content p {
+	@apply mb-3 last:mb-0;
+}
+
+.markdown-content strong {
+	@apply font-bold text-[#1E90FF] dark:text-[#1E90FF];
+}
+
+.markdown-content em {
+	@apply text-[#8E8EA0] dark:text-[#8E8EA0] italic;
+}
+
+.markdown-content ul {
+	@apply list-disc list-inside mb-3 space-y-1;
+}
+
+.markdown-content ol {
+	@apply list-decimal list-inside mb-3 space-y-1;
+}
+
+.markdown-content li {
+	@apply mb-1;
+}
+
+.markdown-content code {
+	@apply bg-[#343541] dark:bg-[#343541] px-1.5 py-0.5 rounded font-mono text-sm text-[#1E90FF];
+}
+
+.markdown-content pre {
+	@apply bg-[#343541] dark:bg-[#343541] p-3 rounded-lg my-3 overflow-x-auto;
+}
+
+.markdown-content blockquote {
+	@apply border-l-4 border-[#4A00E0] pl-4 italic my-3 text-[#8E8EA0] dark:text-[#8E8EA0];
+}
+
+.markdown-content h1 {
+	@apply text-2xl font-bold mb-4 text-white dark:text-white;
+}
+
+.markdown-content h2 {
+	@apply text-xl font-bold mb-3 text-white dark:text-white;
+}
+
+.markdown-content h3 {
+	@apply text-lg font-bold mb-2 text-white dark:text-white;
+}
+
+.markdown-content a {
+	@apply text-[#1E90FF] dark:text-[#1E90FF] hover:underline;
+}
+
+.markdown-content hr {
+	@apply my-4 border-[#2A2B32] dark:border-[#2A2B32];
+}
+
+.markdown-content table {
+	@apply w-full border-collapse mb-3;
+}
+
+.markdown-content th,
+.markdown-content td {
+	@apply border border-[#2A2B32] dark:border-[#2A2B32] px-3 py-2;
+}
+
+.markdown-content th {
+	@apply bg-[#343541] dark:bg-[#343541] font-semibold text-[#8E8EA0];
+}

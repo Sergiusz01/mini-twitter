@@ -137,9 +137,11 @@ const UsersTwo = ({
 							)}
 						</div>
 					</div>
-				</div>
-				<div>
-					<p className="whitespace-break-spaces">{bio}</p>
+					{bio && (
+						<p className="text-sm text-gray-200 mt-2 break-words">
+							{bio}
+						</p>
+					)}
 				</div>
 			</section>
 		</section>

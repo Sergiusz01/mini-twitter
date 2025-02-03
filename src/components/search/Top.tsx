@@ -21,7 +21,7 @@ const Top = ({ tweets, currentUser, people, queryQ, page }: Props) => {
 			pathname: "/search",
 			query: {
 				q: queryQ,
-				f: "ludzie",
+				f: "people",
 			},
 		},
 		path = `/search?q=${queryQ}&f=popularne`;
@@ -30,7 +30,7 @@ const Top = ({ tweets, currentUser, people, queryQ, page }: Props) => {
 		<>
 			{people?.length ? (
 				<section className="border-b border-gray-300">
-					<h2 className="text-xl font-bold px-3 py-4">Ludzie</h2>
+					<h2 className="text-xl font-bold px-3 py-4">People</h2>
 					{people.slice(0, 3).map((user) => (
 						<UsersTwo
 							key={user.id}

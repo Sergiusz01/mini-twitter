@@ -21,11 +21,11 @@ const Tab = ({ title }: TabProps) => {
 	const getTabParam = (title: string) => {
 		switch (title) {
 			case "Popularne":
-				return "popularne";
+				return "Top";
 			case "Najnowsze":
-				return "najnowsze";
+				return "Latest";
 			case "Ludzie":
-				return "ludzie";
+				return "people";
 			case "Media":
 				return "media";
 			default:
@@ -67,7 +67,7 @@ const Tabs = () => {
 			<ul className="flex items-center justify-evenly">
 				<Tab title="Popularne" />
 				<Tab title="Najnowsze" />
-				<Tab title="Ludzie" />
+				<Tab title="People" />
 				<Tab title="Media" />
 			</ul>
 		</section>

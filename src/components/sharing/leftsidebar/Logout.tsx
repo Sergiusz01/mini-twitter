@@ -42,7 +42,7 @@ const Logout = ({ imageUrl, username, name }: Props) => {
       <DropdownMenuContent>
         <DropdownMenuItem asChild>
           <SignOutButton>
-            <p className="text-red-500 font-bold">Log out @{username}</p>
+            <p className="text-red-500 font-bold">Wyloguj się @{username}</p>
           </SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>

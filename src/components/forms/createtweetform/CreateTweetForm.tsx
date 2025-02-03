@@ -25,13 +25,16 @@ import SubmitButton from "./SubmitButton";
 import Topbar from "./Topbar";
 import PreviewImage from "./PreviewImage";
 import Reply from "./Reply";
+import UserSuggestions from "./UserSuggestions";
 import { uploadFile } from "@/lib/cloudinary";
 import toast from "react-hot-toast";
 import { createTweetAction } from "@/actions/tweet.action";
+import { searchUsersAction } from "@/actions/user.action";
 import {
 	commentPostNotificationAction,
 	replyCommentPostNotificationAction,
 } from "@/actions/notification.action";
+import { User } from "@prisma/client";
 
 interface Props {
 	isModal?: boolean;
@@ -58,6 +61,9 @@ const CreateTweetForm = ({
 	const [isLoading, setIsLoading] = useState(false);
 	const [file, setFile] = useState<File>();
 	const [previewImage, setPreviewImage] = useState("");
+	const [userSuggestions, setUserSuggestions] = useState<User[]>([]);
+	const [suggestionPosition, setSuggestionPosition] = useState({ top: 0, left: 0 });
+	const [searchQuery, setSearchQuery] = useState("");
 	const textarea = useRef<HTMLTextAreaElement | null>(null);
 
 	const form = useForm<z.infer<typeof tweetSchema>>({
@@ -83,6 +89,54 @@ const CreateTweetForm = ({
 		setFile(file);
 		const previewPhoto = URL.createObjectURL(file);
 		setPreviewImage(previewPhoto);
+	};
+
+	const handleTextChange = async (e: ChangeEvent<HTMLTextAreaElement>) => {
+		const text = e.target.value;
+		form.setValue("text", text);
+
+		const cursorPosition = e.target.selectionStart;
+		const textBeforeCursor = text.slice(0, cursorPosition);
+		const words = textBeforeCursor.split(/\s+/);
+		const lastWord = words[words.length - 1];
+
+		if (lastWord.startsWith("@") && lastWord.length > 1) {
+			const query = lastWord.slice(1);
+			setSearchQuery(query);
+			const users = await searchUsersAction(query);
+			setUserSuggestions(users);
+
+			// Oblicz pozycję sugestii
+			const textArea = textarea.current;
+			if (textArea) {
+				const { selectionStart } = textArea;
+				const textBeforeCursor = text.slice(0, selectionStart);
+				const lines = textBeforeCursor.split('\n');
+				const currentLineHeight = 24; // Wysokość linii tekstu
+				const currentLine = lines.length;
+				
+				const coordinates = textArea.getBoundingClientRect();
+				setSuggestionPosition({
+					top: currentLine * currentLineHeight,
+					left: 0
+				});
+			}
+		} else {
+			setUserSuggestions([]);
+		}
+	};
+
+	const handleUserSelect = (username: string) => {
+		const text = form.getValues("text");
+		const cursorPosition = textarea.current?.selectionStart || 0;
+		const textBeforeCursor = text.slice(0, cursorPosition);
+		const textAfterCursor = text.slice(cursorPosition);
+		const words = textBeforeCursor.split(/\s+/);
+		words[words.length - 1] = `@${username}`;
+		const newText = [...words, textAfterCursor].join(" ");
+		form.setValue("text", newText);
+		setUserSuggestions([]);
+		textarea.current?.focus();
 	};
 
 	async function onSubmit(values: z.infer<typeof tweetSchema>): Promise<void> {
@@ -189,7 +243,7 @@ const CreateTweetForm = ({
 							control={form.control}
 							name="text"
 							render={({ field }) => (
-								<FormItem className="flex-1 mt-2">
+								<FormItem className="flex-1 mt-2 relative">
 									<FormControl>
 										<Textarea
 											className="no-focus !border-none !outline-none w-full p-0 text-white rounded-none placeholder:text-gray-200 font-normal tracking-wide text-xl resize-none block overlow-hidden max-h-[300px] overflow-y-auto bg-transparent"
@@ -197,9 +251,17 @@ const CreateTweetForm = ({
 											placeholder={showTextPlaceholder()}
 											{...field}
 											ref={textarea}
+											onChange={handleTextChange}
 										/>
 									</FormControl>
 									<FormMessage />
+									{userSuggestions.length > 0 && (
+										<UserSuggestions
+											users={userSuggestions}
+											onSelect={handleUserSelect}
+											position={suggestionPosition}
+										/>
+									)}
 								</FormItem>
 							)}
 						/>

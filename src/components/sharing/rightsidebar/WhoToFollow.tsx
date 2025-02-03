@@ -17,7 +17,7 @@ const WhoToFollow = ({ users, currentUser }: Props) => {
 			);
 		}
 
-		return users.map((user) => (
+		return users.map((user, index) => (
 			<Users
 				key={user.id}
 				username={user.username}
@@ -26,6 +26,7 @@ const WhoToFollow = ({ users, currentUser }: Props) => {
 				userId={user.id}
 				currentUser={currentUser}
 				isOnSearch={false}
+				index={index}
 			/>
 		));
 	};
@@ -33,7 +34,7 @@ const WhoToFollow = ({ users, currentUser }: Props) => {
 	return (
 		<section className="p-3 bg-gray-400 rounded-xl flex flex-col space-y-6">
 			<h3 className="text-xl text-gray-100 font-bold tracking-wide">
-				Kogo obserwować
+				Warci obserwowania
 			</h3>
 			<ul>{showUsersList()}</ul>
 		</section>

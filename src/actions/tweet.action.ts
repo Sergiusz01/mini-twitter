@@ -439,54 +439,184 @@ export async function getTotalTweetsAction({
  * @param {number} param.size - The number of tweets to retrieve (default: 30).
  * @param {number} param.page - The page of tweets to retrieve (default: 0).
  * @param {string} param.searchQuery - The search query to filter tweets by (default: "").
+ * @param {string} param.filter - The filter to apply to the search query (default: "najnowsze").
  * @return {Promise<GetTweetsActionType>} A promise that resolves to an object containing the retrieved tweets and a flag indicating whether there is more data to fetch.
  */
 export async function getTweetsBySearchAction({
 	size = 30,
 	page = 0,
 	searchQuery = "",
+	filter = "najnowsze"
 }: GetTweetsBySearchActionProps): Promise<GetTweetsActionType> {
 	try {
-		const skip = size * page;
+		if (!searchQuery) return;
 
-		const whereFilter = {
-			parentId: null,
+		const skip = size * page;
+		const searchQueryLower = searchQuery.toLowerCase();
+
+		// Dla filtra "people" szukamy bezpośrednio użytkowników
+		if (filter === "people") {
+			const users = await prisma.user.findMany({
+				where: {
+					OR: [
+						{
+							username: {
+								contains: searchQueryLower
+							}
+						},
+						{
+							name: {
+								contains: searchQueryLower
+							}
+						}
+					]
+				},
+				select: {
+					id: true,
+					imageUrl: true,
+					name: true,
+					username: true,
+					followers: true,
+					followings: true,
+					threads: {
+						take: 1,
+						orderBy: {
+							createdAt: 'desc'
+						},
+						include: {
+							likes: true,
+							bookmarks: true,
+							_count: {
+								select: {
+									replies: true,
+									likes: true,
+									bookmarks: true,
+								},
+							},
+						},
+					},
+				},
+				skip,
+				take: size,
+			});
+
+			const totalUsers = await prisma.user.count({
+				where: {
+					OR: [
+						{
+							username: {
+								contains: searchQueryLower
+							}
+						},
+						{
+							name: {
+								contains: searchQueryLower
+							}
+						}
+					]
+				}
+			});
+
+			// Przekształcamy wyniki do oczekiwanego formatu
+			const data = users.map(user => ({
+				id: user.threads[0]?.id || user.id,
+				text: '',
+				imageUrl: null,
+				createdAt: new Date(),
+				userId: user.id,
+				parentId: null,
+				user: {
+					id: user.id,
+					imageUrl: user.imageUrl,
+					name: user.name,
+					username: user.username,
+					followers: user.followers,
+					followings: user.followings,
+				},
+				likes: user.threads[0]?.likes || [],
+				bookmarks: user.threads[0]?.bookmarks || [],
+				_count: user.threads[0]?._count || {
+					replies: 0,
+					likes: 0,
+					bookmarks: 0,
+				}
+			})) as DetailTweet[];
+
+			return {
+				data,
+				hasNext: Boolean(totalUsers - skip - users.length),
+			};
+		}
+
+		// Dla pozostałych filtrów (najnowsze, media) szukamy w tweetach
+		let whereCondition: any = {
 			OR: [
 				{
 					text: {
-						contains: searchQuery,
-					},
+						contains: searchQueryLower
+					}
 				},
 				{
 					user: {
 						OR: [
 							{
-								name: {
-									contains: searchQuery,
-								},
+								username: {
+									contains: searchQueryLower
+								}
 							},
 							{
-								username: {
-									contains: searchQuery,
-								},
-							},
-						],
-					},
-				},
-			],
-		} as any;
+								name: {
+									contains: searchQueryLower
+								}
+							}
+						]
+					}
+				}
+			]
+		};
+
+		// Dla filtra "media" dodajemy warunek na imageUrl
+		if (filter === "media") {
+			whereCondition = {
+				...whereCondition,
+				imageUrl: {
+					not: null
+				}
+			};
+		}
 
 		const data = await prisma.thread.findMany({
-			where: whereFilter,
+			where: whereCondition,
 			include: {
 				user: {
 					select: {
 						id: true,
-						username: true,
-						name: true,
 						imageUrl: true,
+						name: true,
+						username: true,
 						followers: true,
 						followings: true,
+					},
+				},
+				parent: {
+					include: {
+						user: {
+							select: {
+								id: true,
+								imageUrl: true,
+								name: true,
+								username: true,
+							},
+						},
+						likes: true,
+						bookmarks: true,
+						_count: {
+							select: {
+								replies: true,
+								likes: true,
+								bookmarks: true,
+							},
+						},
 					},
 				},
 				likes: true,
@@ -494,29 +624,28 @@ export async function getTweetsBySearchAction({
 				_count: {
 					select: {
 						replies: true,
+						likes: true,
+						bookmarks: true,
 					},
 				},
 			},
 			orderBy: {
-				likes: {
-					_count: "desc",
-				},
+				createdAt: "desc",
 			},
 			skip,
 			take: size,
-		});
+		}) as DetailTweet[];
 
 		const remainingData = await prisma.thread.count({
-			where: whereFilter,
+			where: whereCondition
 		});
-		const hasNext = Boolean(remainingData - skip - data.length);
 
 		return {
 			data,
-			hasNext,
+			hasNext: Boolean(remainingData - skip - data.length),
 		};
 	} catch (error) {
-		console.info("[ERROR_GET_TWEETS_BY_SEARCH_ACTION]", error);
+		console.log("[ERROR_GET_TWEETS_BY_SEARCH_ACTION]", error);
 	}
 }
 

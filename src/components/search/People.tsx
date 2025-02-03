@@ -14,11 +14,11 @@ interface Props {
 }
 
 const People = ({ currentUser, people, queryQ, page }: Props) => {
-	const path = `/search?q=${queryQ}&f=ludzie`;
+	const path = `/search?q=${queryQ}&f=people`;
 
 	return people?.data.length ? (
 		<>
-			{people.data.map((user) => (
+			{people.data.map((user, index) => (
 				<UsersTwo
 					key={user.id}
 					userId={user.id}
@@ -27,6 +27,7 @@ const People = ({ currentUser, people, queryQ, page }: Props) => {
 					imageUrl={user.imageUrl}
 					bio={user.bio}
 					currentUser={currentUser}
+					index={index}
 				/>
 			))}
 

@@ -30,7 +30,7 @@ const ButtonCreatePostMobile = ({ isMobile, dataTweet }: Props) => {
 	};
 
 	return (
-		<div className="fixed bottom-28 right-6 sm:hidden">
+		<div className="fixed bottom-28 right-6 sm:hidden z-50">
 			<Button
 				disabled={isPending}
 				variant="primary"

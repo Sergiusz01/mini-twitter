@@ -86,7 +86,8 @@ export interface CreateTweetActionProps {
 export interface GetTweetsBySearchActionProps {
 	size?: number;
 	page?: number;
-	searchQuery: string;
+	searchQuery?: string;
+	filter?: "najnowsze" | "people" | "media";
 }
 
 export interface ToggleLikeActionProps {

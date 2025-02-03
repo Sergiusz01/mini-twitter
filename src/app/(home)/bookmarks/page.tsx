@@ -58,8 +58,8 @@ const Page = async ({ searchParams }: Props) => {
       ) : (
         // Wyświetlenie komunikatu, gdy zakładki są puste
         <NotFound
-          title="Save posts for later"
-          description="Bookmark posts to easily find them again in the future."
+          title="Zapisz posty na później"
+          description="Dodaj posty do zakładek, aby łatwo je znaleźć w przyszłości."
         />
       )}
     </>

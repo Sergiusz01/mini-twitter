@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { getUsersAction } from "@/actions/user.action";
 import { User } from "@prisma/client";
 import { UserWithFollowers } from "@/interfaces/user.interface";
-import { useDebounce } from "@uidotdev/usehooks";
+import { useDebounce } from "@/hooks/useDebounce";
 import Focused from "./Focused";
 
 interface Props {

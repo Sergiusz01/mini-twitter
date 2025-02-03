@@ -311,3 +311,21 @@ export const removeFollowerAction = async ({
 		revalidatePath(path);
 	}
 };
+
+export const searchUsersAction = async (query: string) => {
+	try {
+		const users = await prisma.user.findMany({
+			where: {
+				OR: [
+					{ username: { contains: query } },
+					{ name: { contains: query } }
+				]
+			},
+			take: 5,
+		});
+		return users;
+	} catch (error) {
+		console.error("[ERROR_SEARCH_USERS]", error);
+		return [];
+	}
+};

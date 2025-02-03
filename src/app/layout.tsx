@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import CookieConsent from "@/components/sharing/CookieConsent";
+import AIAssistant from "@/components/ai/AIAssistant";
 
 export const metadata: Metadata = {
 	title: {
@@ -53,6 +54,7 @@ export default function RootLayout({
 					<Toaster position="bottom-center" />
 					<main className="h-full">{children}</main>
 					<CookieConsent />
+					<AIAssistant />
 				</body>
 			</html>
 		</ClerkProvider>

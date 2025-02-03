@@ -62,7 +62,7 @@ const Page = async ({ params, searchParams }: Props) => {
 			<h2 className="text-xl font-bold px-3 py-4">Obserwujący</h2>
 			{validFollowers.length > 0 ? (
 				<>
-					{validFollowers.map((follower) => (
+					{validFollowers.map((follower, index) => (
 						<UsersTwo
 							key={follower.id}
 							userId={follower.id}
@@ -72,6 +72,7 @@ const Page = async ({ params, searchParams }: Props) => {
 							bio={follower.bio}
 							currentUser={currentUser}
 							showRemoveButton={currentUser.username === username}
+							index={index}
 						/>
 					))}
 				</>

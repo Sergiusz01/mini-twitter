@@ -49,6 +49,12 @@ export const linksMobile = [
 		href: "",
 	},
 	{
+		icon: "/assets/sparkles.svg",
+		activeIcon: "/assets/sparkles.svg",
+		title: "Gemini",
+		href: "gemini",
+	},
+	{
 		icon: "/assets/explore-icon.svg",
 		activeIcon: "/assets/explore-fill-icon.svg",
 		title: "Przeglądaj",
@@ -74,5 +80,38 @@ export const mobileSidebarLinks = [
 		activeIcon: "/assets/bookmark-fill-icon.svg",
 		title: "Zakładki",
 		href: "/bookmarks",
+	},
+];
+
+export const sidebarLinks = [
+	{
+		title: "Strona główna",
+		icon: "/assets/home.svg",
+		activeIcon: "/assets/home-active.svg",
+		href: "/home",
+	},
+	{
+		title: "Eksploruj",
+		icon: "/assets/explore.svg",
+		activeIcon: "/assets/explore-active.svg",
+		href: "/explore",
+	},
+	{
+		title: "Powiadomienia",
+		icon: "/assets/notifications.svg",
+		activeIcon: "/assets/notifications-active.svg",
+		href: "/notifications",
+	},
+	{
+		title: "Zakładki",
+		icon: "/assets/bookmarks.svg",
+		activeIcon: "/assets/bookmarks-active.svg",
+		href: "/bookmarks",
+	},
+	{
+		title: "Profil",
+		icon: "/assets/profile.svg",
+		activeIcon: "/assets/profile-active.svg",
+		href: "",
 	},
 ];
