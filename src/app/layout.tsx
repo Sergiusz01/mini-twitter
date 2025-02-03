@@ -1,3 +1,7 @@
+/**
+ * Główny plik layoutu aplikacji
+ * Zawiera konfigurację podstawowych elementów i providerów
+ */
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -5,25 +9,40 @@ import { Toaster } from "react-hot-toast";
 import CookieConsent from "@/components/sharing/CookieConsent";
 import AIAssistant from "@/components/ai/AIAssistant";
 
+/**
+ * Konfiguracja metadanych strony
+ * Definiuje tytuły, OpenGraph i podstawowy URL aplikacji
+ */
 export const metadata: Metadata = {
 	title: {
-		default: "X",
-		template: "%s / X",
+		default: "Akademik",
+		template: "%s / Akademik",
 	},
 	metadataBase: new URL(process.env.NEXT_PUBLIC_NEXT_URL || 'https://mini-twitter-sergiusz01.vercel.app'),
 	openGraph: {
 		title: {
-			default: "X",
-			template: "%s / X",
+			default: "Akademik",
+			template: "%s / Akademik",
 		},
-		siteName: "X (formerly Twitter)",
+		siteName: "Akademik",
 	},
 };
 
+/**
+ * Konfiguracja viewport i motywu kolorystycznego
+ */
 export const viewport: Viewport = {
 	themeColor: "black",
 };
 
+/**
+ * Główny komponent layoutu
+ * Zawiera:
+ * - ClerkProvider dla autentykacji
+ * - System powiadomień (Toaster)
+ * - Zgodę na cookies
+ * - Asystenta AI
+ */
 export default function RootLayout({
 	children,
 }: {

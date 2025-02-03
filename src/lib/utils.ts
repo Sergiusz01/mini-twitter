@@ -1,17 +1,28 @@
+/**
+ * Moduł zawierający funkcje narzędziowe (utilities)
+ * Implementuje różne pomocnicze funkcje używane w całej aplikacji
+ */
+
 import { ConvertToHttpsType } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+/**
+ * Łączy klasy CSS z wykorzystaniem clsx i tailwind-merge
+ * @param inputs Klasy CSS do połączenia
+ * @returns Połączone i zoptymalizowane klasy CSS
+ */
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
 /**
- * Converts a given timestamp into a custom date format.
- *
- * @param {number} timestamp - The timestamp to convert.
- * @param {number} referenceTime - The reference time to calculate the difference.
- * @return {string} The custom date format.
+ * Konwertuje timestamp na relatywny format daty
+ * Zwraca czas w formacie: s (sekundy), m (minuty), h (godziny), d (dni), w (tygodnie), y (lata)
+ * 
+ * @param timestamp Timestamp do przekonwertowania
+ * @param referenceTime Czas odniesienia (domyślnie aktualny czas)
+ * @returns Sformatowany relatywny czas
  */
 export function customDatePost(timestamp: number, referenceTime: number = Date.now()): string {
 	const timeDiff = referenceTime - timestamp;
@@ -39,10 +50,11 @@ export function customDatePost(timestamp: number, referenceTime: number = Date.n
 }
 
 /**
- * Formats a given Date object into a string representing the time and date.
- *
- * @param {Date} Date - The Date object to be formatted.
- * @return {string} The formatted string representing the time and date.
+ * Formatuje obiekt Date na string w polskim formacie
+ * Format: HH:MM · DD MIESIĄC RRRR
+ * 
+ * @param Date Obiekt daty do sformatowania
+ * @returns Sformatowana data i czas
  */
 export const formatDateTime = (Date: Date): string => {
 	const formattedTime = new Intl.DateTimeFormat('pl-PL', {
@@ -58,6 +70,9 @@ export const formatDateTime = (Date: Date): string => {
 	return `${formattedTime} · ${day} ${month} ${year}`;
 };
 
+/**
+ * Konfiguracja dla powiadomień toast
+ */
 export const toastOptions = {
 	duration: 2000,
 	style: {
@@ -66,6 +81,9 @@ export const toastOptions = {
 	},
 };
 
+/**
+ * Lista polskich nazw miesięcy
+ */
 export const months = [
 	"Styczeń",
 	"Luty",
@@ -82,10 +100,11 @@ export const months = [
 ];
 
 /**
- * Converts a given URL to HTTPS.
- *
- * @param {string} url - The URL to be converted.
- * @return {{ href: string, title: string } | undefined} - The converted URL object with href and title.
+ * Konwertuje URL na format HTTPS
+ * Obsługuje różne formaty wejściowe (http://, https://, bez protokołu)
+ * 
+ * @param url URL do przekonwertowania
+ * @returns Obiekt z przekonwertowanym URL i tytułem lub undefined
  */
 export function convertToHttps(url: string): ConvertToHttpsType {
 	if (!url) return;
@@ -109,9 +128,11 @@ export function convertToHttps(url: string): ConvertToHttpsType {
 }
 
 /**
- * Gets the current path and search parameters of the window location.
- *
- * @return {string} The current path and search parameters.
+ * Pobiera aktualną ścieżkę i parametry wyszukiwania
+ * Obsługuje środowisko SSR zwracając fallback
+ * 
+ * @param fallbackPath Ścieżka domyślna w przypadku błędu
+ * @returns Aktualna ścieżka z parametrami lub fallback
  */
 export const getCurrentPath = (fallbackPath: string = ''): string => {
 	try {
@@ -125,10 +146,11 @@ export const getCurrentPath = (fallbackPath: string = ''): string => {
 };
 
 /**
- * Checks if the given page value is valid and returns it.
- *
- * @param {string} qPage - The page value to be validated.
- * @return {number} The valid page value.
+ * Sprawdza i waliduje numer strony
+ * Zapewnia, że wartość jest poprawną liczbą >= 0
+ * 
+ * @param qPage Numer strony do sprawdzenia
+ * @returns Zwalidowany numer strony
  */
 export const isValidPage = (qPage: string): number => {
 	const page = parseInt(qPage);
@@ -139,6 +161,8 @@ export const isValidPage = (qPage: string): number => {
 
 /**
  * Wyodrębnia ID filmu z linku YouTube
+ * Obsługuje różne formaty linków YouTube
+ * 
  * @param text Tekst zawierający link do YouTube
  * @returns ID filmu lub null jeśli nie znaleziono linku
  */
@@ -159,12 +183,26 @@ export const extractYouTubeId = (text: string): string | null => {
 	return null;
 };
 
+/**
+ * Wyodrębnia URL Spotify z tekstu
+ * Obsługuje linki do utworów, albumów i playlist
+ * 
+ * @param text Tekst zawierający link do Spotify
+ * @returns URL Spotify lub null jeśli nie znaleziono
+ */
 export const extractSpotifyUrl = (text: string): string | null => {
 	const spotifyRegex = /https:\/\/open\.spotify\.com\/(track|album|playlist)\/[a-zA-Z0-9]+/;
 	const match = text.match(spotifyRegex);
 	return match ? match[0] : null;
 };
 
+/**
+ * Wyodrębnia URL GitHub z tekstu
+ * Obsługuje linki do repozytoriów, plików i katalogów
+ * 
+ * @param text Tekst zawierający link do GitHub
+ * @returns URL GitHub lub null jeśli nie znaleziono
+ */
 export const extractGithubUrl = (text: string): string | null => {
 	const githubRegex = /https?:\/\/(?:www\.)?github\.com\/[^/\s]+\/[^/\s]+(?:\/(?:blob|tree)\/[^/\s]+\/[^/\s]+)?/;
 	const match = text.match(githubRegex);

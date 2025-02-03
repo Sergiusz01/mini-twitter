@@ -1,3 +1,12 @@
+/**
+ * Stałe aplikacji
+ * Zawiera definicje linków nawigacyjnych i innych stałych wartości
+ */
+
+/**
+ * Główne linki nawigacyjne
+ * Używane w głównym menu aplikacji
+ */
 export const links = [
 	{
 		title: "X Logo",
@@ -35,6 +44,10 @@ export const links = [
 	},
 ];
 
+/**
+ * Linki dla widoku mobilnego
+ * Zoptymalizowana nawigacja dla urządzeń mobilnych
+ */
 export const linksMobile = [
 	{
 		icon: "/assets/home-icon.svg",
@@ -68,6 +81,10 @@ export const linksMobile = [
 	},
 ];
 
+/**
+ * Linki dla bocznego menu mobilnego
+ * Dodatkowe opcje dostępne w menu wysuwanym
+ */
 export const mobileSidebarLinks = [
 	{
 		icon: "/assets/profile-icon.svg",
@@ -83,6 +100,10 @@ export const mobileSidebarLinks = [
 	},
 ];
 
+/**
+ * Linki dla bocznego menu
+ * Główna nawigacja w wersji desktopowej
+ */
 export const sidebarLinks = [
 	{
 		title: "Strona główna",

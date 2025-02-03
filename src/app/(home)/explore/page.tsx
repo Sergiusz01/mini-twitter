@@ -53,10 +53,13 @@ const Page = async ({ searchParams }: Props) => {
       />
     </>
   ) : (
-    <div className="flex justify-center py-4 px-3">
-      <div className="flex flex-col items-start">
-        <p className="font-normal text-gray-200">
-          Spróbuj wyszukać coś innego
+    <div className="flex justify-center py-8 px-4">
+      <div className="flex flex-col items-center text-center space-y-4">
+        <p className="font-normal text-gray-200 text-lg">
+          Nie znaleziono użytkowników
+        </p>
+        <p className="text-gray-400 text-sm">
+          Spróbuj wyszukać używając innych kryteriów
         </p>
       </div>
     </div>

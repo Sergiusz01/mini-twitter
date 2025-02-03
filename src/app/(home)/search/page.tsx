@@ -23,10 +23,10 @@ export const generateMetadata = async ({ searchParams }: Props) => {
 	const { q: queryQ } = searchParams;
 
 	return {
-		title: `${queryQ} - Search`,
+		title: `${queryQ} - Wyszukiwanie`,
 		openGraph: {
-			title: `${queryQ} - Search`,
-			siteName: "X (formerly Twitter)",
+			title: `${queryQ} - Wyszukiwanie`,
+			siteName: "Akademik",
 		},
 	};
 };
@@ -82,7 +82,7 @@ const Page = async ({ searchParams }: Props) => {
 			),
 			notfound: (
 				<NotFound
-					title={`No results for "${queryQ}"`}
+					title={`Brak wyników dla "${queryQ}"`}
 					description="Spróbuj wyszukać coś innego"
 				/>
 			),

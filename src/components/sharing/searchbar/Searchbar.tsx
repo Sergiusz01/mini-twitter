@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * Komponent wyszukiwarki użytkowników
+ * Implementuje funkcjonalność wyszukiwania w czasie rzeczywistym z debounce
+ */
+
 import { ChangeEvent, useEffect, useState } from "react";
 import { Input } from "../../ui/input";
 import { Search } from "lucide-react";
@@ -14,12 +19,21 @@ interface Props {
 	currentUser: UserWithFollowers;
 }
 
+/**
+ * Główny komponent wyszukiwarki
+ * @param currentUser - Aktualnie zalogowany użytkownik
+ */
 const Searchbar = ({ currentUser }: Props) => {
+	// Stan komponentu
 	const [isFocused, setIsFocused] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [users, setUsers] = useState<User[]>([]);
 	const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
+	/**
+	 * Pobiera użytkowników na podstawie wyszukiwanej frazy
+	 * @param searchQuery - Fraza wyszukiwania
+	 */
 	async function getAllOfUsers(searchQuery: string) {
 		const users = await getUsersAction({
 			searchQuery,
@@ -32,16 +46,22 @@ const Searchbar = ({ currentUser }: Props) => {
 		setUsers(users.data);
 	}
 
+	// Efekt wywołujący wyszukiwanie po zmianie frazy z debounce
 	useEffect(() => {
 		getAllOfUsers(debouncedSearchTerm);
 	}, [debouncedSearchTerm]);
 
-	// property input search
+	/**
+	 * Obsługa zmiany wartości w polu wyszukiwania
+	 */
 	const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		setSearchTerm(value);
 	};
 
+	/**
+	 * Obsługa utraty fokusu - czyści wyniki i pole wyszukiwania
+	 */
 	const onBlurSearch = () => {
 		setTimeout(() => {
 			setIsFocused(false);
@@ -50,6 +70,9 @@ const Searchbar = ({ currentUser }: Props) => {
 		}, 100);
 	};
 
+	/**
+	 * Obsługa uzyskania fokusu
+	 */
 	const onFocusSearch = () => {
 		setIsFocused(true);
 	};
@@ -74,6 +97,7 @@ const Searchbar = ({ currentUser }: Props) => {
 				/>
 			</div>
 
+			{/* Komponent wyświetlający wyniki wyszukiwania */}
 			{isFocused && (
 				<Focused
 					users={users}
