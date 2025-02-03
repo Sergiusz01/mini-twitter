@@ -21,7 +21,7 @@ const TweetText = ({ content }: Props) => {
 	};
 
 	return (
-		<div className="whitespace-break-spaces break-all">
+		<div className="whitespace-pre-wrap break-words text-[15px] leading-normal">
 			{words.map((word: string) => {
 				if (word.match(URL_REGEX)) {
 					return (
