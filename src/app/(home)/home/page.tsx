@@ -51,7 +51,7 @@ const Page = async ({ searchParams }: Props) => {
         </>
       ) : (
         <NotFound
-          title="Witaj w X"
+          title="Witaj Akademik"
           description="To jest najlepszy moment, aby dołączyć do konwersacji. Zacznij obserwować innych, aby zobaczyć ich tweety tutaj."
         />
       )}

@@ -1,0 +1,377 @@
+SPRAWOZDANIE Z FUNKCJONALNOŚCI APLIKACJI MINI-TWITTER
+
+1. SYSTEM AUTENTYKACJI I ZARZĄDZANIA KONTAMI
+
+1.1. Tworzenie konta
+- Aplikacja wykorzystuje system Clerk do bezpiecznej autentykacji użytkowników
+- Proces rejestracji obejmuje:
+  * Podanie podstawowych danych (email, hasło)
+  * Weryfikację adresu email
+  * Utworzenie unikalnej nazwy użytkownika
+- Po pierwszej rejestracji użytkownik jest przekierowywany do procesu onboardingu
+
+1.2. Proces Onboardingu
+- Obowiązkowe uzupełnienie profilu użytkownika:
+  * Imię (wymagane, 1-30 znaków)
+  * Bio (opcjonalne, max 255 znaków)
+- Dane są walidowane przed zapisaniem
+- Po zakończeniu onboardingu użytkownik otrzymuje dostęp do pełnej funkcjonalności aplikacji
+
+1.3. Edycja Profilu
+- Możliwość modyfikacji danych profilu:
+  * Zdjęcie profilowe
+  * Zdjęcie w tle (banner)
+  * Imię
+  * Bio
+  * Lokalizacja (max 30 znaków)
+  * Strona internetowa (max 100 znaków)
+- Wszystkie pola są walidowane pod kątem długości i poprawności danych
+- Możliwość edycji zarówno przez modal jak i osobną stronę ustawień
+
+2. FUNKCJONALNOŚCI SPOŁECZNOŚCIOWE
+
+2.1. Tweety
+- Tworzenie nowych tweetów z:
+  * Tekstem
+  * Obrazami
+  * Możliwością odpowiadania na inne tweety
+- System komentarzy i odpowiedzi
+- Możliwość usuwania własnych tweetów
+- Paginacja tweetów na stronie głównej
+
+2.2. Interakcje
+- System polubień tweetów
+- Możliwość zapisywania tweetów do zakładek
+- System obserwowania innych użytkowników
+- Powiadomienia o:
+  * Nowych obserwujących
+  * Polubieniach
+  * Komentarzach
+  * Odpowiedziach na komentarze
+
+2.3. Wyszukiwanie i Eksploracja
+- Wyszukiwarka użytkowników
+- Strona eksploracji z sugerowanymi użytkownikami
+- Sekcja "Kogo obserwować"
+- Przeglądanie profili innych użytkowników
+
+3. INTERFEJS UŻYTKOWNIKA
+
+3.1. Układ Strony
+- Responsywny design dostosowany do różnych urządzeń
+- Lewy pasek z główną nawigacją
+- Prawy pasek z dodatkowymi funkcjami
+- Dolny pasek nawigacyjny na urządzeniach mobilnych
+
+3.2. Komponenty UI
+- Modalne okna do edycji profilu
+- Formularze z walidacją w czasie rzeczywistym
+- Przyciski akcji (tweety, obserwowanie, etc.)
+- Wskaźniki ładowania i stany pośrednie
+
+4. BEZPIECZEŃSTWO I WYDAJNOŚĆ
+
+4.1. Zabezpieczenia
+- Bezpieczna autentykacja przez Clerk
+- Walidacja wszystkich danych wejściowych
+- Zabezpieczenie endpointów API
+- Szyfrowanie danych użytkownika
+
+4.2. Optymalizacja
+- Paginacja dla długich list
+- Lazy loading komponentów
+- Optymalizacja obrazów
+- Cachowanie danych
+
+5. BAZA DANYCH
+
+5.1. Struktura
+- Tabela User: przechowywanie danych użytkowników
+- Tabela Follower: relacje między użytkownikami
+- Tabela Thread: tweety i odpowiedzi
+- Tabela Notification: system powiadomień
+
+5.2. Relacje
+- Powiązania między użytkownikami (obserwujący)
+- Powiązania między tweetami (odpowiedzi)
+- Powiązania powiadomień z użytkownikami i tweetami
+
+5.3. Szczegółowa Struktura MySQL
+
+Tabela User (Użytkownicy):
+```sql
+CREATE TABLE `User` (
+    `id` VARCHAR(191) NOT NULL,
+    `name` CHAR(30) NOT NULL,
+    `username` CHAR(64) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `imageUrl` VARCHAR(191) NOT NULL,
+    `bannerUrl` VARCHAR(191) NULL,
+    `location` CHAR(30) NULL,
+    `website` CHAR(100) NULL,
+    `isCompleted` BOOLEAN NOT NULL DEFAULT false,
+    `bio` CHAR(255) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    UNIQUE INDEX `User_username_key`(`username`),
+    UNIQUE INDEX `User_email_key`(`email`),
+    INDEX `User_username_name_idx`(`username`, `name`),
+    PRIMARY KEY (`id`)
+)
+```
+- Przechowuje podstawowe informacje o użytkowniku
+- Posiada indeksy dla optymalizacji wyszukiwania
+- Zawiera ograniczenia długości pól zgodne z wymaganiami biznesowymi
+- Automatyczne znaczniki czasowe dla utworzenia i aktualizacji
+
+Tabela Follower (Obserwujący):
+```sql
+CREATE TABLE `Follower` (
+    `id` VARCHAR(191) NOT NULL,
+    `followerId` VARCHAR(191) NOT NULL,
+    `followingId` VARCHAR(191) NOT NULL,
+    INDEX `Follower_followerId_followingId_idx`(`followerId`, `followingId`),
+    PRIMARY KEY (`id`)
+)
+```
+- Implementuje relacje obserwujących między użytkownikami
+- Zoptymalizowana pod kątem szybkiego wyszukiwania relacji
+- Indeks złożony dla efektywnego filtrowania
+
+Tabela Thread (Tweety):
+```sql
+CREATE TABLE `Thread` (
+    `id` VARCHAR(191) NOT NULL,
+    `text` VARCHAR(280) NOT NULL,
+    `imageUrl` VARCHAR(191) NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `parentId` VARCHAR(191) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    INDEX `Thread_userId_idx`(`userId`),
+    INDEX `Thread_parentId_idx`(`parentId`),
+    PRIMARY KEY (`id`)
+)
+```
+- Przechowuje tweety i odpowiedzi
+- Limit tekstu do 280 znaków
+- Obsługa obrazów przez URL
+- System odpowiedzi przez parentId
+- Indeksy dla szybkiego wyszukiwania
+
+Tabela Notification (Powiadomienia):
+```sql
+CREATE TABLE `Notification` (
+    `id` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `sourceId` VARCHAR(191) NOT NULL,
+    `parentIdPost` VARCHAR(191) NULL,
+    `parentIdUser` VARCHAR(191) NULL,
+    `parentType` ENUM('Post', 'User') NOT NULL,
+    `activityType` ENUM('Like', 'Comment', 'Follow', 'Reply') NOT NULL,
+    `isRead` BOOLEAN NOT NULL DEFAULT false,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    INDEX `Notification_userId_idx`(`userId`),
+    PRIMARY KEY (`id`)
+)
+```
+- System powiadomień dla różnych typów aktywności
+- Elastyczna struktura dla różnych rodzajów powiadomień
+- Flagowanie przeczytanych powiadomień
+- Indeks dla szybkiego dostępu do powiadomień użytkownika
+
+Tabela Bookmark (Zakładki):
+```sql
+CREATE TABLE `Bookmark` (
+    `id` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `postId` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    INDEX `Bookmark_userId_postId_idx`(`userId`, `postId`),
+    PRIMARY KEY (`id`)
+)
+```
+- System zapisywania tweetów
+- Indeks złożony dla szybkiego dostępu
+- Znacznik czasowy utworzenia zakładki
+
+Tabela Like (Polubienia):
+```sql
+CREATE TABLE `Like` (
+    `id` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `postId` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    INDEX `Like_userId_postId_idx`(`userId`, `postId`),
+    PRIMARY KEY (`id`)
+)
+```
+- System polubień tweetów
+- Indeks złożony dla efektywnego sprawdzania statusu polubienia
+- Znacznik czasowy dla śledzenia historii
+
+Wszystkie tabele używają:
+- VARCHAR(191) dla identyfikatorów UUID
+- Indeksów dla optymalizacji zapytań
+- Znaczników czasowych dla audytu
+- Kluczy obcych dla integralności referencyjnej
+- Kodowania utf8mb4 dla pełnej obsługi Unicode
+
+5.4. Diagram ERD (Entity Relationship Diagram)
+
+```
++---------------+     +----------------+     +---------------+
+|     User      |     |    Thread     |     | Notification  |
++---------------+     +----------------+     +---------------+
+| PK id         |     | PK id         |     | PK id         |
+| name          |     | text          |     | userId        |
+| username      |     | imageUrl      |     | sourceId      |
+| email         |     | userId        |<----| parentIdPost  |
+| imageUrl      |     | parentId      |     | parentIdUser  |
+| bannerUrl     |     | createdAt     |     | parentType    |
+| location      |     | updatedAt     |     | activityType  |
+| website       |     +----------------+     | isRead        |
+| isCompleted   |           ▲               | createdAt     |
+| bio           |           |               +---------------+
+| createdAt     |           |                      ▲
+| updatedAt     |           |                      |
++---------------+           |                      |
+       ▲                    |                      |
+       |                    |                      |
+       |            +----------------+             |
+       |            |     Like      |             |
+       |            +----------------+             |
+       +----------->| PK id         |             |
+       |            | userId        |-------------+
+       |            | postId        |
+       |            | createdAt     |
+       |            +----------------+
+       |
+       |            +----------------+
+       |            |   Bookmark    |
+       |            +----------------+
+       +----------->| PK id         |
+       |            | userId        |
+       |            | postId        |
+       |            | createdAt     |
+       |            +----------------+
+       |
+       |            +----------------+
+       |            |   Follower    |
+       |            +----------------+
+       +----------->| PK id         |
+                    | followerId    |
+                    | followingId   |
+                    +----------------+
+
+Legenda:
+PK - Klucz główny (Primary Key)
+--> - Relacja jeden-do-wielu
+<-> - Relacja wiele-do-wielu
+
+Główne relacje:
+1. User -> Thread (1:N) - Użytkownik może mieć wiele tweetów
+2. User -> Like (1:N) - Użytkownik może polubić wiele tweetów
+3. User -> Bookmark (1:N) - Użytkownik może zapisać wiele tweetów
+4. User -> Follower (N:N) - Użytkownik może obserwować/być obserwowanym przez wielu
+5. User -> Notification (1:N) - Użytkownik może mieć wiele powiadomień
+6. Thread -> Thread (1:N) - Tweet może mieć wiele odpowiedzi (self-reference)
+
+5.5. Alternatywna Wizualizacja Struktury Bazy Danych
+
+📦 STRUKTURA BAZY DANYCH MINI-TWITTER
+═══════════════════════════════════════
+
+👤 USER ━━━━━━━━━━━━━━┓
+┌─────────────────────┐ │
+│ 🔑 id               │ │
+│ 👨 name             │ │
+│ 📝 username         │ │     📝 THREAD ━━━━━━━━━━━┓
+│ 📧 email           │ │     ┌─────────────────────┐
+│ 🖼️ imageUrl        │ │     │ 🔑 id               │
+│ 🎨 bannerUrl       │ │     │ 📄 text             │
+│ 📍 location        │ │     │ 🖼️ imageUrl        │
+│ 🌐 website         │ ├────▶│ 👤 userId           │
+│ ✅ isCompleted     │ │     │ 🔄 parentId         │
+│ 📋 bio             │ │     │ 🔄 updatedAt        │
+│ ⏰ createdAt       │ │     └─────────────────────┘
+│ �� updatedAt       │ │
+└─────────────────────┘ │
+          ▲            │
+          │            │
+          │            │
+          │            │
+          │            │     📢 NOTIFICATION
+          │            │     ┌─────────────────────┐
+          │            │     │ 🔑 id               │
+          │            │     │ 👤 userId           │
+          │            │     │ 📤 sourceId         │
+          │            │     │ 📨 parentIdPost     │
+          │            │     │ 👥 parentIdUser     │
+          │            │     │ 📋 parentType       │
+          │            │     │ 🔔 activityType     │
+          │            │     │ 👁️ isRead          │
+          │            │     │ ⏰ createdAt        │
+          │            │     └─────────────────────┘
+          │            │
+    ┌─────┴─────┐     │
+    │           │     │
+👍 LIKE    📑 BOOKMARK│
+┌─────────┐ ┌────────┐
+│ 🔑 id   │ │ 🔑 id  │
+│ 👤 user │ │ 👤 user│
+│ 📝 post │ │ 📝 post│
+│ ⏰ time │ │ ⏰ time│
+└─────────┘ └────────┘
+
+👥 FOLLOWER
+┌─────────────────┐
+│ 🔑 id           │
+│ 👤 followerId   │◀─────┐
+│ 👥 followingId  │      │
+└─────────────────┘      │
+         ▲              │
+         └──────────────┘
+
+LEGENDA:
+━━━━━ Główna encja
+───▶  Relacja jeden-do-wielu
+◀────▶ Relacja wiele-do-wielu
+🔑 Klucz główny
+👤 Referencja do użytkownika
+📝 Pole tekstowe
+⏰ Znacznik czasu
+✅ Pole logiczne
+🔄 Pole aktualizacji
+
+TYPY RELACJI:
+┌────────────┐  ┌────────────┐
+│  Encja A   │──│  Encja B   │  1:1 Jeden-do-jednego
+└────────────┘  └────────────┘
+
+┌────────────┐  ┌────────────┐
+│  Encja A   │─┼│  Encja B   │  1:N Jeden-do-wielu
+└────────────┘  └────────────┘
+
+┌────────────┐  ┌────────────┐
+│  Encja A   │┼─┼│  Encja B   │  N:N Wiele-do-wielu
+└────────────┘  └────────────┘
+
+6. TECHNOLOGIE
+
+- Next.js jako framework frontendowy i backendowy
+- Prisma jako ORM do zarządzania bazą danych
+- Clerk do autentykacji
+- TypeScript dla bezpiecznego typowania
+- Tailwind CSS dla stylowania
+- React Hook Form dla zarządzania formularzami
+- Zod dla walidacji danych
+
+7. PODSUMOWANIE
+
+Aplikacja Mini-Twitter stanowi kompleksowe rozwiązanie oferujące podstawowe funkcjonalności platformy społecznościowej, z naciskiem na:
+- Bezpieczeństwo użytkowników
+- Intuicyjny interfejs
+- Wydajność działania
+- Skalowalność rozwiązania
+ 
