@@ -37,7 +37,7 @@ yarn install
 ```
 
 3. Skonfiguruj zmienne środowiskowe:
-   Skopiuj plik `.env.example` do `.env` i uzupełnij następujące zmienne:
+   Stwórz plik `.env` i uzupełnij następujące zmienne:
 
    ```env
    # URL aplikacji
