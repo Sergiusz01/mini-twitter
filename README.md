@@ -39,7 +39,7 @@ yarn install
 3. Skonfiguruj zmienne środowiskowe:
    Stwórz plik `.env` i uzupełnij następujące zmienne:
 
-   ```env
+```env
 # CLERK
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
@@ -61,9 +61,7 @@ GEMINI_API_KEY=
 
 # NEXT URL
 NEXT_PUBLIC_NEXT_URL=http://localhost:3000
-
-
-   ```
+ ```
 
 4. Zainicjalizuj bazę danych:
 ```bash
